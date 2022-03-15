@@ -24,7 +24,7 @@ AS
 			INSERT INTO t_account
 			(f_account, f_password, f_nickName)
 			OUTPUT inserted.*
-			VALUES(@account, @password, @nickName)
+			VALUES(@Account, @Password, @NickName)
 		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH

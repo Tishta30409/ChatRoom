@@ -1,60 +1,66 @@
 ﻿CREATE PROCEDURE [dbo].[pro_historyDelete]
 	@RoomID INT
 AS
-	--宣告變數
-	DECLARE @roomData AS TABLE
-	(
-		f_id BIGINT IDENTITY NOT NULL ,
-		f_roomID INT NOT NULL,
-		f_nickName NVARCHAR(20) NOT NULL,
-		f_content NVARCHAR(20) NOT NULL,
-		f_createDateTime DATETIME NOT NULL
-	)
 
-	--整理資料
-	SET @roomData = 
-	(
-		SELECT TOP 100 PERCENT
-		f_id,
-		f_roomID, 
-		f_nickName,
-		f_content, 
-		f_createDateTime 
-		FROM t_history 
-		WHERE f_roomID = @RoomID ORDER BY f_createDateTime DESC
-	)
-	--刪除資料
+	--宣告房間列表暫存
+	DECLARE @roomlist TABLE (f_id INT , ROWID INT IDENTITY) 
 
-	DELETE FROM @roomData WHERE  row_number() > 10
+	--把資料存到暫存區
+	INSERT INTO @roomlist (f_id)
+	SELECT  
+	f_id 
+	FROM t_room 
+	WITH(NOLOCK) 
 
-	
+	-- 迴圈參數
+	DECLARE 
+	@TableCount INT,
+	@WhileTableCount INT = 1
 
-	GO
+	--找最大行數
+	SET @TableCount = (SELECT COUNT(f_id) FROM @roomlist)
 
-	
-
-
-
-	DELETE FROM t_history WITH(ROWLOCK)
-	OUTPUT deleted.*
-	WHERE  
-	購買物品 + '-' + CONVERT(varchar(8), 第幾次)
-	in 
-	(
-		SELECT 購買物品 + '-' + CONVERT(varchar(8), 第幾次) AS id 
-		FROM 
+	--迴圈 執行每個房間的排列刪除
+	WHILE @WhileTableCount <= @TableCount
+	BEGIN
+	-- 找到目前迴圈指標指向的 房間ID
+		DECLARE @curRoomID INT
+		SET 
+		@curRoomID = 
 		(
-			SELECT 購買物品, 第幾次, 價格, row_number() OVER 
-			(
-				partition BY 購買物品 ORDER BY 購買物品, 第幾次 DESC
-			) AS RANK  FROM   dbo.DataTable
-		) AS TMP 
-		WHERE RANK > 2
-	)
+			SELECT 
+			f_id 
+			FROM  
+			@roomlist 
+			WHERE  ROWID = @WhileTableCount
+		)
 
-	WHERE( f_roomID = @RoomID ORDER BY f_createDateTime DESC ) 
+		--找出最新的一筆資料
+		DECLARE @lastHistoryID BIGINT
+		SET 
+		@lastHistoryID = 
+		(
+			SELECT TOP 1 
+			f_id 
+			FROM t_history  
+			WHERE f_roomID = @curRoomID 
+			ORDER BY f_id DESC
+		)
+
+		DELETE FROM 
+		t_history 
+		WHERE
+		( 
+			f_roomID =@curRoomID 
+			AND 
+			(f_id-@lastHistoryID)>10
+		)
+
+		SET @WhileTableCount = @WhileTableCount+1
+	END
 RETURN 0
 GO
+
 GRANT EXECUTE
     ON OBJECT::[dbo].[pro_historyDelete] TO PUBLIC
     AS [dbo];

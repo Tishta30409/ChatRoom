@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[pro_accountDelete]
-	@Id INT
+	@Account NVARCHAR(40)
 AS
 	DELETE FROM t_account WITH(ROWLOCK)
 	OUTPUT deleted.*
-	WHERE f_id = @Id
+	WHERE f_account = @Account
 RETURN 0
 GO
 GRANT EXECUTE
