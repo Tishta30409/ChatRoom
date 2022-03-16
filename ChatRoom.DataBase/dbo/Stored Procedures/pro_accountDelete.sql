@@ -1,10 +1,10 @@
 ﻿--後臺使用
 CREATE PROCEDURE [dbo].[pro_accountDelete]
-	@Account NVARCHAR(40)
+	@account NVARCHAR(40)
 AS
 	DELETE FROM t_account WITH(ROWLOCK)
 	OUTPUT deleted.*
-	WHERE f_account = @Account
+	WHERE f_account = @account
 RETURN 0
 GO
 GRANT EXECUTE

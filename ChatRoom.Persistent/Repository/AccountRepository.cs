@@ -31,9 +31,9 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @Account = account.f_account,
-                            @Password = account.f_password,
-                            @NickName = account.f_nickName
+                            account = account.f_account,
+                            password = account.f_password,
+                            nickName = account.f_nickName
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -57,7 +57,7 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @Account = account,
+                            account = account,
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -81,7 +81,7 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @Account = account
+                            account = account
                         },
                         commandType: CommandType.StoredProcedure);
 

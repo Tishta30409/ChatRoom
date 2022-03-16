@@ -1,14 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[pro_historyAdd]
-	@RoomID INT,
-	@NickName NVARCHAR(20),
-	@Content NVARCHAR(20),
-	@CreateDateTime DATETIME
+	@roomID INT,
+	@nickName NVARCHAR(20),
+	@content NVARCHAR(20),
+	@createDateTime DATETIME
 AS
 	
 	
 	INSERT INTO t_history([f_roomID], [f_nickName], [f_content], [f_createDateTime])
 	OUTPUT inserted.*
-	VALUES(@RoomID, @NickName, @Content, @CreateDateTime)
+	VALUES(@roomID, @nickName, @content, @createDateTime)
 
 RETURN 0
 GO

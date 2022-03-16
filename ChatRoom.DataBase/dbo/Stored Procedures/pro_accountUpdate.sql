@@ -1,18 +1,18 @@
 ﻿CREATE PROCEDURE [dbo].[pro_accountUpdate]
-	@Account VARCHAR(40),--傳入值
-	@Password VARCHAR(40),
-	@NickName NVARCHAR(20),
-	@State	TINYINT,
-	@ErrorTimes TINYINT
+	@account VARCHAR(40),--傳入值
+	@password VARCHAR(40),
+	@nickName NVARCHAR(20),
+	@state	TINYINT,
+	@errorTimes TINYINT
 AS
 	UPDATE t_account WITH(ROWLOCK)
 	SET 
-	f_password = @Password, 
-	f_nickName = @NickName,
-	f_state = @State,
-	f_errorTimes = @ErrorTimes
+	f_password = @password, 
+	f_nickName = @nickName,
+	f_state = @state,
+	f_errorTimes = @errorTimes
 	OUTPUT inserted.*
-	WHERE f_account = @Account
+	WHERE f_account = @account
 RETURN 0
 GO
 GRANT EXECUTE

@@ -28,7 +28,7 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @RoomName = roomName,
+                            roomName = roomName,
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -52,7 +52,7 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @ID = id,
+                            id = id,
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -96,8 +96,8 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @ID = room.f_id,
-                            @RoomName = room.f_roomName,
+                            id = room.f_id,
+                            roomName = room.f_roomName,
                         },
                         commandType: CommandType.StoredProcedure);
 

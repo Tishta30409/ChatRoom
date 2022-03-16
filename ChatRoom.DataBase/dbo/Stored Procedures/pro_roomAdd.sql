@@ -1,17 +1,17 @@
 ﻿CREATE PROCEDURE [dbo].[pro_roomAdd]
-	@RoomName NVARCHAR(20)
+	@roomName NVARCHAR(20)
 AS
 	DECLARE 
-      @ResultCode  INT        = -99
-      ,@ResultMsg    NVARCHAR(MAX)  = N'未定義錯誤'
+      @resultCode  INT        = -99
+      ,@resultMsg    NVARCHAR(20)  = '未定義錯誤'
 
 	IF EXISTS(
     SELECT 1 
     FROM t_room 
-    WHERE f_roomName=@RoomName
+    WHERE f_roomName=@roomName
     )
 	BEGIN
-		SET @ResultCode = -1    
+		SET @resultCode = -1    
 	END
 
 	BEGIN TRY
@@ -19,7 +19,7 @@ AS
 			INSERT INTO t_room
 			(f_roomName)
 			OUTPUT inserted.*
-			VALUES(@RoomName)
+			VALUES(@roomName)
 		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH
@@ -27,14 +27,14 @@ AS
 	END CATCH
 
 	EndProc:
-		SET @ResultMsg = 
-		CASE @ResultCode
+		SET @resultMsg = 
+		CASE @resultCode
 			WHEN  1 THEN N'創建房間成功'
 			WHEN -1 THEN N'房間名稱已存在'
 			WHEN -99 THEN N'未定義錯誤。'
 		END
 
-RETURN @ResultCode
+RETURN @resultCode
 GO
 
 GRANT EXECUTE

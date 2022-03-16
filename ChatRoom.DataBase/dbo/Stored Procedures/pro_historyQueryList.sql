@@ -6,7 +6,7 @@ AS
     f_nickName, 
     f_content,
     f_createDateTime  
-    FROM t_history WITH(NOLOCK)  WHERE f_roomID = @RoomID
+    FROM t_history WITH(NOLOCK)  WHERE f_roomID = @roomID
     ORDER BY f_id DESC 
 
 RETURN 0

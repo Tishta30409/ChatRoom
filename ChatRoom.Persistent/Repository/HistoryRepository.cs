@@ -31,10 +31,10 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @RoomID = history.f_roomID,
-                            @NickName = history.f_nickName,
-                            @Content = history.f_content,
-                            @CreateDateTime = history.f_createDateTime
+                            roomID = history.f_roomID,
+                            nickName = history.f_nickName,
+                            content = history.f_content,
+                            createDateTime = history.f_createDateTime
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -55,7 +55,7 @@ namespace ChatRoom.Persistent.Repository
                 {
                     var result = cn.Query<History>(
                         "pro_historyQueryList",
-                        new { @RoomID = roomID },
+                        new { roomID = roomID },
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         commandType: CommandType.StoredProcedure);
 

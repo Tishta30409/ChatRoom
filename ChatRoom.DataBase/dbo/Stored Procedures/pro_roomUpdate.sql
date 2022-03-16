@@ -1,12 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[pro_roomUpdate]
-	@ID int,
-	@RoomName VARCHAR(20)
+	@id int,
+	@roomName VARCHAR(20)
 AS
 	UPDATE t_room WITH(ROWLOCK)
 	SET 
-	f_roomName = @RoomName
+	f_roomName = @roomName
 	OUTPUT inserted.*
-	WHERE f_id = @ID
+	WHERE f_id = @id
 RETURN 0
 GO
 GRANT EXECUTE
