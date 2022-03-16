@@ -4,6 +4,7 @@ using ChatRoom.Persistent.Repository;
 using Dapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace ChatRoom.Persistent.Tests
 {
@@ -30,7 +31,7 @@ namespace ChatRoom.Persistent.Tests
         [TestMethod]
         public void 新增帳號測試()
         {
-            var addResult = this.repo.Create(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+            var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
 
             Assert.IsNull(addResult.exception);
             Assert.IsNotNull(addResult.account);
@@ -39,7 +40,7 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(addResult.account.f_nickName, "你好我是");
 
             //重複帳號測試
-            var addAgainResult = this.repo.Create(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+            var addAgainResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
             Assert.IsNull(addAgainResult.exception);
 
         }
@@ -47,7 +48,7 @@ namespace ChatRoom.Persistent.Tests
         [TestMethod]
         public void 更新帳號測試()
         {
-            var addResult = this.repo.Create(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+            var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
 
             Assert.IsNull(addResult.exception);
             Assert.IsNotNull(addResult.account);
@@ -75,7 +76,7 @@ namespace ChatRoom.Persistent.Tests
           [TestMethod]
         public  void 刪除帳號測試()
         {
-            var addResult = this.repo.Create(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+            var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
 
             Assert.IsNull(addResult.exception);
             Assert.IsNotNull(addResult.account);
@@ -94,5 +95,41 @@ namespace ChatRoom.Persistent.Tests
             deleteResult = this.repo.Delete("test000");
             Assert.IsNull(addResult.exception);
         }
+
+        [TestMethod]
+        public void 查詢帳號測試()
+        {
+            var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+
+            Assert.IsNull(addResult.exception);
+            Assert.IsNotNull(addResult.account);
+            Assert.AreEqual(addResult.account.f_account, "test000");
+            Assert.AreEqual(addResult.account.f_password, "123456");
+            Assert.AreEqual(addResult.account.f_nickName, "你好我是");
+
+            var queryResult = this.repo.Query("test000");
+            Assert.IsNull(queryResult.exception);
+            Assert.IsNotNull(queryResult.account);
+            Assert.AreEqual(queryResult.account.f_account, "test000");
+            Assert.AreEqual(queryResult.account.f_password, "123456");
+            Assert.AreEqual(queryResult.account.f_nickName, "你好我是");
+        }
+
+        [TestMethod]
+        public void 查詢帳號清單測試()
+        {
+            this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+            this.repo.Add(new Account() { f_account = "test001", f_password = "123456", f_nickName = "你好我是" });
+            this.repo.Add(new Account() { f_account = "test002", f_password = "123456", f_nickName = "你好我是" });
+            this.repo.Add(new Account() { f_account = "test003", f_password = "123456", f_nickName = "你好我是" });
+            this.repo.Add(new Account() { f_account = "test004", f_password = "123456", f_nickName = "你好我是" });
+
+
+            var queryResult = this.repo.QueryList();
+            Assert.IsNull(queryResult.exception);
+            Assert.IsNotNull(queryResult.accounts);
+            Assert.AreEqual(queryResult.accounts.Count(), 5);
+        }
+
     }
 }

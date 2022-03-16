@@ -60,6 +60,7 @@
     <Compile Include="Repository\HistoryRepositoryTests.cs" />
     <Compile Include="Repository\AccountRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\RoomRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

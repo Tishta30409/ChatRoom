@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[pro_accountDelete]
+﻿--後臺使用
+CREATE PROCEDURE [dbo].[pro_accountDelete]
 	@Account NVARCHAR(40)
 AS
 	DELETE FROM t_account WITH(ROWLOCK)

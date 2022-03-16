@@ -71,9 +71,12 @@
     <Build Include="dbo\Stored Procedures\pro_accountUpdate.sql" />
     <Build Include="dbo\Stored Procedures\pro_roomAdd.sql" />
     <Build Include="dbo\Stored Procedures\pro_roomDelete.sql" />
-    <Build Include="dbo\Stored Procedures\pro_roomQuery.sql" />
+    <Build Include="dbo\Stored Procedures\pro_roomQueryList.sql" />
     <Build Include="dbo\Stored Procedures\pro_historyAdd.sql" />
-    <Build Include="dbo\Stored Procedures\pro_historyQuery.sql" />
-    <Build Include="dbo\Stored Procedures\pro_historyDelete.sql" />
+    <Build Include="dbo\Stored Procedures\pro_historyQueryList.sql" />
+    <Build Include="dbo\Stored Procedures\pro_historySortOut.sql" />
+    <Build Include="dbo\Stored Procedures\pro_roomUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\pro_accountQuery.sql" />
+    <Build Include="dbo\Stored Procedures\pro_accountQueryList.sql" />
   </ItemGroup>
 </Project>

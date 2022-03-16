@@ -9,12 +9,24 @@ namespace ChatRoom.Domain.Repository
 {
     public interface IHistoryRepository
     {
+        /// <summary>
+        /// 插入單筆資料
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
         (Exception exception, History history) Add(History history);
 
-        (Exception exception, IEnumerable<History> historys) Delete();
+        /// <summary>
+        /// 整理資料 清除多於10筆的資料
+        /// </summary>
+        /// <returns></returns>
+        (Exception exception, IEnumerable<History> historys) SortOut();
 
-        (Exception exception, IEnumerable<History> historys) Query();
-
+        /// <summary>
+        /// 查詢歷史紀錄清單 最多10筆
+        /// </summary>
+        /// <returns></returns>
+        (Exception exception, IEnumerable<History> historys) QueryList(int roomID);
 
     }
 }

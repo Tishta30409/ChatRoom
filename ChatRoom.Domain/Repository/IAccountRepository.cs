@@ -23,7 +23,7 @@ namespace ChatRoom.Domain.Repository
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, Account account) Create(Account account);
+        (Exception exception, Account account) Add(Account account);
 
         /// <summary>
         /// 更新帳號
@@ -31,6 +31,20 @@ namespace ChatRoom.Domain.Repository
         /// <param account="accoumt"></param>
         /// <returns></returns>
         (Exception exception, Account account) Update(Account account);
+
+        /// <summary>
+        /// 查詢單一帳號
+        /// </summary>
+        /// <param account="accoumt"></param>
+        /// <returns></returns>
+        (Exception exception, Account account) Query(string account);
+
+        /// <summary>
+        /// 查詢帳號清單 顯示用
+        /// </summary>
+        /// <param account="accoumt"></param>
+        /// <returns></returns>
+        (Exception exception, IEnumerable<Account> accounts) QueryList();
 
         /// <summary>
         /// 刪除帳號

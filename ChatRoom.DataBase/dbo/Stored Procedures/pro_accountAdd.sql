@@ -1,5 +1,5 @@
 ﻿
-
+--創建帳號
 CREATE PROCEDURE [dbo].[pro_accountAdd]
 	@Account VARCHAR(40) ,
 	@Password VARCHAR(40),

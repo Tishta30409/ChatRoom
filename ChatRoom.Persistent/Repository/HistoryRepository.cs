@@ -47,14 +47,15 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
-        public (Exception exception, IEnumerable<History> historys) Delete()
+        public (Exception exception, IEnumerable<History> historys) QueryList(int roomID)
         {
             try
             {
                 using (var cn = new SqlConnection(this.connectionString))
                 {
                     var result = cn.Query<History>(
-                        "pro_historyDelete",
+                        "pro_historyQueryList",
+                        new { @RoomID = roomID },
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         commandType: CommandType.StoredProcedure);
 
@@ -67,14 +68,14 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
-        public (Exception exception, IEnumerable<History> historys) Query()
+        public (Exception exception, IEnumerable<History> historys) SortOut()
         {
             try
             {
                 using (var cn = new SqlConnection(this.connectionString))
                 {
                     var result = cn.Query<History>(
-                        "pro_historyQuery",
+                        "pro_historySortOut",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         commandType: CommandType.StoredProcedure);
 
