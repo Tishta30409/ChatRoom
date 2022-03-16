@@ -93,7 +93,7 @@ namespace ChatRoom.Persistent.Tests
 
             //重複刪除測試
             deleteResult = this.repo.Delete("test000");
-            Assert.IsNull(addResult.exception);
+            Assert.IsNull(deleteResult.exception);
         }
 
         [TestMethod]
