@@ -13,7 +13,15 @@ namespace ChatRoom.Domain.Repository
     {
         Normal = 1,
         Mute = 2,
-        Locking = 3,
+        Locked = 3,
+    }
+
+    public enum AccountResult
+    {
+        SUCCESS = 0,
+        ACCOUNT_REPEAT = 1,
+        ACCOUNT_LOCKED = 2,
+        WORNG_PASSWORD = 3,
     }
 
     public interface IAccountRepository

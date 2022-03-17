@@ -40,7 +40,7 @@ AS
 			WHEN -99 THEN '未定義錯誤'
 		END
 
-RETURN @ResultCode
+RETURN @resultCode
 GO
 
 
