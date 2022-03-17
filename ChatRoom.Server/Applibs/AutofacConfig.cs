@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Integration.WebApi;
 using ChatRoom.Server.Model;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +28,9 @@ namespace ChatRoom.Server.Applibs
             var builder = new ContainerBuilder();
             var asm = Assembly.GetExecutingAssembly();
 
+            //API註冊
+            builder.RegisterApiControllers(asm);
+
             // Action Handler
             builder.RegisterAssemblyTypes(asm)
                 .Named<IActionHandler>(t => t.Name.Replace("ActionHandler", string.Empty).ToLower())
@@ -41,6 +45,7 @@ namespace ChatRoom.Server.Applibs
                 .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
                 .SingleInstance();
 
+            //建置
             container = builder.Build();
         }
     }

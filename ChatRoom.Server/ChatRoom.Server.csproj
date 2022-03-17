@@ -136,7 +136,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Applibs\AutofacConfig.cs" />
+    <Compile Include="Applibs\ChatRoomProcess.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Hubs\ChatRoomHub.cs" />
+    <Compile Include="Hubs\HubClient.cs" />
+    <Compile Include="Hubs\IHubClient.cs" />
     <Compile Include="Model\IActionHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,14 +156,15 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Hubs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ChatRoom.Domain\ChatRoom.Domain.csproj">
       <Project>{8899a6d7-e7ef-41e9-a1f8-bf2d4c3628e6}</Project>
       <Name>ChatRoom.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChatRoom.Persistent\ChatRoom.Persistent.csproj">
+      <Project>{aabdcea0-28eb-4256-b60f-146d03fe7cad}</Project>
+      <Name>ChatRoom.Persistent</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

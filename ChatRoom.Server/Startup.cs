@@ -16,7 +16,6 @@ namespace ChatRoom.Server
             //短連結建置
             var webApiConfiguration = ConfigureWebApi();
             app.UseWebApi(webApiConfiguration);
-
             app.UseCors(CorsOptions.AllowAll);
 
             //長連結設置

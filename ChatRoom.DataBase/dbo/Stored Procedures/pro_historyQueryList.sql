@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[pro_historyQueryList]
-@RoomID INT
+@roomID INT
 AS
 	SELECT
     f_id, f_roomID, 

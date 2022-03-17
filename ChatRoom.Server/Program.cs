@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ChatRoom.Server.Applibs;
+using Microsoft.Owin.Hosting;
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 
 /// <summary>
@@ -38,6 +36,40 @@ namespace ChatRoom.Server
 
         static void Main(string[] args)
         {
+            using (WebApp.Start(ConfigHelper.SignalrUrl))
+            {
+                //// 監聽APP關閉事件
+                SetConsoleCtrlHandler(t =>
+                {
+                    ChatRoomProcess.ProcessStop();
+
+                    return false;
+                },
+                true);
+
+                DisbleQuickEditMode();
+
+                ChatRoomProcess.ProcessStart();
+
+                while (Console.ReadLine().ToLower() != "exit")
+                {
+                }
+
+                ChatRoomProcess.ProcessStop();
+            }
+        }
+
+        /// <summary>
+        /// 關閉快速編輯模式、插入模式
+        /// </summary>
+        public static void DisbleQuickEditMode()
+        {
+            IntPtr hStdin = GetStdHandle(STD_INPUT_HANDLE);
+            uint mode;
+            GetConsoleMode(hStdin, out mode);
+            mode &= ~ENABLE_QUICK_EDIT_MODE; //移除快速編輯模式
+            mode &= ~ENABLE_INSERT_MODE; //移除插入模式
+            SetConsoleMode(hStdin, mode);
         }
     }
 }

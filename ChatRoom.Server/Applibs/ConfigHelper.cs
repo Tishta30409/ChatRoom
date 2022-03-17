@@ -4,7 +4,7 @@ namespace ChatRoom.Server.Applibs
 {
     internal static class ConfigHelper
     {
-           public static string SingalrUrl
+           public static string SignalrUrl
         {
             get
                 => $"http://localhost:8085";

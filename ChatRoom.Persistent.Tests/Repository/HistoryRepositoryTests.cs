@@ -16,10 +16,12 @@ namespace ChatRoom.Persistent.Tests
 
         private IHistoryRepository repo;
 
+        private IRoomRepository roomRepo;
+
         [TestInitialize]
         public void Init()
         {
-            var sqlStr = @"TRUNCATE TABLE t_history";
+            var sqlStr = @"TRUNCATE TABLE t_history TRUNCATE TABLE t_room";
 
             using (var cn = new SqlConnection(connectionString))
             {
@@ -27,6 +29,8 @@ namespace ChatRoom.Persistent.Tests
             }
 
             this.repo = new HistoryRepository(connectionString);
+
+            this.roomRepo = new RoomRepository(connectionString);
         }
 
         [TestMethod]
@@ -85,6 +89,10 @@ namespace ChatRoom.Persistent.Tests
         [TestMethod]
         public void 定時整理歷史資料測試()
         {
+            for (int i = 0; i < 5; i++)
+            {
+                this.roomRepo.Add($"測試房間{i}");
+            }
 
             for (int i = 0; i < 30; i++)
             {
