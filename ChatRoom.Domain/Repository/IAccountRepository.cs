@@ -59,6 +59,6 @@ namespace ChatRoom.Domain.Repository
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, Account account) Delete(string account);
+        (Exception exception, Account account) Delete(int id);
     }
 }

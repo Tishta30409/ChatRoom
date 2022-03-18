@@ -84,7 +84,7 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(addResult.account.f_password, "123456");
             Assert.AreEqual(addResult.account.f_nickName, "你好我是");
 
-            var deleteResult = this.repo.Delete("test000");
+            var deleteResult = this.repo.Delete(1);
             Assert.IsNull(deleteResult.exception);
             Assert.IsNotNull(deleteResult.account);
             Assert.AreEqual(deleteResult.account.f_account, "test000");
@@ -92,7 +92,7 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(deleteResult.account.f_nickName, "你好我是");
 
             //重複刪除測試
-            deleteResult = this.repo.Delete("test000");
+            deleteResult = this.repo.Delete(1);
             Assert.IsNull(deleteResult.exception);
         }
 

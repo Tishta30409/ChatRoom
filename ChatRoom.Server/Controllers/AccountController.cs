@@ -131,7 +131,7 @@ namespace ChatRoom.Server.Controllers
                 }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult));
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.accounts));
                 return result;
             }
             catch (Exception ex)
@@ -144,7 +144,7 @@ namespace ChatRoom.Server.Controllers
         //刪除帳號 -client
         [HttpDelete]
         [Route("api/Account/Delete")]
-        public HttpResponseMessage Delete(string input)
+        public HttpResponseMessage Delete(int input)
         {
             try
             {

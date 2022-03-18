@@ -1,7 +1,9 @@
-﻿using ChatRoom.Domain.Repository;
+﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -34,7 +36,8 @@ namespace ChatRoom.Server.Controllers
                 }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(JsonConvert.SerializeObject(queryResult.historys)));
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.historys));
+                var test = JsonConvert.DeserializeObject<IEnumerable<History>>(result.Content.ReadAsStringAsync().Result);
                 return result;
             }
             catch (Exception ex)

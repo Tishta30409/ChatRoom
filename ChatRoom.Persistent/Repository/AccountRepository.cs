@@ -46,7 +46,7 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
-        public (Exception exception, Account account) Delete(string account)
+        public (Exception exception, Account account) Delete(int id)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            account = account,
+                            id = id,
                         },
                         commandType: CommandType.StoredProcedure);
 
