@@ -1,31 +1,28 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
 
 namespace ChatRoom.Domain.Repository
 {
-    public enum AccountState: byte
-    {
-        Normal = 1,
-        Mute = 2,
-        Locked = 3,
-    }
-
     public enum AccountResult
     {
         SUCCESS = 0,
         ACCOUNT_REPEAT = 1,
         ACCOUNT_LOCKED = 2,
-        WORNG_PASSWORD = 3,
+        ACCOUNT_NOTEXIST = 3,
+        WORNG_PASSWORD = 4,
     }
 
     public interface IAccountRepository
     {
+        /// <summary>
+        /// 帳號登入
+        /// </summary>
+        /// <param account="accoumt"></param>
+        /// <returns></returns>
+        (Exception exception, Login login) Login(Login login);
+
         /// <summary>
         /// 新增帳號
         /// </summary>

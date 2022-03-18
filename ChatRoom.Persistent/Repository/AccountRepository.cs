@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using Dapper;
 using System;
@@ -18,6 +19,40 @@ namespace ChatRoom.Persistent.Repository
         public AccountRepository(string connectionString)
         {
             this.connectionString = connectionString;
+        }
+
+        public (Exception exception, Login login) Login(Login login)
+        {
+            try
+            {
+                //會有錯誤碼跟回傳值
+                using (var cn = new SqlConnection(this.connectionString))
+                {
+                    var result = cn.QueryMultiple(
+                        "pro_accountLogin",
+                        //參數名稱為PROCEDURE中宣告的變數名稱
+                        new
+                        {
+                            account  = login.f_account,
+                            password = login.f_password
+                        },
+                        commandType: CommandType.StoredProcedure
+                        );
+
+                    
+                    var resultCode = result.ReadFirstOrDefault<AccountResult>();
+                    var resultData = result.ReadFirstOrDefault<Account>();
+                    //var resultData = result.Read();
+
+
+                    return (null, new Login() { resultCode = resultCode, data = resultData });
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
         }
 
         public (Exception exception, Account account) Add(Account account)
@@ -128,7 +163,8 @@ namespace ChatRoom.Persistent.Repository
                             @Account = account.f_account,
                             @Password = account.f_password,
                             @NickName = account.f_nickName,
-                            @State = account.f_state,
+                            @IsLocked = account.f_isLocked,
+                            @IsMuted = account.f_isMuted,
                             @ErrorTimes = account.f_errorTimes,
                         },
                         commandType: CommandType.StoredProcedure);

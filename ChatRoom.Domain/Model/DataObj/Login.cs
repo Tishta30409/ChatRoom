@@ -1,4 +1,6 @@
-﻿namespace ChatRoom.Domain.Model.DataObj
+﻿using ChatRoom.Domain.Repository;
+
+namespace ChatRoom.Domain.Model.DataObj
 {
     public class Login
     {
@@ -12,5 +14,9 @@
         /// 限制長度 20 不能含中文
         /// </summary>
         public string f_password { get; set; }
+
+        public AccountResult resultCode { get; set; }
+
+        public Account data { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;
@@ -46,6 +47,23 @@ namespace ChatRoom.Persistent.Tests
         }
 
         [TestMethod]
+        public void 登入帳號測試()
+        {
+            var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+
+            Assert.IsNull(addResult.exception);
+            Assert.IsNotNull(addResult.account);
+            Assert.AreEqual(addResult.account.f_account, "test000");
+            Assert.AreEqual(addResult.account.f_password, "123456");
+            Assert.AreEqual(addResult.account.f_nickName, "你好我是");
+
+            var loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123456" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+
+        }
+
+        [TestMethod]
         public void 更新帳號測試()
         {
             var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
@@ -60,7 +78,8 @@ namespace ChatRoom.Persistent.Tests
                 f_account = "test000", 
                 f_password = "654321", 
                 f_nickName = "我是你好" ,
-                f_state = AccountState.Mute,
+                f_isLocked = true,
+                f_isMuted = false,
                 f_errorTimes = 3
             
             });
@@ -69,7 +88,8 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(updateResult.account.f_account, "test000");
             Assert.AreEqual(updateResult.account.f_password, "654321");
             Assert.AreEqual(updateResult.account.f_nickName, "我是你好");
-            Assert.AreEqual(updateResult.account.f_state, AccountState.Mute);
+            Assert.AreEqual(updateResult.account.f_isLocked, true);
+            Assert.AreEqual(updateResult.account.f_isMuted, false);
             Assert.AreEqual(updateResult.account.f_errorTimes, 3);
         }
 

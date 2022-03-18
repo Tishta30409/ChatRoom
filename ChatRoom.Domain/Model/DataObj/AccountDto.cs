@@ -1,10 +1,4 @@
-﻿using ChatRoom.Domain.Repository;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace ChatRoom.Domain.Model.DataObj
 {
@@ -28,7 +22,9 @@ namespace ChatRoom.Domain.Model.DataObj
         /// </summary>
         public string NickName { get; set; }
 
-        public AccountState State { get; set; }
+        public bool isLocked { get; set; }
+
+        public bool isMuted { get; set; }
 
         public byte ErrorTimes { get; set; }
 

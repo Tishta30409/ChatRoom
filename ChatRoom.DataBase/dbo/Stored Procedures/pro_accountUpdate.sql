@@ -2,14 +2,16 @@
 	@account VARCHAR(40),--傳入值
 	@password VARCHAR(40),
 	@nickName NVARCHAR(20),
-	@state	TINYINT,
+	@isLocked	TINYINT,
+	@isMuted TINYINT, 
 	@errorTimes TINYINT
 AS
 	UPDATE t_account WITH(ROWLOCK)
 	SET 
 	f_password = @password, 
 	f_nickName = @nickName,
-	f_state = @state,
+	f_isLocked = @isLocked,
+	f_isMuted = @isMuted,
 	f_errorTimes = @errorTimes
 	OUTPUT inserted.*
 	WHERE f_account = @account

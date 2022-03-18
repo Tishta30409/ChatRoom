@@ -60,7 +60,11 @@ namespace ChatRoom.Server.Controllers
         {
             try
             {
-                var queryResult = this.repo.Query(input.Account);
+                var queryResult = this.repo.Login(new Login()
+                {
+                    f_account = input.Account,
+                    f_password=input.Password,
+                });
 
                 if (queryResult.exception != null)
                 {
@@ -68,44 +72,7 @@ namespace ChatRoom.Server.Controllers
                 }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-
-                switch (queryResult.account.f_state)
-                {
-                    case AccountState.Locked:
-                        result.Content = new StringContent(JsonConvert.SerializeObject(
-                            new LoginDto()
-                            { 
-                                result = AccountResult.ACCOUNT_LOCKED,
-                            }));
-                        break;
-                    default:
-                        if(queryResult.account.f_password == input.Password)
-                        {
-                            result.Content = new StringContent(JsonConvert.SerializeObject(
-                            new LoginDto()
-                            {
-                                result = AccountResult.SUCCESS,
-                                data = queryResult.account
-                            }));
-                        }
-                        else
-                        {
-                            //累積錯誤次數 失敗三次就修改帳號狀態
-                            queryResult.account.f_errorTimes += 1;
-                            if(queryResult.account.f_errorTimes >= 3)
-                            {
-                                queryResult.account.f_state = AccountState.Locked;
-                            }
-                            this.repo.Update(queryResult.account);
-
-                            result.Content = new StringContent(JsonConvert.SerializeObject(
-                            new LoginDto()
-                            {
-                                result = AccountResult.WORNG_PASSWORD,
-                            })) ;
-                        }
-                        break;
-                }
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.login));
 
                 return result;
             }

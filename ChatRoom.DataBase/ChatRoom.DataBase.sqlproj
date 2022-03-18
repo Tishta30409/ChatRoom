@@ -78,5 +78,12 @@
     <Build Include="dbo\Stored Procedures\pro_roomUpdate.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountQuery.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountQueryList.sql" />
+    <Build Include="dbo\Stored Procedures\pro_accountLogin.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChatRoom.DataBase.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\PreDeployment.sql" />
   </ItemGroup>
 </Project>

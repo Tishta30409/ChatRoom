@@ -43,13 +43,14 @@ namespace ChatRoom.Server.Tests
 
             // 一般登入
             repo.Setup(p => p.Query("test123"))
-                .Returns((null, new Account() 
-                { 
-                    f_account = "test123", 
-                    f_password = "123456", 
-                    f_nickName = "我是測試", 
-                    f_state =AccountState.Normal,
-                    f_errorTimes = 0 
+                .Returns((null, new Account()
+                {
+                    f_account = "test123",
+                    f_password = "123456",
+                    f_nickName = "我是測試",
+                    f_isLocked = false,
+                    f_isMuted = false,
+                    f_errorTimes = 0
                 }));
 
             var controller = new AccountController(repo.Object);
@@ -73,7 +74,8 @@ namespace ChatRoom.Server.Tests
                     f_account = "test123",
                     f_password = "123456",
                     f_nickName = "我是測試",
-                    f_state = AccountState.Locked,
+                    f_isLocked = true,
+                    f_isMuted = false,
                     f_errorTimes = 0
                 }));
 
@@ -97,7 +99,8 @@ namespace ChatRoom.Server.Tests
                     f_account = "test123",
                     f_password = "123456",
                     f_nickName = "我是測試",
-                    f_state = AccountState.Locked,
+                    f_isLocked = false,
+                    f_isMuted=false,
                     f_errorTimes = 2
                 }));
 
@@ -121,14 +124,15 @@ namespace ChatRoom.Server.Tests
         {
             var repo = new Mock<IAccountRepository>();
             repo.Setup(p => p.QueryList())
-                .Returns((null, Enumerable.Range(1,10).Select(index => new Account()
+                .Returns((null, Enumerable.Range(1, 10).Select(index => new Account()
                 {
                     f_id = index,
-                    f_account =  $"acc{index}",
+                    f_account = $"acc{index}",
                     f_password = $"pass{index}",
                     f_nickName = $"nick{index}",
-                    f_errorTimes =0,
-                    f_state = AccountState.Normal
+                    f_isLocked=false,
+                    f_isMuted = false,
+                    f_errorTimes = 0,
                 })));
 
             var controller = new AccountController(repo.Object);
