@@ -20,18 +20,13 @@ namespace ChatRoom.Server.Controllers
         }
 
         //取得房間列表-client
-        [HttpPost]
-        [Route("api/Account/GetList")]
-        public HttpResponseMessage Post()
+        [HttpGet]
+        [Route("api/Room/GetRoomList")]
+        public HttpResponseMessage GetRoomList()
         {
             try
             {
                 var queryResult = this.repo.QueryList();
-
-                if (queryResult.exception != null)
-                {
-                    throw queryResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.rooms));
@@ -46,17 +41,12 @@ namespace ChatRoom.Server.Controllers
 
         //新增房間-後台
         [HttpPost]
-        [Route("api/Account/Add")]
-        public HttpResponseMessage Post([FromBody] string input)
+        [Route("api/Room/RoomAdd")]
+        public HttpResponseMessage RoomAdd([FromBody] string input)
         {
             try
             {
                 var addResult = this.repo.Add(input);
-
-                if (addResult.exception != null)
-                {
-                    throw addResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.room));
@@ -72,18 +62,13 @@ namespace ChatRoom.Server.Controllers
 
         //刪除房間-後台
         [HttpDelete]
-        [Route("api/Account/Delete")]
-        public HttpResponseMessage Delete([FromBody] int input)
+        [Route("api/Room/RoomDelete")]
+        public HttpResponseMessage RoomDelete([FromBody] int input)
         {
             try
             {
                 //新增房間
                 var deleteResult = this.repo.Delete(input);
-
-                if (deleteResult.exception != null)
-                {
-                    throw deleteResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.room));

@@ -23,8 +23,8 @@ namespace ChatRoom.Server.Controllers
 
         //註冊帳號 - CLIENT
         [HttpPost]
-        [Route("api/Account/Register")]
-        public HttpResponseMessage Post([FromBody] AccountDto input)
+        [Route("api/Account/AccountRegister")]
+        public HttpResponseMessage AccountRegister([FromBody] AccountDto input)
         {
             try
             {
@@ -34,12 +34,6 @@ namespace ChatRoom.Server.Controllers
                     f_password = input.Password,
                     f_nickName = input.NickName
                 });
-
-                if (addResult.exception != null)
-                {
-                    throw addResult.exception;
-                }
-
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.account));
@@ -56,7 +50,7 @@ namespace ChatRoom.Server.Controllers
         //帳號登入 - CLIENT
         [HttpPost]
         [Route("api/Account/Login")]
-        public HttpResponseMessage Post([FromBody] LoginDto input)
+        public HttpResponseMessage Login([FromBody] LoginDto input)
         {
             try
             {
@@ -65,11 +59,6 @@ namespace ChatRoom.Server.Controllers
                     f_account = input.Account,
                     f_password=input.Password,
                 });
-
-                if (queryResult.exception != null)
-                {
-                    throw queryResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.login));
@@ -84,18 +73,13 @@ namespace ChatRoom.Server.Controllers
         }
 
         //取得帳號清單 - 後台
-        [HttpPost]
-        [Route("api/Account/GetList")]
-        public HttpResponseMessage Post()
+        [HttpGet]
+        [Route("api/Account/GetAccountList")]
+        public HttpResponseMessage GetAccountList()
         {
             try
             {
                 var queryResult = this.repo.QueryList();
-
-                if (queryResult.exception != null)
-                {
-                    throw queryResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.accounts));
@@ -110,17 +94,12 @@ namespace ChatRoom.Server.Controllers
 
         //刪除帳號 -client
         [HttpDelete]
-        [Route("api/Account/Delete")]
-        public HttpResponseMessage Delete(int input)
+        [Route("api/Account/AccountDelete")]
+        public HttpResponseMessage AccountDelete(int input)
         {
             try
             {
                 var deleteResult = this.repo.Delete(input);
-
-                if (deleteResult.exception != null)
-                {
-                    throw deleteResult.exception;
-                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.account));

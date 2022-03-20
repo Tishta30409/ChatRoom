@@ -60,15 +60,7 @@ namespace ChatRoom.Server.Hubs
                 var action = ActionModule.FromString(str);
                 var actionResult = this.ExecuteAction(action);
 
-                if (actionResult.exception != null)
-                {
-                    throw actionResult.exception;
-                }
-
-                if (actionResult.action != null)
-                {
-                    return actionResult.action.ToString();
-                }
+                return actionResult.action.ToString();
             }
             catch (Exception ex)
             {
@@ -90,11 +82,6 @@ namespace ChatRoom.Server.Hubs
 
                 var action = ActionModule.FromString(str);
                 var actionResult = this.ExecuteAction(action);
-
-                if (actionResult.exception != null)
-                {
-                    throw actionResult.exception;
-                }
 
                 if (actionResult.action != null)
                 {
@@ -118,11 +105,6 @@ namespace ChatRoom.Server.Hubs
                     if (handlerSets.TryGetValue(action.Action.ToLower(), out var actionHandler))
                     {
                         var excuteResult = actionHandler.ExecuteAction(action);
-
-                        if (excuteResult.exception != null)
-                        {
-                            throw excuteResult.exception;
-                        }
 
                         var actionResult = new ActionModule()
                         {

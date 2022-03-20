@@ -23,7 +23,7 @@ namespace ChatRoom.Server.Tests
                 .Returns((null, new Account() { f_account = "test123", f_password = "123456", f_nickName = "我是測試" }));
 
             var controller = new AccountController(repo.Object);
-            var postRsult = controller.Post(new AccountDto()
+            var postRsult = controller.AccountRegister(new AccountDto()
             {
                 Account = "test123",
                 Password = "123456",
@@ -42,80 +42,95 @@ namespace ChatRoom.Server.Tests
             var repo = new Mock<IAccountRepository>();
 
             // 一般登入
-            repo.Setup(p => p.Query("test123"))
-                .Returns((null, new Account()
+            repo.Setup(p => p.Login(It.IsAny<Login>()))
+                .Returns((null, new Login()
                 {
-                    f_account = "test123",
-                    f_password = "123456",
-                    f_nickName = "我是測試",
-                    f_isLocked = false,
-                    f_isMuted = false,
-                    f_errorTimes = 0
+                   resultCode = AccountResult.SUCCESS,
+                   data = new Account()
+                   {
+                       f_account = "test123",
+                       f_password = "123456",
+                       f_errorTimes = 0,
+                       f_nickName = "test123",
+                       f_id = 1,
+                       f_isLocked = false,
+                       f_isMuted = false,
+                   }
                 }));
 
             var controller = new AccountController(repo.Object);
-            var postRsult = controller.Post(new LoginDto()
+            var postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
                 Password = "123456",
             });
 
-            var result = JsonConvert.DeserializeObject<LoginDto>(postRsult.Content.ReadAsStringAsync().Result);
+            var result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.result, AccountResult.SUCCESS);
+            Assert.AreEqual(result.resultCode, AccountResult.SUCCESS);
 
 
             //帳號鎖定
-            repo.Setup(p => p.Query("test123"))
-                .Returns((null, new Account()
-                {
-                    f_account = "test123",
-                    f_password = "123456",
-                    f_nickName = "我是測試",
-                    f_isLocked = true,
-                    f_isMuted = false,
-                    f_errorTimes = 0
-                }));
+            repo.Setup(p => p.Login(It.IsAny<Login>()))
+               .Returns((null, new Login()
+               {
+                   resultCode = AccountResult.ACCOUNT_LOCKED,
+                   data = new Account()
+                   {
+                       f_account = "test123",
+                       f_password = "123456",
+                       f_errorTimes = 0,
+                       f_nickName = "test123",
+                       f_id = 1,
+                       f_isLocked = false,
+                       f_isMuted = false,
+                   }
+               }));
 
             controller = new AccountController(repo.Object);
-            postRsult = controller.Post(new LoginDto()
+            postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
                 Password = "123456",
             });
 
-            result = JsonConvert.DeserializeObject<LoginDto>(postRsult.Content.ReadAsStringAsync().Result);
+            result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.result, AccountResult.ACCOUNT_LOCKED);
+            Assert.AreEqual(result.resultCode, AccountResult.ACCOUNT_LOCKED);
 
-            // 錯誤兩次
-            repo.Setup(p => p.Query("test123"))
-                .Returns((null, new Account()
-                {
-                    f_account = "test123",
-                    f_password = "123456",
-                    f_nickName = "我是測試",
-                    f_isLocked = false,
-                    f_isMuted=false,
-                    f_errorTimes = 2
-                }));
+            // 密碼錯誤
+            repo.Setup(p => p.Login(It.IsAny<Login>()))
+               .Returns((null, new Login()
+               {
+                   resultCode = AccountResult.WORNG_PASSWORD,
+                   data = new Account()
+                   {
+                       f_account = "test123",
+                       f_password = "123456",
+                       f_errorTimes = 0,
+                       f_nickName = "test123",
+                       f_id = 1,
+                       f_isLocked = false,
+                       f_isMuted = false,
+                   }
+               }));
 
             controller = new AccountController(repo.Object);
-            postRsult = controller.Post(new LoginDto()
+            postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
                 Password = "123457",
             });
 
-            result = JsonConvert.DeserializeObject<LoginDto>(postRsult.Content.ReadAsStringAsync().Result);
+            result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.result, AccountResult.ACCOUNT_LOCKED);
+            Assert.AreEqual(result.resultCode, AccountResult.WORNG_PASSWORD);
 
         }
 
@@ -136,7 +151,7 @@ namespace ChatRoom.Server.Tests
                 })));
 
             var controller = new AccountController(repo.Object);
-            var postRsult = controller.Post();
+            var postRsult = controller.GetAccountList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Account>>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
@@ -151,7 +166,7 @@ namespace ChatRoom.Server.Tests
                 .Returns((null, new Account() { f_account = "test123", f_password = "123456", f_nickName = "我是測試" }));
 
             var controller = new AccountController(repo.Object);
-            var postRsult = controller.Delete(1);
+            var postRsult = controller.AccountDelete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 

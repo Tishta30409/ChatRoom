@@ -49,6 +49,7 @@ namespace ChatRoom.Persistent.Tests
         [TestMethod]
         public void 登入帳號測試()
         {
+            //正常登入
             var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
 
             Assert.IsNull(addResult.exception);
@@ -60,6 +61,49 @@ namespace ChatRoom.Persistent.Tests
             var loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123456" });
             Assert.IsNull(loginResult.exception);
             Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.SUCCESS);
+
+            //錯誤一次
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123457" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.WORNG_PASSWORD);
+            Assert.AreEqual(loginResult.login.data.f_errorTimes, 1);
+
+            //正常登入 清空錯誤
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123456" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.SUCCESS);
+            Assert.AreEqual(loginResult.login.data.f_errorTimes, 0);
+
+            //錯誤一次
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123457" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.WORNG_PASSWORD);
+            Assert.AreEqual(loginResult.login.data.f_errorTimes, 1);
+
+            //錯誤二次
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123457" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.WORNG_PASSWORD);
+            Assert.AreEqual(loginResult.login.data.f_errorTimes, 2);
+
+            //錯誤三次
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123457" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.WORNG_PASSWORD);
+            Assert.AreEqual(loginResult.login.data.f_errorTimes, 3);
+
+            //帳號鎖定
+            loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123456" });
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.login);
+            Assert.AreEqual(loginResult.login.resultCode, AccountResult.ACCOUNT_LOCKED);
+
 
         }
 

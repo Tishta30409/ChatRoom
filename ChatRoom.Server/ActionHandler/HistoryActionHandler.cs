@@ -33,11 +33,6 @@ namespace ChatRoom.Server.ActionHandler
                         f_createDateTime = DateTime.Now,
                     });
 
-                if (addResult.exception != null)
-                {
-                    throw addResult.exception;
-                }
-
                 //沒問題就廣播給所有連線
                 var actionResult = new HistoryAction()
                 {

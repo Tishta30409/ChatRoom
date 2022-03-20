@@ -22,7 +22,7 @@ namespace ChatRoom.Server.Tests.Controllers
                 .Returns((null, new Room() { f_roomName = "room001" }));
 
             var controller = new RoomController(repo.Object);
-            var postRsult = controller.Post("room001");
+            var postRsult = controller.RoomAdd("room001");
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
@@ -38,7 +38,7 @@ namespace ChatRoom.Server.Tests.Controllers
                 .Returns((null, new Room() { f_roomName = "room001" }));
 
             var controller = new RoomController(repo.Object);
-            var postRsult = controller.Delete(1);
+            var postRsult = controller.RoomDelete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
@@ -58,7 +58,7 @@ namespace ChatRoom.Server.Tests.Controllers
                 })));
 
             var controller = new RoomController(repo.Object);
-            var postRsult = controller.Post();
+            var postRsult = controller.GetRoomList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Room>>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);

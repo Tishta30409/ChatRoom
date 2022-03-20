@@ -25,7 +25,7 @@ AS
 
 	--撈出會員資料
 	INSERT INTO #accountTemp 
-	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE @account = f_account 
+	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE f_account =  @account
 
 	DECLARE @resultCode TINYINT
  
@@ -34,7 +34,7 @@ AS
 		SELECT top 1 1  FROM #accountTemp
     )
 	BEGIN
-		DECLARE @tempPassword  VARCHAR = (SELECT f_password FROM #accountTemp)
+		DECLARE @tempPassword  VARCHAR(40) = (SELECT f_password FROM #accountTemp)
 		DECLARE @isLocked TINYINT = (SELECT f_isLocked FROM #accountTemp)
 		DECLARE @errorTimes TINYINT = (SELECT f_errorTimes FROM #accountTemp)
 		DECLARE @guid UNIQUEIDENTIFIER = NEWID()
@@ -59,12 +59,13 @@ AS
 			SET @resultCode = 0
 			SET @errorTimes = 0
 		END
+
 		--更新資料
 		UPDATE t_account SET f_isLocked = @isLocked, f_errorTimes = @errorTimes, f_GUID = @guid WHERE f_account = @account 
 
 		--輸出結果
-	SELECT @resultCode
-	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE @account = f_account  
+		SELECT @resultCode
+		SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE f_account =  @account
 	END
 	ELSE
 	BEGIN

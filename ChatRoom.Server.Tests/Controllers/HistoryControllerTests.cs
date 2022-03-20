@@ -29,7 +29,7 @@ namespace ChatRoom.Server.Tests.Controllers
                 })));
 
             var controller = new HistoryController(repo.Object);
-            var postRsult = controller.Post(1);
+            var postRsult = controller.GetHistoryList(1);
             var result = JsonConvert.DeserializeObject<IEnumerable<History>>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
