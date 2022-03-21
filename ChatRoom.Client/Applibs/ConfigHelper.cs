@@ -9,5 +9,11 @@ namespace ChatRoom.Client.Applibs
             get
                 => $"http://{ConfigurationManager.AppSettings["SignalrUrl"]}:8085/signalr";
         }
+
+        public static string ServiceUrl
+        {
+            get
+                => $"http://{ConfigurationManager.AppSettings["ServiceUrl"]}:8085";
+        }
     }
 }

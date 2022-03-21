@@ -1,4 +1,5 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Hubs;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Controllers;
@@ -21,8 +22,11 @@ namespace ChatRoom.Server.Tests
             var repo = new Mock<IAccountRepository>();
             repo.Setup(p => p.Add(It.IsAny<Account>()))
                 .Returns((null, new Account() { f_account = "test123", f_password = "123456", f_nickName = "我是測試" }));
+            
+            //模擬廣播 TODO
+            var hub = new Mock<IHubClient>();
 
-            var controller = new AccountController(repo.Object);
+            var controller = new AccountController(repo.Object, hub.Object);
             var postRsult = controller.AccountRegister(new AccountDto()
             {
                 Account = "test123",
@@ -58,7 +62,10 @@ namespace ChatRoom.Server.Tests
                    }
                 }));
 
-            var controller = new AccountController(repo.Object);
+            //模擬廣播 TODO
+            var hub = new Mock<IHubClient>();
+
+            var controller = new AccountController(repo.Object, hub.Object);
             var postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -89,7 +96,7 @@ namespace ChatRoom.Server.Tests
                    }
                }));
 
-            controller = new AccountController(repo.Object);
+            controller = new AccountController(repo.Object, hub.Object);
             postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -119,7 +126,7 @@ namespace ChatRoom.Server.Tests
                    }
                }));
 
-            controller = new AccountController(repo.Object);
+            controller = new AccountController(repo.Object, hub.Object);
             postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -150,7 +157,10 @@ namespace ChatRoom.Server.Tests
                     f_errorTimes = 0,
                 })));
 
-            var controller = new AccountController(repo.Object);
+            //模擬廣播 TODO
+            var hub = new Mock<IHubClient>();
+
+            var controller = new AccountController(repo.Object, hub.Object);
             var postRsult = controller.GetAccountList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Account>>(postRsult.Content.ReadAsStringAsync().Result);
 
@@ -165,7 +175,10 @@ namespace ChatRoom.Server.Tests
             repo.Setup(p => p.Delete(1))
                 .Returns((null, new Account() { f_account = "test123", f_password = "123456", f_nickName = "我是測試" }));
 
-            var controller = new AccountController(repo.Object);
+            //模擬廣播 TODO
+            var hub = new Mock<IHubClient>();
+
+            var controller = new AccountController(repo.Object, hub.Object);
             var postRsult = controller.AccountDelete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);

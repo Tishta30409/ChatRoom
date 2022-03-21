@@ -39,7 +39,6 @@ namespace ChatRoom.Server.Tests.ActionHandler
 
             Assert.IsNull(result.exception);
             Assert.IsNotNull(result.actionBase);
-
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ChatRoom.Domain.Hubs
     public interface IHubClient
     {
         /// <summary>
-        /// 廣撥用
+        /// 廣播用
         /// </summary>
         void BroadCastAction<A>(A act)
             where A : ActionBase;

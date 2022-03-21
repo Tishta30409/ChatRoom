@@ -1,4 +1,7 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Action;
+using ChatRoom.Domain.Hubs;
+using ChatRoom.Domain.KeepAliveConn;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
@@ -16,9 +19,12 @@ namespace ChatRoom.Server.Controllers
 
         private IAccountRepository repo;
 
-        public AccountController(IAccountRepository repo)
+        private IHubClient hub;
+
+        public AccountController(IAccountRepository repo, IHubClient hub)
         {
             this.repo = repo;
+            this.hub = hub;
         }
 
         //註冊帳號 - CLIENT
@@ -59,6 +65,17 @@ namespace ChatRoom.Server.Controllers
                     f_account = input.Account,
                     f_password=input.Password,
                 });
+
+
+                //如果登入成功才廣播訊息
+                if (queryResult.login.resultCode == AccountResult.SUCCESS)
+                {
+                    this.hub.BroadCastAction(new CheckConnectStateAction()
+                    {
+                        Account = queryResult.login.data.f_account,
+                        GUID = queryResult.login.data.f_guid
+                    });
+                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.login));

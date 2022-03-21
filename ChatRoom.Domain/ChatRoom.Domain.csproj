@@ -49,26 +49,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\CheckConnectStateAction.cs" />
     <Compile Include="Action\HistoryAction.cs" />
     <Compile Include="Hubs\IHubClient.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
-    <Compile Include="Model\ConsoleWrapper.cs" />
+    <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />
+    <Compile Include="Model\ConsoleWrapper\IConsoleWrapper.cs" />
     <Compile Include="Model\DataObj\Account.cs" />
     <Compile Include="Model\DataObj\AccountDto.cs" />
     <Compile Include="Model\DataObj\History.cs" />
     <Compile Include="Model\DataObj\Login.cs" />
     <Compile Include="Model\DataObj\LoginDto.cs" />
     <Compile Include="Model\DataObj\Room.cs" />
-    <Compile Include="Model\IConsoleWrapper.cs" />
+    <Compile Include="Model\EnumDisplayAttribute.cs" />
+    <Compile Include="Model\Process\IMainProcess.cs" />
+    <Compile Include="Model\Process\IProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRoomRepository.cs" />
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\IHistoryRepository.cs" />
+    <Compile Include="Service\RoomService.cs" />
+    <Compile Include="Service\HistoryService.cs" />
+    <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\IHistoryService.cs" />
+    <Compile Include="Service\IRoomService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

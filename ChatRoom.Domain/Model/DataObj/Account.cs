@@ -1,4 +1,6 @@
-﻿namespace ChatRoom.Domain.Model
+﻿using System;
+
+namespace ChatRoom.Domain.Model
 {
     public class Account
     {
@@ -24,6 +26,10 @@
         public bool f_isLocked { get; set; }
 
         public byte f_errorTimes { get; set; }
+
+        public Guid f_guid { get; set; }
+
+        public int f_roomID { get; set; }
 
     }
 }

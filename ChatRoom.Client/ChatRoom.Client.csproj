@@ -79,6 +79,11 @@
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />
     <Compile Include="Model\IActionHandler.cs" />
+    <Compile Include="Model\Process\ChatRoomProcess.cs" />
+    <Compile Include="Model\Process\MainProcess\LeaveMainProcess.cs" />
+    <Compile Include="Model\Process\LobbyProcess.cs" />
+    <Compile Include="Model\Process\MainProcess\RegisterMainProcess.cs" />
+    <Compile Include="Model\Process\MainProcess\LoginMainProcess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signalr\HubClient.cs" />
@@ -88,10 +93,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ChatRoom.Domain\ChatRoom.Domain.csproj">
-      <Project>{8899A6D7-E7EF-41E9-A1F8-BF2D4C3628E6}</Project>
+      <Project>{8899a6d7-e7ef-41e9-a1f8-bf2d4c3628e6}</Project>
       <Name>ChatRoom.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChatRoom.Persistent\ChatRoom.Persistent.csproj">
@@ -99,7 +103,7 @@
       <Name>ChatRoom.Persistent</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChatRoom.Server\ChatRoom.Server.csproj">
-      <Project>{F6F99581-66B5-4EDD-A559-23F31F1543D0}</Project>
+      <Project>{f6f99581-66b5-4edd-a559-23f31f1543d0}</Project>
       <Name>ChatRoom.Server</Name>
     </ProjectReference>
   </ItemGroup>
