@@ -7,11 +7,19 @@ namespace ChatRoom.Domain.Service
 {
     public interface IAccountService
     {
-        (Exception exception, Login login) Login(LoginDto login);
 
-        (Exception exception, Account account) Add(Account account);
-
+         /// <summary>
+        /// 後臺使用 解禁言
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         (Exception exception, Account account) Update(Account account);
+
+        (Exception exception, AccountResult result) Login(LoginDto login);
+
+        (Exception exception, AccountResult result) Register(AccountDto account);
+
+       
 
         (Exception exception, Account account) Query(string account);
 

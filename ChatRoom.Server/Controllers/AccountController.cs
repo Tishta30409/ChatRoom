@@ -1,4 +1,5 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Action;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Hubs;
@@ -41,7 +42,7 @@ namespace ChatRoom.Server.Controllers
                 });
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.account));
+                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.result));
                 return result;
 
             }
@@ -67,23 +68,43 @@ namespace ChatRoom.Server.Controllers
 
 
                 //如果登入成功才廣播訊息
-                //if (queryResult.login.resultCode == AccountResult.SUCCESS)
-                //{
-                //    this.hub.BroadCastAction(new CheckConnectStateAction()
-                //    {
-                //        Account = queryResult.login.data.f_account,
-                //        GUID = queryResult.login.data.f_guid
-                //    });
-                //}
+                if (queryResult.result.resultCode == ResultCode.SUCCESS)
+                {
+                    this.hub.BroadCastAction(new CheckConnectStateAction()
+                    {
+                        Account = queryResult.result.account.f_account,
+                        GUID = queryResult.result.account.f_guid
+                    });
+                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.login));
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.result));
 
                 return result;
             }
             catch (Exception ex)
             {
                 this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{input.ToString()}");
+                return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        //更新帳號 - 後台
+        [HttpPut]
+        [Route("api/Account/Update")]
+        public HttpResponseMessage Update([FromBody] Account account)
+        {
+            try
+            {
+                var queryResult = this.repo.Update(account);
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.account));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request");
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }

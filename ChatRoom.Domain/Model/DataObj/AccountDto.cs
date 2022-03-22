@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ChatRoom.Domain.Repository;
+using Newtonsoft.Json;
 
 namespace ChatRoom.Domain.Model.DataObj
 {

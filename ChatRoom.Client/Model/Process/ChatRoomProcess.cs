@@ -1,23 +1,34 @@
-﻿using ChatRoom.Domain.Model.Process;
+﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.Process;
+using ChatRoom.Domain.Service;
 using System;
 
 namespace ChatRoom.Client.Model.Process
 {
     public class ChatRoomProcess : IProcess
     {
-        public ChatRoomProcess()
+
+        IHistoryService historySvc;
+
+        IConsoleWrapper console;
+
+        public ChatRoomProcess(IHistoryService historySvc, IConsoleWrapper console)
         {
+            this.historySvc = historySvc;
+            this.console = console;
         }
 
-        public bool Execute()
+        public ProcessViewType Execute()
         {
             try
             {
-                return false;
+                this.console.WriteLine("聊天室介面");
+                this.console.Read();
+                return ProcessViewType.Lobby;
             }
             catch (Exception)
             {
-                return false;
+                return ProcessViewType.Lobby;
             }
         }
     }

@@ -8,6 +8,6 @@
 
     public interface IProcess
     {
-        bool Execute();
+        ProcessViewType Execute();
     }
 }

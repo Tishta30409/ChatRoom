@@ -24,7 +24,7 @@ namespace ChatRoom.Domain.Service
         /// 列出所有的房間
         /// </summary>
         /// <returns></returns>
-        (Exception exception, IEnumerable<Room> rooms) QueryList();
+        (Exception exception, IEnumerable<Room> rooms) GetList();
 
         /// <summary>
         /// 刪除房間 同時會刪除歷史資料

@@ -78,9 +78,9 @@
   <ItemGroup>
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />
+    <Compile Include="Model\LoginUserData.cs" />
     <Compile Include="Model\IActionHandler.cs" />
     <Compile Include="Model\Process\ChatRoomProcess.cs" />
-    <Compile Include="Model\Process\MainProcess\LeaveMainProcess.cs" />
     <Compile Include="Model\Process\LobbyProcess.cs" />
     <Compile Include="Model\Process\MainProcess\RegisterMainProcess.cs" />
     <Compile Include="Model\Process\MainProcess\LoginMainProcess.cs" />

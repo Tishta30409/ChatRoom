@@ -12,6 +12,7 @@ namespace ChatRoom.Client
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             var console = Applibs.AutofacConfig.Container.Resolve<IConsoleWrapper>();
@@ -20,7 +21,6 @@ namespace ChatRoom.Client
             {
                 MainProcessType.Login,
                 MainProcessType.Register,
-                MainProcessType.Leave
             };
 
             var legalTypesFormat = legalTypes.Select(t => $"{((int)t)}");
@@ -42,7 +42,9 @@ namespace ChatRoom.Client
                 console.WriteLine("Connect Success");
                 console.Read();
 
-                var processSets = Applibs.AutofacConfig.Container.Resolve<IIndex<MainProcessType, IMainProcess>>();
+                var mainProcessSets = Applibs.AutofacConfig.Container.Resolve<IIndex<MainProcessType, IMainProcess>>();
+
+                var processSets = Applibs.AutofacConfig.Container.Resolve<IIndex<ProcessType, IProcess>>();
 
                 string cmd = string.Empty;
 
@@ -54,19 +56,36 @@ namespace ChatRoom.Client
 
                     console.WriteLine(string.Join("\r\n", legalTypesDisplay));
 
+                    console.WriteLine("或是輸入exit離開");
+
                     cmd = console.ReadLine();
 
-                    //處理第一層業
-                    if (legalTypesFormat.Any(p => p == cmd) &&
-                            processSets.TryGetValue((MainProcessType)Convert.ToInt32(cmd), out IMainProcess process) &&
-                            !process.Execute())
+                    if (legalTypesFormat.Any(p => p == cmd) && mainProcessSets.TryGetValue((MainProcessType)Convert.ToInt32(cmd), out IMainProcess mainProcess) )
                     {
+                        ProcessViewType view = mainProcess.Execute();
 
-                        console.Clear();
-                        console.WriteLine("Finished!");
-                        console.Read();
+                        while (view != ProcessViewType.Main)
+                        {
+                            switch (view)
+                            {
+                                case ProcessViewType.Lobby:
+                                    {
+                                        processSets.TryGetValue(ProcessType.Lobby, out IProcess lobbyProcess);
+                                        view = lobbyProcess.Execute();
+                                    }
+                                    break;
+                                case ProcessViewType.ChatRoom:
+                                    processSets.TryGetValue(ProcessType.ChatRoom, out IProcess chatRoomProcess);
+                                    view = chatRoomProcess.Execute();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
+                //離開聊天室 記得要斷線
+                console.Read();
             }
             catch (Exception ex)
             {

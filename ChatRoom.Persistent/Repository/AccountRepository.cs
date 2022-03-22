@@ -21,7 +21,7 @@ namespace ChatRoom.Persistent.Repository
             this.connectionString = connectionString;
         }
 
-        public (Exception exception, Login login) Login(Login login)
+        public (Exception exception, AccountResult result) Login(Login login)
         {
             try
             {
@@ -40,12 +40,12 @@ namespace ChatRoom.Persistent.Repository
                         );
 
                     
-                    var resultCode = result.ReadFirstOrDefault<AccountResult>();
+                    var resultCode = result.ReadFirstOrDefault<ResultCode>();
                     var resultData = result.ReadFirstOrDefault<Account>();
                     //var resultData = result.Read();
                     
 
-                    return (null, new Login() { resultCode = resultCode, data = resultData });
+                    return (null, new AccountResult() { resultCode = resultCode, account = resultData });
 
                 }
             }
@@ -55,13 +55,13 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
-        public (Exception exception, Account account) Add(Account account)
+        public (Exception exception, AccountResult result) Add(Account account)
         {
             try
             {
                 using (var cn = new SqlConnection(this.connectionString))
                 {
-                    var result = cn.QueryFirstOrDefault<Account>(
+                    var result = cn.QueryMultiple(
                         "pro_accountAdd",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
@@ -72,7 +72,10 @@ namespace ChatRoom.Persistent.Repository
                         },
                         commandType: CommandType.StoredProcedure);
 
-                    return (null, result);
+                    var resultCode = result.ReadFirstOrDefault<ResultCode>();
+                    var resultData = result.ReadFirstOrDefault<Account>();
+
+                    return (null, new AccountResult() { resultCode = resultCode, account = resultData });
                 }
             }
             catch (Exception ex)

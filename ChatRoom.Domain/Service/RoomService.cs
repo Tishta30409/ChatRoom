@@ -30,7 +30,16 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return ((null, null));
+                var content = new StringContent(JsonConvert.SerializeObject(roomName), Encoding.UTF8, "application/json");
+                var response = this.client.PostAsync(this.route + "/Add", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Room>(result)));
             }
             catch (Exception ex)
             {
@@ -50,11 +59,19 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, IEnumerable<Room> rooms) QueryList()
+        public (Exception exception, IEnumerable<Room> rooms) GetList()
         {
             try
             {
-                return (null, null);
+                var response = this.client.GetAsync(this.route + "/GetList").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<IEnumerable<Room>>(result)));
             }
             catch (Exception ex)
             {

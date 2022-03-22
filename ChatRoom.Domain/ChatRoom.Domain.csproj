@@ -60,8 +60,10 @@
     <Compile Include="Model\DataObj\History.cs" />
     <Compile Include="Model\DataObj\Login.cs" />
     <Compile Include="Model\DataObj\LoginDto.cs" />
+    <Compile Include="Model\DataObj\AccountResult.cs" />
     <Compile Include="Model\DataObj\Room.cs" />
     <Compile Include="Model\EnumDisplayAttribute.cs" />
+    <Compile Include="Model\Process\IBackStageProcess.cs" />
     <Compile Include="Model\Process\IMainProcess.cs" />
     <Compile Include="Model\Process\IProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

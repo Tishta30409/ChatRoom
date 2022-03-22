@@ -26,12 +26,12 @@ namespace ChatRoom.Domain.Service
             };
         }
 
-        public (Exception exception, Login login) Login(LoginDto login)
+        public (Exception exception, AccountResult result) Login(LoginDto login)
         {
             try
             {
                 var content = new StringContent(login.ToString(), Encoding.UTF8, "application/json");
-                var response = this.client.PostAsync(this.route, content).Result;
+                var response = this.client.PostAsync(this.route + "/Login", content).Result;
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -39,7 +39,7 @@ namespace ChatRoom.Domain.Service
                 }
 
                 var result = response.Content.ReadAsStringAsync().Result;
-                return ((null, JsonConvert.DeserializeObject<Login>(result)));
+                return ((null, JsonConvert.DeserializeObject<AccountResult>(result)));
             }
             catch (Exception ex)
             {
@@ -47,22 +47,20 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, Account account) Add(Account account)
+        public (Exception exception, AccountResult result) Register(AccountDto account)
         {
-            var content = new StringContent(account.ToString(), Encoding.UTF8, "application/json");
-            var response = this.client.PostAsync(this.route, content).Result;
-
-            if(!response.IsSuccessStatusCode)
-                {
-                throw new Exception(response.Content.ReadAsStringAsync().Result);
-            }
-
-            var result = response.Content.ReadAsStringAsync().Result;
-            return ((null, JsonConvert.DeserializeObject<Account>(result)));
-
             try
             {
-                return (null, null);
+                var content = new StringContent(JsonConvert.SerializeObject(account), Encoding.UTF8, "application/json");
+                var response = this.client.PostAsync(this.route + "/Register", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<AccountResult>(result)));
             }
             catch (Exception ex)
             {
@@ -74,7 +72,16 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return (null, null);
+                var content = new StringContent(JsonConvert.SerializeObject(account), Encoding.UTF8, "application/json");
+                var response = this.client.PutAsync(this.route + "/Update", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Account>(result)));
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Service;
 using System;
@@ -18,12 +19,12 @@ namespace ChatRoom.Client.Model.Process
             this.console = console;
         }
 
-        public bool Execute()
+        public ProcessViewType Execute()
         {
             try
             {
                 this.console.Clear();
-                this.console.WriteLine("註冊畫面:\n");
+                this.console.Write("註冊畫面:\n");
 
 
                 string pattern = @"^[a-zA-Z0-9]*$";
@@ -45,7 +46,7 @@ namespace ChatRoom.Client.Model.Process
                 string passwordSecond = string.Empty;
 
                 while (
-                    passwordFirst == passwordSecond ||
+                    passwordFirst != passwordSecond ||
                     passwordFirst == string.Empty ||
                     passwordFirst.Length > 20 ||
                     !Regex.IsMatch(passwordFirst, pattern)
@@ -54,6 +55,7 @@ namespace ChatRoom.Client.Model.Process
                     ConsoleKeyInfo key = Console.ReadKey(true);
 
                     this.console.Write("請輸入密碼:\n");
+                    passwordFirst = string.Empty;
                     while (true)
                     {
                         //儲存使用者輸入的按鍵，並且在輸入的位置不顯示字元
@@ -83,6 +85,7 @@ namespace ChatRoom.Client.Model.Process
                     }
 
                     this.console.Write("請再次輸入密碼:\n");
+                    passwordSecond = string.Empty;
                     while (true)
                     {
                         //儲存使用者輸入的按鍵，並且在輸入的位置不顯示字元
@@ -111,18 +114,42 @@ namespace ChatRoom.Client.Model.Process
                         }
                     }
 
-                    this.console.WriteLine($"{ Regex.IsMatch(account, pattern) }");
-                    this.console.WriteLine($"{ Regex.IsMatch(passwordFirst, pattern) }");
-                    this.console.WriteLine($"{ Regex.IsMatch(passwordSecond, pattern) }");
+                    this.console.WriteLine($"passwordFirst:{passwordFirst}");
+                    this.console.WriteLine($"passwordFirst:{passwordFirst.Length}");
+                    this.console.WriteLine($"passwordSecond:{passwordSecond}");
+                    this.console.WriteLine($"passwordSecond:{passwordSecond.Length}");
+
                 }
 
-                var result = this.accountSvc.Add(new Account()
+                string nickName = string.Empty;
+
+                while (
+                    nickName == string.Empty ||
+                    nickName.Length > 10
+                )
                 {
-                    f_account = account,
-                    f_password = passwordFirst
+                    this.console.Write("請輸入暱稱:\n");
+                    nickName = this.console.ReadLine();
+                }
+
+
+                var result = this.accountSvc.Register(new AccountDto()
+                {
+                    Account = account,
+                    Password = passwordFirst,
+                    NickName = nickName
                 });
 
-                return true;
+                if(result.result == null)
+                {
+                    this.console.Write("註冊失敗:\n");
+                }
+                else
+                {
+                    this.console.Write("註冊成功:\n");
+                }
+
+                return ProcessViewType.Main;
             }
             catch (Exception ex)
             {
@@ -130,7 +157,7 @@ namespace ChatRoom.Client.Model.Process
                 this.console.WriteLine(ex.Message);
                 this.console.Read();
 
-                return false;
+                return ProcessViewType.Main;
             }
         }
     }

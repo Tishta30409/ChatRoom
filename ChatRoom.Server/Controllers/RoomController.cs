@@ -1,4 +1,5 @@
-﻿using ChatRoom.Domain.Repository;
+﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -21,8 +22,8 @@ namespace ChatRoom.Server.Controllers
 
         //取得房間列表-client
         [HttpGet]
-        [Route("api/Room/GetRoomList")]
-        public HttpResponseMessage GetRoomList()
+        [Route("api/Room/GetList")]
+        public HttpResponseMessage GetList()
         {
             try
             {
@@ -41,8 +42,8 @@ namespace ChatRoom.Server.Controllers
 
         //新增房間-後台
         [HttpPost]
-        [Route("api/Room/RoomAdd")]
-        public HttpResponseMessage RoomAdd([FromBody] string input)
+        [Route("api/Room/Add")]
+        public HttpResponseMessage Add([FromBody] string input)
         {
             try
             {
@@ -58,12 +59,31 @@ namespace ChatRoom.Server.Controllers
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+        [HttpPut]
+        [Route("api/Room/Update")]
+        public HttpResponseMessage Update([FromBody] Room room)
+        {
+            try
+            {
+                var addResult = this.repo.Update(room);
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.room));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request");
+                return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
 
 
         //刪除房間-後台
         [HttpDelete]
-        [Route("api/Room/RoomDelete")]
-        public HttpResponseMessage RoomDelete([FromBody] int input)
+        [Route("api/Room/Delete")]
+        public HttpResponseMessage Delete([FromBody] int input)
         {
             try
             {
