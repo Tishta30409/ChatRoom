@@ -43,7 +43,7 @@ namespace ChatRoom.Persistent.Repository
                     var resultCode = result.ReadFirstOrDefault<AccountResult>();
                     var resultData = result.ReadFirstOrDefault<Account>();
                     //var resultData = result.Read();
-
+                    
 
                     return (null, new Login() { resultCode = resultCode, data = resultData });
 

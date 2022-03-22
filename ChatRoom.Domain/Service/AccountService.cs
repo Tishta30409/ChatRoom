@@ -49,6 +49,17 @@ namespace ChatRoom.Domain.Service
 
         public (Exception exception, Account account) Add(Account account)
         {
+            var content = new StringContent(account.ToString(), Encoding.UTF8, "application/json");
+            var response = this.client.PostAsync(this.route, content).Result;
+
+            if(!response.IsSuccessStatusCode)
+                {
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
+            }
+
+            var result = response.Content.ReadAsStringAsync().Result;
+            return ((null, JsonConvert.DeserializeObject<Account>(result)));
+
             try
             {
                 return (null, null);

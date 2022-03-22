@@ -29,18 +29,18 @@ namespace ChatRoom.Client
             try
             {
                 //連線
-                //var hubClient = Applibs.AutofacConfig.Container.Resolve<IHubClient>();
-                //hubClient.StartAsync();
+                var hubClient = Applibs.AutofacConfig.Container.Resolve<IHubClient>();
+                hubClient.StartAsync();
 
-                //while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
-                //{
-                //    console.Clear();
-                //    console.WriteLine($"HubClient State:{hubClient.State}...");
-                //}
+                while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
+                {
+                    console.Clear();
+                    console.WriteLine($"HubClient State:{hubClient.State}...");
+                }
 
 
-                //console.WriteLine("Connect Success");
-                //console.Read();
+                console.WriteLine("Connect Success");
+                console.Read();
 
                 var processSets = Applibs.AutofacConfig.Container.Resolve<IIndex<MainProcessType, IMainProcess>>();
 
