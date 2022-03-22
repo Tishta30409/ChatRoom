@@ -1,9 +1,7 @@
-﻿using ChatRoom.Domain.Action;
-using ChatRoom.Domain.Hubs;
-using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
+using ChatRoom.Server.Hubs;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -24,13 +22,14 @@ namespace ChatRoom.Server.Controllers
         public AccountController(IAccountRepository repo, IHubClient hub)
         {
             this.repo = repo;
+
             this.hub = hub;
         }
 
         //註冊帳號 - CLIENT
         [HttpPost]
-        [Route("api/Account/AccountRegister")]
-        public HttpResponseMessage AccountRegister([FromBody] AccountDto input)
+        [Route("api/Account/Register")]
+        public HttpResponseMessage Register([FromBody] AccountDto input)
         {
             try
             {
@@ -44,7 +43,7 @@ namespace ChatRoom.Server.Controllers
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.account));
                 return result;
-               
+
             }
             catch (Exception ex)
             {
@@ -63,19 +62,19 @@ namespace ChatRoom.Server.Controllers
                 var queryResult = this.repo.Login(new Login()
                 {
                     f_account = input.Account,
-                    f_password=input.Password,
+                    f_password = input.Password,
                 });
 
 
                 //如果登入成功才廣播訊息
-                if (queryResult.login.resultCode == AccountResult.SUCCESS)
-                {
-                    this.hub.BroadCastAction(new CheckConnectStateAction()
-                    {
-                        Account = queryResult.login.data.f_account,
-                        GUID = queryResult.login.data.f_guid
-                    });
-                }
+                //if (queryResult.login.resultCode == AccountResult.SUCCESS)
+                //{
+                //    this.hub.BroadCastAction(new CheckConnectStateAction()
+                //    {
+                //        Account = queryResult.login.data.f_account,
+                //        GUID = queryResult.login.data.f_guid
+                //    });
+                //}
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.login));
@@ -91,8 +90,8 @@ namespace ChatRoom.Server.Controllers
 
         //取得帳號清單 - 後台
         [HttpGet]
-        [Route("api/Account/GetAccountList")]
-        public HttpResponseMessage GetAccountList()
+        [Route("api/Account/GetList")]
+        public HttpResponseMessage GetList()
         {
             try
             {
@@ -111,8 +110,8 @@ namespace ChatRoom.Server.Controllers
 
         //刪除帳號 -client
         [HttpDelete]
-        [Route("api/Account/AccountDelete")]
-        public HttpResponseMessage AccountDelete(int input)
+        [Route("api/Account/Delete")]
+        public HttpResponseMessage Delete(int input)
         {
             try
             {

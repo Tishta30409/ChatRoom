@@ -1,8 +1,8 @@
-﻿using ChatRoom.Domain.Hubs;
-using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Controllers;
+using ChatRoom.Server.Hubs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -27,7 +27,7 @@ namespace ChatRoom.Server.Tests
             var hub = new Mock<IHubClient>();
 
             var controller = new AccountController(repo.Object, hub.Object);
-            var postRsult = controller.AccountRegister(new AccountDto()
+            var postRsult = controller.Register(new AccountDto()
             {
                 Account = "test123",
                 Password = "123456",
@@ -161,7 +161,7 @@ namespace ChatRoom.Server.Tests
             var hub = new Mock<IHubClient>();
 
             var controller = new AccountController(repo.Object, hub.Object);
-            var postRsult = controller.GetAccountList();
+            var postRsult = controller.GetList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Account>>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
@@ -179,7 +179,7 @@ namespace ChatRoom.Server.Tests
             var hub = new Mock<IHubClient>();
 
             var controller = new AccountController(repo.Object, hub.Object);
-            var postRsult = controller.AccountDelete(1);
+            var postRsult = controller.Delete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 

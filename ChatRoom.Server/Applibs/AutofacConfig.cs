@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using ChatRoom.Server.Hubs;
 using ChatRoom.Server.Model;
 using System.Linq;
 using System.Reflection;
@@ -34,6 +35,11 @@ namespace ChatRoom.Server.Applibs
             // Action Handler
             builder.RegisterAssemblyTypes(asm)
                 .Named<IActionHandler>(t => t.Name.Replace("ActionHandler", string.Empty).ToLower())
+                .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
+                .SingleInstance();
+
+            builder.RegisterType<HubClient>()
+                .As<IHubClient>()
                 .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
                 .SingleInstance();
 

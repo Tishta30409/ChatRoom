@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Action\CheckConnectStateAction.cs" />
     <Compile Include="Action\HistoryAction.cs" />
-    <Compile Include="Hubs\IHubClient.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
     <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />
