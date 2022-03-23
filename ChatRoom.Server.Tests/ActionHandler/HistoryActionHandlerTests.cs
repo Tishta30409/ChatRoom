@@ -25,10 +25,10 @@ namespace ChatRoom.Server.Tests.ActionHandler
                 f_createDateTime = DateTime.Now
             }));
 
-            var handler = new HistoryActionHandler(repo.Object);
+            var handler = new ChatMessageActionHandler(repo.Object);
             var result = handler.ExecuteAction(new ActionModule()
             {
-                Message = new HistoryAction()
+                Message = new ChatMessageAction()
                 {
                     RoomID = 1,
                     NickName = "test001",

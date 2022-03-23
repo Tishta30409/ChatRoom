@@ -24,7 +24,7 @@ namespace ChatRoom.Server.Controllers
         //要求10筆歷史資料
         [HttpGet]
         [Route("api/History/GetList")]
-        public HttpResponseMessage GetHistoryList([FromBody] int roomID)
+        public HttpResponseMessage GetList(int roomID)
         {
             try
             {

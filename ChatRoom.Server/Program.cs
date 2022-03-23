@@ -1,8 +1,10 @@
-﻿using ChatRoom.Server.Applibs;
+﻿using Autofac;
+using ChatRoom.Domain.Repository;
+using ChatRoom.Server.Applibs;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Runtime.InteropServices;
-
+using System.Timers;
 
 /// <summary>
 /// 長短連結合併
@@ -36,6 +38,11 @@ namespace ChatRoom.Server
 
         static void Main(string[] args)
         {
+            Timer timer = new Timer(60000);
+            timer.Elapsed += new ElapsedEventHandler(OnElapsed);
+            timer.AutoReset = false;
+            timer.Start();
+
             using (WebApp.Start(ConfigHelper.SignalrUrl))
             {
                 //// 監聽APP關閉事件
@@ -57,6 +64,12 @@ namespace ChatRoom.Server
 
                 ChatRoomProcess.ProcessStop();
             }
+        }
+
+        static void OnElapsed(object sender, ElapsedEventArgs e)
+        {
+            var repo= Applibs.AutofacConfig.Container.Resolve<IHistoryRepository>();
+            repo.SortOut();
         }
 
         /// <summary>

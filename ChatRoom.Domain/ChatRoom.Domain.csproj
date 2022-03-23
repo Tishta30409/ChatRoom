@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\JoinRoomAction.cs" />
+    <Compile Include="Action\LeaveRoomAction.cs" />
     <Compile Include="Action\CheckConnectStateAction.cs" />
-    <Compile Include="Action\HistoryAction.cs" />
+    <Compile Include="Action\ChatMessageAction.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
     <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />

@@ -10,5 +10,7 @@ namespace ChatRoom.Domain.Model
     {
         string GetInputString(string reg, bool isEncode, int length);
 
+        string GetTempString(int length);
+
     }
 }

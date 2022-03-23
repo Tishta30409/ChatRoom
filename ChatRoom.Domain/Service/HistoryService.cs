@@ -54,7 +54,16 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return (null, null);
+                //找歷史訊息10筆
+                var response = this.client.GetAsync($"{this.route}/GetList?roomID={roomID}").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<IEnumerable<History>>(result)));
             }
             catch (Exception ex)
             {

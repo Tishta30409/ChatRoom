@@ -27,11 +27,11 @@ namespace ChatRoom.Client.Signalr
 
                 if (this.handlerSets.TryGetValue(actionModule.Action.ToLower(), out var handler))
                 {
-                    var second = 0;
-                    while (!SpinWait.SpinUntil(() => false, 1000) && second < 10)
-                    {
-                        second += 1;
-                    }
+                    //var second = 0;
+                    //while (!SpinWait.SpinUntil(() => false, 1000) && second < 10)
+                    //{
+                    //    second += 1;
+                    //}
 
                     handler.Execute(actionModule);
                 }

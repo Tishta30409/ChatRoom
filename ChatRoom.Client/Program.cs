@@ -28,15 +28,7 @@ namespace ChatRoom.Client
 
             try
             {
-                //連線
                 var hubClient = Applibs.AutofacConfig.Container.Resolve<IHubClient>();
-                hubClient.StartAsync();
-
-                while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
-                {
-                    console.Clear();
-                    console.WriteLine($"HubClient State:{hubClient.State}...");
-                }
 
                 var mainProcessSets = Applibs.AutofacConfig.Container.Resolve<IIndex<MainProcessType, IMainProcess>>();
 

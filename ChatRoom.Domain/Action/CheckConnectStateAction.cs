@@ -6,7 +6,7 @@ namespace ChatRoom.Domain.Action
     public class CheckConnectStateAction : ActionBase
     {
         public override string Action()
-          => "checkConnectStateAction";
+          => "checkConnectState";
 
         /// <summary>
         /// 帳號

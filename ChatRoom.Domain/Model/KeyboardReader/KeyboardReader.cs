@@ -9,6 +9,12 @@ namespace ChatRoom.Domain.Model
 {
     public class KeyboardReader : IKeyboardReader
     {
+        public string GetTempString(int length)
+        {
+            return "";
+        }
+
+
         /// <summary>
         /// 取得輸入字串
         /// </summary>

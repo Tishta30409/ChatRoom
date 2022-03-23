@@ -1,10 +1,13 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Client.Signalr;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ChatRoom.Client.Model.Process
 {
@@ -16,11 +19,14 @@ namespace ChatRoom.Client.Model.Process
 
         private IKeyboardReader keyboardReader;
 
-        public LoginMainProcess(IAccountService accountSvc, IConsoleWrapper console, IKeyboardReader keyboardReader)
+        private IHubClient hubClient;
+
+        public LoginMainProcess(IAccountService accountSvc, IConsoleWrapper console, IKeyboardReader keyboardReader, IHubClient hubClient )
         {
             this.accountSvc = accountSvc;
             this.console = console;
             this.keyboardReader = keyboardReader;
+            this.hubClient = hubClient;
         }
 
         public ProcessViewType Execute()
@@ -43,7 +49,7 @@ namespace ChatRoom.Client.Model.Process
                 this.console.Write("請輸入密碼:\r\n");
                 while (password == string.Empty)
                 {
-                    password = this.keyboardReader.GetInputString(pattern, true, 40); ;
+                    password = this.keyboardReader.GetInputString(pattern, true, 40);
                 }
 
                 var result = this.accountSvc.Login(new LoginDto()
@@ -67,12 +73,23 @@ namespace ChatRoom.Client.Model.Process
                     {
                         // 存帳號資料
                         LoginUserData.account = result.result.account;
-                        this.console.WriteLine("登入成功 進入大廳");
+                        this.console.WriteLine("登入成功 嘗試建立連線");
+
+                        //連線
+                        hubClient.StartAsync();
+                        while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
+                        {
+                            console.Clear();
+                            console.WriteLine($"HubClient State:{hubClient.State}...");
+                        }
+
                         return ProcessViewType.Lobby;
                     }
                     else
                     {
                         this.console.WriteLine("登入失敗 返回主畫面");
+                        this.console.WriteLine($"{result.result.resultCode }");
+                        this.console.Read();
                         return ProcessViewType.Main;
                     }
                 }

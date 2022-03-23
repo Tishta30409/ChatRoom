@@ -23,6 +23,8 @@ namespace ChatRoom.Persistent.Repository
 
         public (Exception exception, AccountResult result) Login(Login login)
         {
+            var resultCode = ResultCode.SUCCESS;
+
             try
             {
                 //會有錯誤碼跟回傳值
@@ -39,7 +41,7 @@ namespace ChatRoom.Persistent.Repository
                         commandType: CommandType.StoredProcedure
                         );
 
-                    var resultCode = result.ReadFirstOrDefault<ResultCode>();
+                    resultCode = result.ReadFirstOrDefault<ResultCode>();
                     var resultData = result.ReadFirstOrDefault<Account>();
                     //var resultData = result.Read();
                     
@@ -48,7 +50,11 @@ namespace ChatRoom.Persistent.Repository
             }
             catch (Exception ex)
             {
-                return (ex, null);
+                return (ex, new AccountResult()
+                {
+                    resultCode = resultCode,
+                    account = null
+                });
             }
         }
 

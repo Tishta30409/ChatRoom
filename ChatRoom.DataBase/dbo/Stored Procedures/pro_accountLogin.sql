@@ -61,7 +61,7 @@ AS
 		END
 
 		--更新資料
-		UPDATE t_account SET f_isLocked = @isLocked, f_errorTimes = @errorTimes, f_GUID = @guid WHERE f_account = @account 
+		UPDATE t_account SET f_isLocked = @isLocked, f_errorTimes = @errorTimes, f_GUID = @guid, f_roomID = NULL WHERE f_account = @account 
 
 		--輸出結果
 		SELECT @resultCode

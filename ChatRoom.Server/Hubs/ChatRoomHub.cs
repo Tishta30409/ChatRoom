@@ -4,12 +4,14 @@ using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Server.Applibs;
 using ChatRoom.Server.Model;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using NLog;
 using System;
 using System.Threading.Tasks;
 
 namespace ChatRoom.Server.Hubs
 {
+    [HubName("ChatRoomHub")]
     public class ChatRoomHub :Hub
     {
         /// <summary>
