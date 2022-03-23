@@ -39,14 +39,11 @@ namespace ChatRoom.Persistent.Repository
                         commandType: CommandType.StoredProcedure
                         );
 
-                    
                     var resultCode = result.ReadFirstOrDefault<ResultCode>();
                     var resultData = result.ReadFirstOrDefault<Account>();
                     //var resultData = result.Read();
                     
-
                     return (null, new AccountResult() { resultCode = resultCode, account = resultData });
-
                 }
             }
             catch (Exception ex)
@@ -163,12 +160,14 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            @Account = account.f_account,
-                            @Password = account.f_password,
-                            @NickName = account.f_nickName,
-                            @IsLocked = account.f_isLocked,
-                            @IsMuted = account.f_isMuted,
-                            @ErrorTimes = account.f_errorTimes,
+                            Account = account.f_account,
+                            Password = account.f_password,
+                            NickName = account.f_nickName,
+                            IsLocked = account.f_isLocked,
+                            IsMuted = account.f_isMuted,
+                            ErrorTimes = account.f_errorTimes,
+                            GUID = account.f_guid,
+                            roomID = account.f_roomID,
                         },
                         commandType: CommandType.StoredProcedure);
 

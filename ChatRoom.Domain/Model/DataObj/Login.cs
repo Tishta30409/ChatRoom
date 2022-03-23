@@ -15,8 +15,8 @@ namespace ChatRoom.Domain.Model.DataObj
         /// </summary>
         public string f_password { get; set; }
 
-        public AccountResult resultCode { get; set; }
+        public ResultCode resultCode { get; set; }
 
-        public Account data { get; set; }
+        public Account account { get; set; }
     }
 }

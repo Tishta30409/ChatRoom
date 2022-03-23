@@ -65,7 +65,7 @@ AS
 
 		--輸出結果
 		SELECT @resultCode
-		SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE f_account =  @account
+		SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID, f_roomID FROM t_account WHERE f_account =  @account
 	END
 	ELSE
 	BEGIN

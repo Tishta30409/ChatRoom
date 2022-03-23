@@ -38,10 +38,6 @@ namespace ChatRoom.Client
                     console.WriteLine($"HubClient State:{hubClient.State}...");
                 }
 
-
-                console.WriteLine("Connect Success");
-                console.Read();
-
                 var mainProcessSets = Applibs.AutofacConfig.Container.Resolve<IIndex<MainProcessType, IMainProcess>>();
 
                 var processSets = Applibs.AutofacConfig.Container.Resolve<IIndex<ProcessType, IProcess>>();

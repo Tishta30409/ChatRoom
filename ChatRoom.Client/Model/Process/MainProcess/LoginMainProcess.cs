@@ -14,10 +14,13 @@ namespace ChatRoom.Client.Model.Process
 
         private IConsoleWrapper console;
 
-        public LoginMainProcess(IAccountService accountSvc, IConsoleWrapper console)
+        private IKeyboardReader keyboardReader;
+
+        public LoginMainProcess(IAccountService accountSvc, IConsoleWrapper console, IKeyboardReader keyboardReader)
         {
             this.accountSvc = accountSvc;
             this.console = console;
+            this.keyboardReader = keyboardReader;
         }
 
         public ProcessViewType Execute()
@@ -30,57 +33,17 @@ namespace ChatRoom.Client.Model.Process
                 string pattern = @"^[a-zA-Z0-9]*$";
 
                 string account = string.Empty;
-
-
-                this.console.Write("請輸入登入帳號:\r\n");
-                while (
-                    account == string.Empty ||
-                    account.Length > 20 ||
-                    !Regex.IsMatch(account, pattern)
-                )
+                while (account == string.Empty )
                 {
-                    account = this.console.ReadLine();
+                    this.console.Write("請輸入登入帳號:\r\n");
+                    account = this.keyboardReader.GetInputString(pattern, false, 40);
                 }
 
-                ConsoleKeyInfo key = Console.ReadKey(true);
-
                 string password = string.Empty;
-
                 this.console.Write("請輸入密碼:\r\n");
-                while (
-                    password == string.Empty ||
-                    password.Length > 20 ||
-                    !Regex.IsMatch(password, pattern)
-                )
+                while (password == string.Empty)
                 {
-                    password = string.Empty;
-                    while (true)
-                    {
-                        //儲存使用者輸入的按鍵，並且在輸入的位置不顯示字元
-                        ConsoleKeyInfo ck = Console.ReadKey(true);
-
-                        //判斷使用者是否按下的Enter鍵
-                        if (ck.Key != ConsoleKey.Enter)
-                        {
-                            if (ck.Key != ConsoleKey.Backspace)
-                            {
-                                //將使用者輸入的字元存入字串中
-                                password += ck.KeyChar.ToString();
-                                //將使用者輸入的字元替換為*
-                                Console.Write("*");
-                            }
-                            else
-                            {
-                                //刪除錯誤的字元
-                                Console.Write("\b \b");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine();
-                            break;
-                        }
-                    }
+                    password = this.keyboardReader.GetInputString(pattern, true, 40); ;
                 }
 
                 var result = this.accountSvc.Login(new LoginDto()
@@ -89,11 +52,11 @@ namespace ChatRoom.Client.Model.Process
                     Password = password
                 });
 
-
                 // 檢查是否登入成功
                 if (result.result == null)
                 {
                     this.console.Write(ResultCode.ACCOUNT_NOTEXIST.ToDisplay());
+                    this.console.WriteLine("登入失敗 返回主畫面");
                     return ProcessViewType.Main;
                 }
                 else
@@ -104,13 +67,14 @@ namespace ChatRoom.Client.Model.Process
                     {
                         // 存帳號資料
                         LoginUserData.account = result.result.account;
+                        this.console.WriteLine("登入成功 進入大廳");
                         return ProcessViewType.Lobby;
                     }
                     else
                     {
+                        this.console.WriteLine("登入失敗 返回主畫面");
                         return ProcessViewType.Main;
                     }
-
                 }
             }
             catch (Exception ex)

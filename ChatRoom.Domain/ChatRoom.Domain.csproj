@@ -63,6 +63,8 @@
     <Compile Include="Model\DataObj\AccountResult.cs" />
     <Compile Include="Model\DataObj\Room.cs" />
     <Compile Include="Model\EnumDisplayAttribute.cs" />
+    <Compile Include="Model\KeyboardReader\IKeyboardReader.cs" />
+    <Compile Include="Model\KeyboardReader\KeyboardReader.cs" />
     <Compile Include="Model\Process\IBackStageProcess.cs" />
     <Compile Include="Model\Process\IMainProcess.cs" />
     <Compile Include="Model\Process\IProcess.cs" />

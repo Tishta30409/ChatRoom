@@ -21,8 +21,17 @@ namespace ChatRoom.Server.Tests
         {
             var repo = new Mock<IAccountRepository>();
             repo.Setup(p => p.Add(It.IsAny<Account>()))
-                .Returns((null, new Account() { f_account = "test123", f_password = "123456", f_nickName = "我是測試" }));
-            
+                .Returns((null, new AccountResult()
+                {
+                    resultCode = ResultCode.SUCCESS,
+                    account = new Account()
+                    {
+                        f_account = "test123",
+                        f_password = "123456",
+                        f_nickName = "我是測試"
+                    }
+                }));
+
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
 
@@ -47,19 +56,19 @@ namespace ChatRoom.Server.Tests
 
             // 一般登入
             repo.Setup(p => p.Login(It.IsAny<Login>()))
-                .Returns((null, new Login()
+                .Returns((null, new AccountResult()
                 {
-                   resultCode = AccountResult.SUCCESS,
-                   data = new Account()
-                   {
-                       f_account = "test123",
-                       f_password = "123456",
-                       f_errorTimes = 0,
-                       f_nickName = "test123",
-                       f_id = 1,
-                       f_isLocked = false,
-                       f_isMuted = false,
-                   }
+                    resultCode = ResultCode.SUCCESS,
+                    account = new Account()
+                    {
+                        f_account = "test123",
+                        f_password = "123456",
+                        f_errorTimes = 0,
+                        f_nickName = "test123",
+                        f_id = 1,
+                        f_isLocked = false,
+                        f_isMuted = false,
+                    }
                 }));
 
             //模擬廣播 TODO
@@ -76,15 +85,15 @@ namespace ChatRoom.Server.Tests
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, AccountResult.SUCCESS);
+            Assert.AreEqual(result.resultCode, ResultCode.SUCCESS);
 
 
             //帳號鎖定
             repo.Setup(p => p.Login(It.IsAny<Login>()))
-               .Returns((null, new Login()
+               .Returns((null, new AccountResult()
                {
-                   resultCode = AccountResult.ACCOUNT_LOCKED,
-                   data = new Account()
+                   resultCode = ResultCode.ACCOUNT_LOCKED,
+                   account = new Account()
                    {
                        f_account = "test123",
                        f_password = "123456",
@@ -107,14 +116,14 @@ namespace ChatRoom.Server.Tests
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, AccountResult.ACCOUNT_LOCKED);
+            Assert.AreEqual(result.resultCode, ResultCode.ACCOUNT_LOCKED);
 
             // 密碼錯誤
             repo.Setup(p => p.Login(It.IsAny<Login>()))
-               .Returns((null, new Login()
+               .Returns((null, new AccountResult()
                {
-                   resultCode = AccountResult.WORNG_PASSWORD,
-                   data = new Account()
+                   resultCode = ResultCode.WORNG_PASSWORD,
+                   account = new Account()
                    {
                        f_account = "test123",
                        f_password = "123456",
@@ -137,7 +146,7 @@ namespace ChatRoom.Server.Tests
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, AccountResult.WORNG_PASSWORD);
+            Assert.AreEqual(result.resultCode, ResultCode.WORNG_PASSWORD);
 
         }
 
@@ -152,7 +161,7 @@ namespace ChatRoom.Server.Tests
                     f_account = $"acc{index}",
                     f_password = $"pass{index}",
                     f_nickName = $"nick{index}",
-                    f_isLocked=false,
+                    f_isLocked = false,
                     f_isMuted = false,
                     f_errorTimes = 0,
                 })));

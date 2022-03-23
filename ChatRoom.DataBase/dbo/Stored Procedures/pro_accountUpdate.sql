@@ -4,7 +4,9 @@
 	@nickName NVARCHAR(20),
 	@isLocked	TINYINT,
 	@isMuted TINYINT, 
-	@errorTimes TINYINT
+	@errorTimes TINYINT,
+	@GUID UNIQUEIDENTIFIER ,
+	@roomID INT
 AS
 	UPDATE t_account WITH(ROWLOCK)
 	SET 
@@ -12,7 +14,9 @@ AS
 	f_nickName = @nickName,
 	f_isLocked = @isLocked,
 	f_isMuted = @isMuted,
-	f_errorTimes = @errorTimes
+	f_errorTimes = @errorTimes,
+	f_GUID = @GUID,
+	f_roomID = @roomID
 	OUTPUT inserted.*
 	WHERE f_account = @account
 RETURN 0

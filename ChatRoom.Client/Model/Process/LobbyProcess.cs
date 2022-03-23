@@ -28,6 +28,9 @@ namespace ChatRoom.Client.Model.Process
             {
                 var queryResult = this.roomSvc.GetList();
 
+                //將ID與房間名暫存起來
+                RoomListData.Rooms = queryResult.rooms;
+
                 this.console.Clear();
                 this.console.WriteLine("大廳介面(房間列表): 請輸入想加入的房間編號");
 
@@ -36,7 +39,6 @@ namespace ChatRoom.Client.Model.Process
                     foreach(var room in queryResult.rooms)
                     {
                         this.console.WriteLine($"房間編號:{room.f_id}. 房間名稱:{room.f_roomName}");
-
                     }
                 }
 
@@ -46,28 +48,24 @@ namespace ChatRoom.Client.Model.Process
 
                 while (queryResult.rooms.Where((element, index) => element.f_id == number).Count() == 0 || selectRoomID == string.Empty)
                 {
-                    this.console.WriteLine("請輸入房間編號:\n");
+                    this.console.WriteLine("請輸入房間編號:");
                     selectRoomID = this.console.ReadLine();
                     Int32.TryParse(selectRoomID, out number);
                 }
 
                 LoginUserData.account.f_roomID = number;
                 var updateResult =  this.accountSvc.Update(LoginUserData.account);
+
                 if(updateResult.account != null)
                 {
-                    this.console.WriteLine("加入房間成功");
-                    this.console.Read();
                     return ProcessViewType.ChatRoom;
                 }
                 else
                 {
-                    this.console.WriteLine("加入房間失敗");
+                    this.console.WriteLine("加入房間失敗 返回大廳");
                     this.console.Read();
                     return ProcessViewType.Lobby;
                 }
-
-               
-                
             }
             catch (Exception)
             {

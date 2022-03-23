@@ -84,6 +84,7 @@
     <Compile Include="Model\Process\LobbyProcess.cs" />
     <Compile Include="Model\Process\MainProcess\RegisterMainProcess.cs" />
     <Compile Include="Model\Process\MainProcess\LoginMainProcess.cs" />
+    <Compile Include="Model\RoomListData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signalr\HubClient.cs" />
