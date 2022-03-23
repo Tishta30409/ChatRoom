@@ -132,11 +132,11 @@ namespace ChatRoom.Server.Controllers
         //刪除帳號 -client
         [HttpDelete]
         [Route("api/Account/Delete")]
-        public HttpResponseMessage Delete(int input)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                var deleteResult = this.repo.Delete(input);
+                var deleteResult = this.repo.Delete(id);
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.account));
@@ -144,7 +144,7 @@ namespace ChatRoom.Server.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{input.ToString()}");
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{id.ToString()}");
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }

@@ -89,23 +89,23 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, Account account) Query(string account)
-        {
-            try
-            {
-                return (null, null);
-            }
-            catch (Exception ex)
-            {
-                return (ex, null);
-            }
-        }
-
+        /// <summary>
+        /// 取得帳號清單
+        /// </summary>
+        /// <returns></returns>
         public (Exception exception, IEnumerable<Account> accounts) QueryList()
         {
             try
             {
-                return (null, null);
+                var response = this.client.GetAsync($"{this.route}/GetList").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<IEnumerable<Account>>(result)));
             }
             catch (Exception ex)
             {
@@ -117,7 +117,15 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return (null, null);
+                var response = this.client.DeleteAsync($"{this.route}/Delete?id={id}").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Account>(result)));
             }
             catch (Exception ex)
             {

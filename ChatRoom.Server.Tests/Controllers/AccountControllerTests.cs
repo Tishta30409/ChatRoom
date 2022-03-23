@@ -178,7 +178,7 @@ namespace ChatRoom.Server.Tests
         }
 
         [TestMethod]
-        public void 刪除帳號清單測試()
+        public void 刪除帳號測試()
         {
             var repo = new Mock<IAccountRepository>();
             repo.Setup(p => p.Delete(1))
@@ -193,6 +193,74 @@ namespace ChatRoom.Server.Tests
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void 更新帳號測試()
+        {
+            var repo = new Mock<IAccountRepository>();
+
+            repo.Setup(p => p.Add(It.IsAny<Account>()))
+                .Returns((null, new AccountResult()
+                {
+                    resultCode = ResultCode.SUCCESS,
+                    account = new Account()
+                    {
+                        f_account = "test123",
+                        f_password = "123456",
+                        f_nickName = "我是測試"
+                    }
+                }));
+
+            //模擬廣播 TODO
+            var hub = new Mock<IHubClient>();
+
+            var controller = new AccountController(repo.Object, hub.Object);
+            var postRsult = controller.Register(new AccountDto()
+            {
+                Account = "test123",
+                Password = "123456",
+                NickName = "我是測試"
+            });
+
+            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+
+            Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
+            Assert.IsNotNull(result);
+
+            repo.Setup(p => p.Update(It.IsAny<Account>()))
+                .Returns((null, new Account()
+                {
+                    f_id = 1,
+                    f_account = "test123",
+                    f_password = "123456",
+                    f_nickName = "我是測試",
+                    f_errorTimes = 0,
+                    f_guid = new Guid(),
+                    f_isLocked = false,
+                    f_isMuted = false,
+                    f_roomID = 1
+                }));
+
+
+            controller = new AccountController(repo.Object, hub.Object);
+            var updateRsult = controller.Update(new Account()
+            {
+                f_id = 1,
+                f_account = "test123",
+                f_password = "123456",
+                f_nickName = "我是測試",
+                f_errorTimes = 0,
+                f_guid = new Guid(),
+                f_isLocked = false,
+                f_isMuted = false,
+                f_roomID = 1
+            });
+
+            result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+
+            Assert.AreEqual(updateRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
         }
     }

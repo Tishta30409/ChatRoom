@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Backstage", "ChatR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Server.Tests", "ChatRoom.Server.Tests\ChatRoom.Server.Tests.csproj", "{7CBED82B-8F9C-488F-8EAC-994484F50079}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Client.Tests", "ChatRoom.Client.Tests\ChatRoom.Client.Tests.csproj", "{06CDE503-93B6-49ED-A77E-C60CF28920E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Backstage.Tests", "ChatRoom.Backstage.Tests\ChatRoom.Backstage.Tests.csproj", "{C157959D-C66B-4CB5-8371-56D35136F1BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{7CBED82B-8F9C-488F-8EAC-994484F50079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CBED82B-8F9C-488F-8EAC-994484F50079}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CBED82B-8F9C-488F-8EAC-994484F50079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06CDE503-93B6-49ED-A77E-C60CF28920E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06CDE503-93B6-49ED-A77E-C60CF28920E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06CDE503-93B6-49ED-A77E-C60CF28920E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06CDE503-93B6-49ED-A77E-C60CF28920E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C157959D-C66B-4CB5-8371-56D35136F1BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C157959D-C66B-4CB5-8371-56D35136F1BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C157959D-C66B-4CB5-8371-56D35136F1BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C157959D-C66B-4CB5-8371-56D35136F1BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
