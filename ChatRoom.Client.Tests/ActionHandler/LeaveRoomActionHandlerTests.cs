@@ -19,7 +19,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
             var handler = new LeaveRoomActionHandler(console.Object);
             var result = handler.Execute(new ActionModule()
             {
-                Message = new LeaveRoomAction()
+                Message = new LeaveRoomMessageAction()
                 {
                     RoomID = 1,
                     NickName = "測試發化緣",

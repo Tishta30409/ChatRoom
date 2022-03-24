@@ -6,7 +6,7 @@ namespace ChatRoom.Client.Model
 {
     public class RoomListData
     {
-        public static IEnumerable<Room> Rooms;
+        public static List<Room> Rooms;
 
         /// <summary>
         /// 取得房間名稱

@@ -1,4 +1,6 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Client.Signalr;
+using ChatRoom.Domain.Action;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Service;
 using Newtonsoft.Json;
@@ -15,11 +17,14 @@ namespace ChatRoom.Client.Model.Process
 
         IConsoleWrapper console;
 
-        public LobbyProcess(IAccountService accountSvc, IRoomService roomSvc, IConsoleWrapper console)
+        IHubClient hubClient;
+
+        public LobbyProcess(IAccountService accountSvc, IRoomService roomSvc, IHubClient hubClient, IConsoleWrapper console)
         {
             this.accountSvc = accountSvc;
             this.roomSvc = roomSvc;
             this.console = console;
+            this.hubClient = hubClient;
         }
 
         public ProcessViewType Execute()
@@ -29,7 +34,7 @@ namespace ChatRoom.Client.Model.Process
                 var queryResult = this.roomSvc.GetList();
 
                 //將ID與房間名暫存起來
-                RoomListData.Rooms = queryResult.rooms;
+                RoomListData.Rooms = queryResult.rooms.ToList();
 
                 this.console.Clear();
                 this.console.WriteLine("大廳介面(房間列表): 請輸入想加入的房間編號");
@@ -58,6 +63,13 @@ namespace ChatRoom.Client.Model.Process
 
                 if(updateResult.account != null)
                 {
+                    //送出通知
+                    this.hubClient.SendAction(new JoinRoomMessageAction()
+                    {
+                        RoomID = LoginUserData.GetRoomID(),
+                        NickName = LoginUserData.GetNickName(),
+                    });
+
                     return ProcessViewType.ChatRoom;
                 }
                 else

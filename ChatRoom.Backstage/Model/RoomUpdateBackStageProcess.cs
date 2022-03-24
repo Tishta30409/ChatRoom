@@ -31,7 +31,7 @@ namespace ChatRoom.Backstage.Model
                 this.console.WriteLine("更新房間:\n");
 
                 var listData = this.roomSvc.GetList();
-                if (listData.rooms == null)
+                if (listData.rooms?.Count() == 0 || listData.rooms == null)
                 {
                     this.console.WriteLine("目前沒有房間存在");
                 }

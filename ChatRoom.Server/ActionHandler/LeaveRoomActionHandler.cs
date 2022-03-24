@@ -21,10 +21,10 @@ namespace ChatRoom.Server.ActionHandler
         {
             try
             {
-                var content = JsonConvert.DeserializeObject<LeaveRoomAction>(action.Message);
+                var content = JsonConvert.DeserializeObject<LeaveRoomMessageAction>(action.Message);
 
                 //沒問題就廣播給所有連線
-                var actionResult = new LeaveRoomAction()
+                var actionResult = new LeaveRoomMessageAction()
                 {
                     RoomID = content.RoomID,
                     NickName = content.NickName,

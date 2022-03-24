@@ -16,7 +16,7 @@ namespace ChatRoom.Backstage
             var legalTypes = new BackStageProcessType[]
            {
                 BackStageProcessType.AccountUpdate,
-                BackStageProcessType.AccountUpdate,
+                BackStageProcessType.AccountUnlock,
                 BackStageProcessType.AccountMute,
                 BackStageProcessType.AccountDelete,
                 BackStageProcessType.RoomAdd,

@@ -3,6 +3,7 @@ using System;
 
 namespace ChatRoom.Domain.Action
 {
+    //通知玩家離開某房間
     public class LeaveRoomAction : ActionBase
     {
         public override string Action()
@@ -13,14 +14,5 @@ namespace ChatRoom.Domain.Action
         /// </summary>
         public int RoomID { get; set; }
 
-        /// <summary>
-        /// 暱稱
-        /// </summary>
-        public string NickName { get; set; }
-
-        /// <summary>
-        /// 發話時間
-        /// </summary>
-        public DateTime CreateDateTime { get; set; }
     }
 }

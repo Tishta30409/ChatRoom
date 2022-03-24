@@ -67,6 +67,8 @@ namespace ChatRoom.Backstage.Model
                         {
                             this.console.WriteLine($"{history.f_nickName}({history.f_createDateTime}): {history.f_content}");
                         }
+
+                        this.console.WriteLine("已經沒有資料了..");
                     }
                 }
 

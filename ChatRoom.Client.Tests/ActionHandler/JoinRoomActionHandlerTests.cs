@@ -19,7 +19,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
             var handler = new JoinRoomActionHandler(console.Object);
             var result = handler.Execute(new ActionModule()
             {
-                Message = new JoinRoomAction()
+                Message = new JoinRoomMessageAction()
                 {
                     RoomID = 1,
                     NickName = "測試發化緣",

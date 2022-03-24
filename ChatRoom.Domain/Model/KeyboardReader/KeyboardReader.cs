@@ -50,7 +50,7 @@ namespace ChatRoom.Domain.Model
                     }
                     else
                     {
-                        if (!String.IsNullOrEmpty(output))
+                        if (!String.IsNullOrEmpty(output) && output.Length !=0)
                         {
                             output = output.Substring(0, output.Length - 1);
 

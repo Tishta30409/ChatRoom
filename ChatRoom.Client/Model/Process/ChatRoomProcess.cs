@@ -61,7 +61,7 @@ namespace ChatRoom.Client.Model.Process
                 }
 
                 // 離開 
-                this.hubClient.SendAction(new LeaveRoomAction()
+                this.hubClient.SendAction(new LeaveRoomMessageAction()
                 {
                     RoomID = LoginUserData.GetRoomID(),
                     NickName = LoginUserData.GetNickName(),
