@@ -16,7 +16,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
         {
             var console = new Mock<IConsoleWrapper>();
 
-            var handler = new JoinRoomActionHandler(console.Object);
+            var handler = new JoinRoomMessageActionHandler(console.Object);
             var result = handler.Execute(new ActionModule()
             {
                 Message = new JoinRoomMessageAction()

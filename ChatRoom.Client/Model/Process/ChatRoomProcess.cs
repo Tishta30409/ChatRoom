@@ -48,6 +48,12 @@ namespace ChatRoom.Client.Model.Process
                 var chatString = string.Empty;
                 while (chatString.ToLower() != "exit")
                 {
+                    if (LoginUserData.GetRoomID() == 0)
+                    {
+                        this.console.WriteLine("聊天室不存在 返回大廳");
+                        break;
+                    }
+
                     //只取字串 不顯示在畫面 收到訊息才KEY到畫面
                     chatString = this.keyboardReader.GetInputString("", false, UserConstants.ContentLength);
 

@@ -1,5 +1,7 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Action;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Repository;
+using ChatRoom.Server.Hubs;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -15,7 +17,9 @@ namespace ChatRoom.Server.Controllers
 
         private IRoomRepository repo;
 
-        public RoomController(IRoomRepository repo)
+        private IHubClient hubClient;
+
+        public RoomController(IRoomRepository repo, IHubClient hubClient)
         {
             this.repo = repo;
         }
@@ -92,6 +96,15 @@ namespace ChatRoom.Server.Controllers
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.room));
+
+                if (deleteResult.room != null)
+                {
+                    this.hubClient.BroadCastAction(new LeaveRoomAction()
+                    {
+                        RoomID = deleteResult.room.f_id,
+                    });
+                }
+
                 return result;
             }
             catch (Exception ex)

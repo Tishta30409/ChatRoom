@@ -160,6 +160,15 @@ namespace ChatRoom.Server.Controllers
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.account));
+
+                if (deleteResult.account != null)
+                {
+                    this.hub.BroadCastAction(new AccountDisconnectAction()
+                    {
+                        Account = deleteResult.account.f_account,
+                    });
+                }
+
                 return result;
             }
             catch (Exception ex)

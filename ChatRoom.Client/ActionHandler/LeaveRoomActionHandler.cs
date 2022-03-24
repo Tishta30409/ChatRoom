@@ -24,10 +24,9 @@ namespace ChatRoom.Client.ActionHandler
 
                 if(LoginUserData.GetRoomID() == action?.RoomID)
                 {
-                    this.console.WriteLine($"{action.NickName} 離開聊天室..");
+                    LoginUserData.account.f_roomID = 0;
+                    this.console.WriteLine($"{action.RoomID} 聊天室已斷線");
                 }
-
-                
 
                 return true;
             }
