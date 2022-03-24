@@ -25,7 +25,7 @@ namespace ChatRoom.Client.ActionHandler
                 var action = JsonConvert.DeserializeObject<CheckConnectStateAction>(actionModule.Message);
 
                 //帳號相同 但是GUID不同 為前被踢
-                if(LoginUserData.GetAccount() == action.Account && LoginUserData.GetGUID() != action.GUID)
+                if(LoginUserData.GetAccount() == action?.Account && LoginUserData.GetGUID() != action?.GUID)
                 {
                     LoginUserData.account =  new Account() { };
                     this.console.WriteLine("帳號重複登入 即將關閉視窗...");

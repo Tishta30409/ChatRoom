@@ -17,11 +17,6 @@ namespace ChatRoom.Client.Tests.Model.MainProcess
         public void 註冊帳號測試()
         {
             var accountSvc = new Mock<IAccountService>();
-
-            var console = new Mock<IConsoleWrapper>();
-
-            var keyboardReader = new Mock<IKeyboardReader>();
-
             accountSvc.Setup(p => p.Register(It.IsAny<AccountDto>())).Returns((null, new AccountResult()
             {
                 resultCode = ResultCode.SUCCESS,
@@ -38,6 +33,15 @@ namespace ChatRoom.Client.Tests.Model.MainProcess
                     f_roomID = 1
                 }
             }));
+
+            var console = new Mock<IConsoleWrapper>();
+
+            //模擬輸入
+            var keyboardReader = new Mock<IKeyboardReader>();
+            keyboardReader.SetupSequence(p=>p.GetInputString(@"^[a-zA-Z0-9]*$", false, UserConstants.AccountLength)).Returns("test001");
+            keyboardReader.SetupSequence(p => p.GetInputString(@"^[a-zA-Z0-9]*$", true, UserConstants.PasswordLength)).Returns("123456");
+            keyboardReader.SetupSequence(p => p.GetInputString(@"^[a-zA-Z0-9]*$", true, UserConstants.PasswordLength)).Returns("123456");
+            keyboardReader.SetupSequence(p => p.GetInputString("", false, UserConstants.NickNameLength)).Returns("Test001");
 
             var process = new RegisterMainProcess(accountSvc.Object, console.Object, keyboardReader.Object);
             var result = process.Execute();

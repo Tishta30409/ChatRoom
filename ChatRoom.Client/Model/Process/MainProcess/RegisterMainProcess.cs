@@ -35,7 +35,7 @@ namespace ChatRoom.Client.Model.Process
                 while (account == string.Empty)
                 {
                     this.console.Write("請輸入帳號:\n");
-                    account = this.keyboardReader.GetInputString(pattern, false, 20);
+                    account = this.keyboardReader.GetInputString(pattern, false, UserConstants.AccountLength);
                 }
 
                 string passwordFirst = string.Empty;
@@ -45,17 +45,17 @@ namespace ChatRoom.Client.Model.Process
                 while (passwordFirst != passwordSecond || passwordFirst == string.Empty )
                 {
                     this.console.Write("請輸入密碼:\n");
-                    passwordFirst = this.keyboardReader.GetInputString(pattern, true, 20);
+                    passwordFirst = this.keyboardReader.GetInputString(pattern, true, UserConstants.PasswordLength);
 
                     this.console.Write("請再次輸入密碼:\n");
-                    passwordSecond = this.keyboardReader.GetInputString(pattern, true, 20);
+                    passwordSecond = this.keyboardReader.GetInputString(pattern, true, UserConstants.PasswordLength);
                 }
 
                 string nickName = string.Empty;
                 while (nickName == string.Empty)
                 {
                     this.console.Write("請輸入暱稱:\n");
-                    nickName = this.keyboardReader.GetInputString("", false, 10);
+                    nickName = this.keyboardReader.GetInputString("", false, UserConstants.NickNameLength);
                 }
 
                 var result = this.accountSvc.Register(new AccountDto()

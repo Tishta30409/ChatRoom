@@ -42,14 +42,14 @@ namespace ChatRoom.Client.Model.Process
                 while (account == string.Empty )
                 {
                     this.console.Write("請輸入登入帳號:\r\n");
-                    account = this.keyboardReader.GetInputString(pattern, false, 40);
+                    account = this.keyboardReader.GetInputString(pattern, false, UserConstants.AccountLength);
                 }
 
                 string password = string.Empty;
                 this.console.Write("請輸入密碼:\r\n");
                 while (password == string.Empty)
                 {
-                    password = this.keyboardReader.GetInputString(pattern, true, 40);
+                    password = this.keyboardReader.GetInputString(pattern, true, UserConstants.PasswordLength);
                 }
 
                 var result = this.accountSvc.Login(new LoginDto()
@@ -67,7 +67,7 @@ namespace ChatRoom.Client.Model.Process
                 }
                 else
                 {
-                    this.console.Write(((ResultCode)result.result.resultCode).ToDisplay());
+                    this.console.Write((result.result.resultCode).ToDisplay());
                        
                     if(result.result.resultCode == ResultCode.SUCCESS)
                     {
@@ -76,13 +76,16 @@ namespace ChatRoom.Client.Model.Process
                         this.console.WriteLine("登入成功 嘗試建立連線");
 
                         //連線
-                        hubClient.StartAsync();
-                        while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
+                        if (hubClient != null)
                         {
-                            console.Clear();
-                            console.WriteLine($"HubClient State:{hubClient.State}...");
+                            hubClient.StartAsync();
+                            while (!SpinWait.SpinUntil(() => false, 1000) && hubClient.State != ConnectionState.Connected)
+                            {
+                                console.Clear();
+                                console.WriteLine($"HubClient State:{hubClient.State}...");
+                            }
                         }
-
+                        
                         return ProcessViewType.Lobby;
                     }
                     else

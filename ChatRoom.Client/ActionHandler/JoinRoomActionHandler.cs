@@ -22,9 +22,9 @@ namespace ChatRoom.Client.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LoginUserData.GetRoomID() == action.RoomID)
+                if(LoginUserData.GetRoomID() == action?.RoomID)
                 {
-                    this.console.WriteLine($"{action.NickName} 加入聊天室!");
+                    this.console.WriteLine($"{action?.NickName??"沒有使用者"} 加入聊天室!");
                 }
 
                 

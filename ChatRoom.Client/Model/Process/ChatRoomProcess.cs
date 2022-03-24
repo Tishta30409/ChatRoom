@@ -1,6 +1,7 @@
 ﻿using ChatRoom.Client.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Service;
 using System;
@@ -48,7 +49,7 @@ namespace ChatRoom.Client.Model.Process
                 while (chatString.ToLower() != "exit")
                 {
                     //只取字串 不顯示在畫面 收到訊息才KEY到畫面
-                    chatString = this.keyboardReader.GetInputString("", false, 20);
+                    chatString = this.keyboardReader.GetInputString("", false, UserConstants.ContentLength);
 
                     //this.console.WriteLine(chatString);
                     if(LoginUserData.GetIsMuted() == false && chatString.ToLower() != "exit")
