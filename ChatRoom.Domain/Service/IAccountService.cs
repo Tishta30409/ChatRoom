@@ -19,6 +19,8 @@ namespace ChatRoom.Domain.Service
 
         (Exception exception, AccountResult result) Register(AccountDto account);
 
+        (Exception exception, Account account) Query(string account);
+
         (Exception exception, IEnumerable<Account> accounts) QueryList();
 
         (Exception exception, Account account) Delete(int id);

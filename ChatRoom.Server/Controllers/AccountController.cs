@@ -111,6 +111,26 @@ namespace ChatRoom.Server.Controllers
 
         //取得帳號清單 - 後台
         [HttpGet]
+        [Route("api/Account/Get")]
+        public HttpResponseMessage Get(string account)
+        {
+            try
+            {
+                var queryResult = this.repo.Query(account);
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.account));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request");
+                return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        //取得帳號清單 - 後台
+        [HttpGet]
         [Route("api/Account/GetList")]
         public HttpResponseMessage GetList()
         {

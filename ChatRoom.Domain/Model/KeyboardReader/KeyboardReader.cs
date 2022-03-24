@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatRoom.Domain.Model.DataObj;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace ChatRoom.Domain.Model
 {
+
     public class KeyboardReader : IKeyboardReader
-    {
-        public string GetTempString(int length)
-        {
-            return "";
-        }
-
-
+    { 
         /// <summary>
         /// 取得輸入字串
         /// </summary>
@@ -22,7 +18,7 @@ namespace ChatRoom.Domain.Model
         /// <param name="isEncode">是否顯示</param>
         /// /// <param name="length">字串長度</param>
         /// <returns></returns>
-        public string GetInputString(string reg = "", bool isEncode = false, int length = 40)
+        public string GetInputString(string reg = "", bool isEncode = false,  int length = UserConstants.DefaultLength)
         {
             string output = string.Empty;
 
@@ -56,10 +52,10 @@ namespace ChatRoom.Domain.Model
                     {
                         if (!String.IsNullOrEmpty(output))
                         {
-                            output = output.Substring(0, output.Length - 1); 
+                            output = output.Substring(0, output.Length - 1);
 
                             //判斷是否為中文
-                            if(output[output.Length-1] > 127)
+                            if (output[output.Length - 1] > 127)
                             {
                                 Console.Write("\b \b");
                                 Console.Write("\b \b");

@@ -44,6 +44,11 @@ namespace ChatRoom.Backstage.Applibs
                 .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
                 .SingleInstance();
 
+            builder.RegisterType<KeyboardReader>()
+               .As<IKeyboardReader>()
+               .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
+               .SingleInstance();
+
             // service
             builder.RegisterAssemblyTypes(Assembly.Load("ChatRoom.Domain"))
                 .WithParameter("serviceUri", ConfigHelper.ServiceUrl)

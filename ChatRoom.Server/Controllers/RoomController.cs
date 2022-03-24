@@ -83,12 +83,12 @@ namespace ChatRoom.Server.Controllers
         //刪除房間-後台
         [HttpDelete]
         [Route("api/Room/Delete")]
-        public HttpResponseMessage Delete([FromBody] int input)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
                 //新增房間
-                var deleteResult = this.repo.Delete(input);
+                var deleteResult = this.repo.Delete(id);
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.room));
@@ -96,7 +96,7 @@ namespace ChatRoom.Server.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{input.ToString()}");
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{id.ToString()}");
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }

@@ -39,6 +39,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -71,14 +74,14 @@
   <ItemGroup>
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />
-    <Compile Include="Model\Account\MuteAccountBackStageProcess.cs" />
-    <Compile Include="Model\Account\DeleteAccountBackStageProcess.cs" />
-    <Compile Include="Model\Room\AddRoomBackStageProcess.cs" />
-    <Compile Include="Model\Room\UpdateRoomBackStageProcess.cs" />
-    <Compile Include="Model\Room\DeleteRoomBackStageProcess.cs" />
-    <Compile Include="Model\QueryHistoryBackStageProcess.cs" />
-    <Compile Include="Model\Account\UnlockAccountBackStageProcess.cs" />
-    <Compile Include="Model\Account\UpdateAccountBackStageProcess.cs" />
+    <Compile Include="Model\AccountMuteBackStageProcess.cs" />
+    <Compile Include="Model\AccountDeleteBackStageProcess.cs" />
+    <Compile Include="Model\RoomAddBackStageProcess.cs" />
+    <Compile Include="Model\RoomUpdateBackStageProcess.cs" />
+    <Compile Include="Model\RoomDeleteBackStageProcess.cs" />
+    <Compile Include="Model\HistoryQueryBackStageProcess.cs" />
+    <Compile Include="Model\AccountUnlockBackStageProcess.cs" />
+    <Compile Include="Model\AccountUpdateBackStageProcess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,6 +91,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\ChatRoom.Client\ChatRoom.Client.csproj">
+      <Project>{3E220206-4513-4736-AC89-4A0D16ACF611}</Project>
+      <Name>ChatRoom.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChatRoom.Domain\ChatRoom.Domain.csproj">
       <Project>{8899A6D7-E7EF-41E9-A1F8-BF2D4C3628E6}</Project>
       <Name>ChatRoom.Domain</Name>

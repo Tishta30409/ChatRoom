@@ -2,7 +2,17 @@
 CREATE PROCEDURE [dbo].[pro_accountQuery]
 @account VARCHAR(40)
 AS
-	SELECT f_id, f_account, f_password, f_nickName, f_isLocked, f_isMuted, f_errorTimes  FROM t_account WITH(NOLOCK)  
+	SELECT 
+    f_id, 
+    f_account,
+    f_password, 
+    f_nickName, 
+    f_isLocked,
+    f_isMuted, 
+    f_errorTimes,
+    f_GUID,
+    f_roomID
+    FROM t_account WITH(NOLOCK)  
     WHERE f_account = @account
 RETURN 0
 GO

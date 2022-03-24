@@ -90,6 +90,30 @@ namespace ChatRoom.Domain.Service
         }
 
         /// <summary>
+        /// 取得帳號資料
+        /// </summary>
+        /// <returns></returns>
+        public (Exception exception, Account account) Query(string account)
+        {
+            try
+            {
+                var response = this.client.GetAsync($"{this.route}/Get?account={account}").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Account>(result)));
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
+        /// <summary>
         /// 取得帳號清單
         /// </summary>
         /// <returns></returns>

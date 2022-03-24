@@ -1,5 +1,5 @@
-﻿using ChatRoom.Domain.Repository;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace ChatRoom.Domain.Model.DataObj
 {
@@ -28,6 +28,10 @@ namespace ChatRoom.Domain.Model.DataObj
         public bool isMuted { get; set; }
 
         public byte ErrorTimes { get; set; }
+
+        public Guid GUID { get; set; }
+
+        public int RoomID { get; set; }
 
         public override string ToString()
             => JsonConvert.SerializeObject(this);

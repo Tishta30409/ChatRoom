@@ -64,6 +64,7 @@
     <Compile Include="Model\DataObj\LoginDto.cs" />
     <Compile Include="Model\DataObj\AccountResult.cs" />
     <Compile Include="Model\DataObj\Room.cs" />
+    <Compile Include="Model\DataObj\UserConstants.cs" />
     <Compile Include="Model\EnumDisplayAttribute.cs" />
     <Compile Include="Model\KeyboardReader\IKeyboardReader.cs" />
     <Compile Include="Model\KeyboardReader\KeyboardReader.cs" />

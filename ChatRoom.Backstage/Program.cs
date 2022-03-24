@@ -15,14 +15,14 @@ namespace ChatRoom.Backstage
 
             var legalTypes = new BackStageProcessType[]
            {
-                BackStageProcessType.UpdateAccount,
-                BackStageProcessType.UnlockAccount,
-                BackStageProcessType.MuteAccount,
-                BackStageProcessType.DeleteAccount,
-                BackStageProcessType.AddRoom,
-                BackStageProcessType.UpdateRoom,
-                BackStageProcessType.DeleteRoom,
-                BackStageProcessType.QueryHistory,
+                BackStageProcessType.AccountUpdate,
+                BackStageProcessType.AccountUpdate,
+                BackStageProcessType.AccountMute,
+                BackStageProcessType.AccountDelete,
+                BackStageProcessType.RoomAdd,
+                BackStageProcessType.RoomUpdate,
+                BackStageProcessType.RoomDelete,
+                BackStageProcessType.HistoryQuery,
            };
 
             var legalTypesFormat = legalTypes.Select(t => $"{((int)t)}");

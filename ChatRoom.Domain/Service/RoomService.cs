@@ -51,7 +51,17 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return (null, null);
+
+                var content = new StringContent(JsonConvert.SerializeObject(room), Encoding.UTF8, "application/json");
+                var response = this.client.PutAsync(this.route + "/Update", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Room>(result)));
             }
             catch (Exception ex)
             {
@@ -83,7 +93,16 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-                return (null, null);
+                var response = this.client.DeleteAsync($"{this.route}/Delete?id={id}").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+
+                return ((null, JsonConvert.DeserializeObject<Room>(result)));
             }
             catch (Exception ex)
             {
