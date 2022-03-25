@@ -34,7 +34,11 @@ namespace ChatRoom.Client.Model
 
         public static void LeaveRoom()
         {
-             account.f_roomID = -1;
+             account.f_roomID = 0;
+        }
+        public static void DisConnect()
+        {
+            account = null;
         }
     }
 

@@ -95,7 +95,7 @@ namespace ChatRoom.Persistent.Tests
             loginResult = this.repo.Login(new Login() { f_account = "test000", f_password = "123457" });
             Assert.IsNull(loginResult.exception);
             Assert.IsNotNull(loginResult.result.account);
-            Assert.AreEqual(loginResult.result.resultCode, ResultCode.WORNG_PASSWORD);
+            Assert.AreEqual(loginResult.result.resultCode, ResultCode.ACCOUNT_LOCKED);
             Assert.AreEqual(loginResult.result.account.f_errorTimes, 3);
 
             //帳號鎖定

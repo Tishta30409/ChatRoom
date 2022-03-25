@@ -1,40 +1,30 @@
 ﻿CREATE PROCEDURE [dbo].[pro_roomAdd]
 	@roomName NVARCHAR(20)
 AS
-	DECLARE 
-      @resultCode  INT        = -99
-      ,@resultMsg    NVARCHAR(20)  = '未定義錯誤'
+	CREATE  TABLE #roomTemp
+	 (
+		f_id int,
+		f_roomName NVARCHAR(10)
+	 )
+
+	 --撈出會員資料
+	INSERT INTO #roomTemp 
+	SELECT f_id, f_roomName FROM t_room WHERE f_roomName =  @roomName
 
 	IF EXISTS(
-    SELECT 1 
-    FROM t_room 
+    SELECT f_id
+    FROM #roomTemp 
     WHERE f_roomName=@roomName
     )
 	BEGIN
-		SET @resultCode = -1    
+		SELECT 1
 	END
-
-	BEGIN TRY
-		BEGIN TRANSACTION
-			INSERT INTO t_room
-			(f_roomName)
-			OUTPUT inserted.*
-			VALUES(@roomName)
-		COMMIT TRANSACTION
-	END TRY
-	BEGIN CATCH
-		ROLLBACK
-	END CATCH
-
-	EndProc:
-		SET @resultMsg = 
-		CASE @resultCode
-			WHEN  1 THEN N'創建房間成功'
-			WHEN -1 THEN N'房間名稱已存在'
-			WHEN -99 THEN N'未定義錯誤。'
-		END
-
-RETURN @resultCode
+	ELSE
+	BEGIN
+		SELECT 0
+		INSERT INTO t_room(f_roomName)VALUES(@roomName)
+	END
+RETURN 0
 GO
 
 GRANT EXECUTE

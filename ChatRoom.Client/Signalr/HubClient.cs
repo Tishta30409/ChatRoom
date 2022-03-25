@@ -3,12 +3,11 @@ using ChatRoom.Client.Model;
 using ChatRoom.Domain.KeepAliveConn;
 using Microsoft.AspNet.SignalR.Client;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChatRoom.Client.Signalr
 {
-    public class HubClient :IHubClient
+    public class HubClient : IHubClient
     {
         private IIndex<string, IActionHandler> handlerSets;
 
@@ -96,6 +95,15 @@ namespace ChatRoom.Client.Signalr
             await this.HubConnection.Start().ContinueWith(task =>
             {
             });
+        }
+
+        public override void Disconnect()
+        {
+            this.HubProxy = null;
+
+            this.HubConnection.Dispose();
+            this.HubConnection.Stop();
+            this.HubConnection = null;
         }
     }
 }

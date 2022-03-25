@@ -24,7 +24,8 @@ namespace ChatRoom.Client.ActionHandler
 
                 if(LoginUserData.GetRoomID() == action?.RoomID)
                 {
-                    LoginUserData.account.f_roomID = 0;
+                    LoginUserData.LeaveRoom();
+
                     this.console.WriteLine($"{action.RoomID} 聊天室已斷線");
                 }
 

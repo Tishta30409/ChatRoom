@@ -6,7 +6,7 @@ namespace ChatRoom.Domain.Action
     public class ChatMessageAction : ActionBase
     {
         public override string Action()
-           => "ChatMessage";
+           => "chatMessage";
 
         /// <summary>
         /// 房間ID

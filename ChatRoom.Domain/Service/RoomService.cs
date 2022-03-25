@@ -1,5 +1,6 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace ChatRoom.Domain.Service
             };
         }
 
-        public (Exception exception, Room room) Add(string roomName)
+        public (Exception exception, ResultCode resultCode) Add(string roomName)
         {
             try
             {
@@ -39,11 +40,11 @@ namespace ChatRoom.Domain.Service
                 }
 
                 var result = response.Content.ReadAsStringAsync().Result;
-                return ((null, JsonConvert.DeserializeObject<Room>(result)));
+                return ((null, JsonConvert.DeserializeObject<ResultCode>(result)));
             }
             catch (Exception ex)
             {
-                return (ex, null);
+                return (ex, ResultCode.DEFAULT);
             }
         }
 

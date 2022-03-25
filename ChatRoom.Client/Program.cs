@@ -66,6 +66,10 @@ namespace ChatRoom.Client
                                     processSets.TryGetValue(ProcessType.ChatRoom, out IProcess chatRoomProcess);
                                     view = chatRoomProcess.Execute();
                                     break;
+                                case ProcessViewType.Main:
+                                    //回登入要斷線
+                                    hubClient.HubConnection.Stop();
+                                    break;
                                 default:
                                     break;
                             }

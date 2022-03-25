@@ -68,7 +68,7 @@ namespace ChatRoom.Server.Controllers
 
 
                 //如果登入成功才廣播訊息
-                if (queryResult.result.resultCode == ResultCode.SUCCESS)
+                if (queryResult.result.resultCode == ResultCode.SUCCESS && queryResult.result.account != null)
                 {
                     this.hub.BroadCastAction(new CheckConnectStateAction()
                     {
@@ -100,6 +100,12 @@ namespace ChatRoom.Server.Controllers
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.account));
+
+                this.hub.BroadCastAction(new UpdateAccountAction()
+                {
+                    Account = queryResult.account
+                }) ;
+
                 return result;
             }
             catch (Exception ex)

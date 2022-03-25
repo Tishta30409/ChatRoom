@@ -70,10 +70,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionHandler\UpdateAccountActionHandlerTests.cs" />
+    <Compile Include="ActionHandler\LeaveRoomActionHandlerTests.cs" />
     <Compile Include="ActionHandler\ChatMessageActionHandlerTests.cs" />
     <Compile Include="ActionHandler\CheckConnectStateActionHandlerTests.cs" />
-    <Compile Include="ActionHandler\JoinRoomActionHandlerTests.cs" />
-    <Compile Include="ActionHandler\LeaveRoomActionHandlerTests.cs" />
+    <Compile Include="ActionHandler\AccountDisconnectActionHandlerTests.cs" />
+    <Compile Include="ActionHandler\JoinRoomActionMessageHandlerTests.cs" />
+    <Compile Include="ActionHandler\LeaveRoomActionMessageHandlerTests.cs" />
     <Compile Include="Model\MainProcess\LoginMainProcessTests.cs" />
     <Compile Include="Model\MainProcess\RegisterMainProcessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -39,39 +39,41 @@ AS
 		DECLARE @errorTimes TINYINT = (SELECT f_errorTimes FROM #accountTemp)
 		DECLARE @guid UNIQUEIDENTIFIER = NEWID()
 
-		--帳號鎖定
 		IF(@isLocked = 1)
-			SET @resultCode = 2
+			--錯誤碼帳號鎖定
+			SELECT 2
 		ELSE IF(@tempPassword != @password)
 		BEGIN
-			PRINT @tempPassword
-			PRINT @password
-			SET @resultCode = 4
 			SET @errorTimes = @errorTimes +1
 			--錯誤大於三次
 			IF(@errorTimes >=3)
 			BEGIN
 				SET @isLocked = 1
+				--錯誤碼帳號鎖定
+				SELECT 2
 			END
+			ELSE
+				--錯誤碼 密碼錯誤
+				SELECT 4
 		END
 		ELSE
 		BEGIN
-			SET @resultCode = 0
+			SELECT 0
 			SET @errorTimes = 0
 		END
 
 		--更新資料
-		UPDATE t_account SET f_isLocked = @isLocked, f_errorTimes = @errorTimes, f_GUID = @guid, f_roomID = NULL WHERE f_account = @account 
+		UPDATE t_account SET f_isLocked = @isLocked, f_errorTimes = @errorTimes, f_GUID = @guid, f_roomID = NULL
+		OUTPUT inserted.* 
+		WHERE f_account = @account 
 
-		--輸出結果
-		SELECT @resultCode
-		SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID, f_roomID FROM t_account WHERE f_account =  @account
 	END
 	ELSE
 	BEGIN
-		SET @resultCode = 3 
+		--錯誤碼 帳號不存在
+		SELECT 3
 	END
-RETURN @resultCode
+RETURN 0
 GO
 
 

@@ -1,6 +1,7 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Model.Process;
+using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using System;
 using System.Text.RegularExpressions;
@@ -65,13 +66,16 @@ namespace ChatRoom.Client.Model.Process
                     NickName = nickName
                 });
 
-                if(result.result == null)
+
+
+                if(result.result.resultCode == ResultCode.SUCCESS)
                 {
-                    this.console.Write("註冊失敗\n");
+                    this.console.Write("註冊成功\n");
                 }
                 else
                 {
-                    this.console.Write("註冊成功\n");
+                    this.console.Write("註冊失敗\n");
+                    this.console.WriteLine($"{result.result.resultCode}");
                 }
 
                 this.console.Read();

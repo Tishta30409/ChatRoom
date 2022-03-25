@@ -4,7 +4,6 @@ using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 
 namespace ChatRoom.Client.Tests.ActionHandler
 {
@@ -12,18 +11,17 @@ namespace ChatRoom.Client.Tests.ActionHandler
     public class LeaveRoomActionHandlerTests
     {
         [TestMethod]
-        public void 離開房間通知測試()
+        public void 通知玩家離開房間測試()
         {
             var console = new Mock<IConsoleWrapper>();
+
 
             var handler = new LeaveRoomActionHandler(console.Object);
             var result = handler.Execute(new ActionModule()
             {
-                Message = new LeaveRoomMessageAction()
+                Message = new LeaveRoomAction()
                 {
-                    RoomID = 1,
-                    NickName = "測試發化緣",
-                    CreateDateTime = DateTime.Now,
+                    RoomID = 1
                 }.ToString()
             });
 

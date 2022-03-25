@@ -7,7 +7,7 @@ namespace ChatRoom.Domain.Action
     public class AccountDisconnectAction : ActionBase
     {
         public override string Action()
-           => "AccountDisconnect";
+           => "accountDisconnect";
 
         /// <summary>
         /// 房間ID

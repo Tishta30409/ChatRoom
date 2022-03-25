@@ -48,7 +48,7 @@ namespace ChatRoom.Backstage.Model
                         f_account = account,
                         f_password = result.account.f_password,
                         f_nickName = result.account.f_nickName,
-                        f_errorTimes = result.account.f_errorTimes,
+                        f_errorTimes = 0,
                         f_guid = result.account.f_guid,
                         f_isLocked = false,
                         f_isMuted = result.account.f_isMuted,

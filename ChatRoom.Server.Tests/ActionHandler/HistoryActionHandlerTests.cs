@@ -3,6 +3,7 @@ using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.ActionHandler;
+using ChatRoom.Server.Hubs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -25,7 +26,11 @@ namespace ChatRoom.Server.Tests.ActionHandler
                 f_createDateTime = DateTime.Now
             }));
 
-            var handler = new ChatMessageActionHandler(repo.Object);
+            var hubClient = new Mock<IHubClient>();
+
+            var repoRoom = new Mock<IRoomRepository>();
+
+            var handler = new ChatMessageActionHandler(repo.Object, repoRoom.Object, hubClient.Object);
             var result = handler.ExecuteAction(new ActionModule()
             {
                 Message = new ChatMessageAction()
@@ -38,7 +43,6 @@ namespace ChatRoom.Server.Tests.ActionHandler
             });
 
             Assert.IsNull(result.exception);
-            Assert.IsNotNull(result.actionBase);
         }
     }
 }

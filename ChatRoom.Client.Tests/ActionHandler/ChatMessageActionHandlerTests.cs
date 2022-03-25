@@ -22,7 +22,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
                 Message = new ChatMessageAction()
                 {
                     RoomID = 1,
-                    NickName = "測試發化緣",
+                    NickName = "測試發話員",
                     Content = "測試發話",
                     CreateDateTime = DateTime.Now,
                 }.ToString()

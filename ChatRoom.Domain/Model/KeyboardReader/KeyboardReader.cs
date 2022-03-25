@@ -50,21 +50,26 @@ namespace ChatRoom.Domain.Model
                     }
                     else
                     {
-                        if (!String.IsNullOrEmpty(output) && output.Length !=0)
+                        if (!String.IsNullOrEmpty(output) )
                         {
-                            output = output.Substring(0, output.Length - 1);
 
-                            //判斷是否為中文
-                            if (output[output.Length - 1] > 127)
+                            if(output.Length != 0)
                             {
-                                Console.Write("\b \b");
-                                Console.Write("\b \b");
+                                //判斷是否為中文
+                                if (output[output.Length - 1] > 127)
+                                {
+                                    Console.Write("\b \b");
+                                    Console.Write("\b \b");
+                                }
+                                else
+                                {
+                                    //刪除錯誤的字元
+                                    Console.Write("\b \b");
+                                }
+
+                                output = output.Substring(0, output.Length - 1);
                             }
-                            else
-                            {
-                                //刪除錯誤的字元
-                                Console.Write("\b \b");
-                            }
+                            
                         }
                     }
                 }

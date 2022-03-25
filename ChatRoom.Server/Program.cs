@@ -38,9 +38,9 @@ namespace ChatRoom.Server
 
         static void Main(string[] args)
         {
-            Timer timer = new Timer(60000);
+            Timer timer = new Timer(10000);
             timer.Elapsed += new ElapsedEventHandler(OnElapsed);
-            timer.AutoReset = false;
+            timer.AutoReset = true;
             timer.Start();
 
             using (WebApp.Start(ConfigHelper.SignalrUrl))

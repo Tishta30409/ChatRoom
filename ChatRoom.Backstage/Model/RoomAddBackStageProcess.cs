@@ -1,6 +1,7 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Model.Process;
+using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using System;
 
@@ -37,7 +38,7 @@ namespace ChatRoom.Backstage.Model
 
                 var result = this.svc.Add(roomName);
 
-                if (result.room != null)
+                if (result.resultCode == ResultCode.SUCCESS)
                 {
                     console.WriteLine(" 房間新增成功");
                 }

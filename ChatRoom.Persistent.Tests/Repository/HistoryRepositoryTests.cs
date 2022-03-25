@@ -83,7 +83,7 @@ namespace ChatRoom.Persistent.Tests
 
             Assert.IsNull(queryResult.exception);
             //只查10筆
-            Assert.AreEqual(queryResult.historys.Count(), 20);
+            Assert.AreEqual(queryResult.historys.Count(), 10);
         }
 
         [TestMethod]

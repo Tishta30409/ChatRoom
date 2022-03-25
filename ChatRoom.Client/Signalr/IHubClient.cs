@@ -19,7 +19,7 @@ namespace ChatRoom.Client.Signalr
         /// <summary>
         /// HubClient連線物件
         /// </summary>
-        protected HubConnection HubConnection;
+        public HubConnection HubConnection;
 
         /// <summary>
         /// HubProxy
@@ -49,5 +49,7 @@ namespace ChatRoom.Client.Signalr
         /// HubClient啟動
         /// </summary>
         public abstract Task StartAsync();
+
+        public abstract void Disconnect();
     }
 }

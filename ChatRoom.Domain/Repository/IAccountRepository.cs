@@ -7,6 +7,8 @@ namespace ChatRoom.Domain.Repository
 {
     public enum ResultCode
     {
+        [EnumDisplay("預設值 未定義")]
+        DEFAULT = -1,
         [EnumDisplay("成功")]
         SUCCESS = 0,
         [EnumDisplay("帳號重複")]

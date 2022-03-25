@@ -34,6 +34,7 @@ namespace ChatRoom.Client.Model.Process
                 this.console.Clear();
                 this.console.WriteLine("聊天室介面");
                 this.console.WriteLine($"房間名稱:: {RoomListData.GetRoomName(LoginUserData.GetRoomID())}");
+                this.console.WriteLine($"使用者暱稱::{LoginUserData.GetNickName()}");
                 this.console.WriteLine("開始聊天..(輸入exit離開)");
 
                 int roomID = LoginUserData.GetRoomID();
@@ -53,21 +54,24 @@ namespace ChatRoom.Client.Model.Process
                         this.console.WriteLine("聊天室不存在 返回大廳");
                         break;
                     }
+                    else
+                    {
+                        //只取字串 不顯示在畫面 收到訊息才KEY到畫面
+                        chatString = this.keyboardReader.GetInputString("", false, UserConstants.ContentLength);
 
-                    //只取字串 不顯示在畫面 收到訊息才KEY到畫面
-                    chatString = this.keyboardReader.GetInputString("", false, UserConstants.ContentLength);
-
-                    //this.console.WriteLine(chatString);
-                    if(LoginUserData.GetIsMuted() == false && chatString.ToLower() != "exit")
-                    this.hubClient.SendAction(new ChatMessageAction() { 
-                        Content = chatString,
-                        RoomID = LoginUserData.GetRoomID(),
-                        NickName = LoginUserData.GetNickName(),
-                    });
+                        //this.console.WriteLine(chatString);
+                        if (LoginUserData.GetIsMuted() == false && chatString.ToLower() != "exit" && LoginUserData.GetRoomID() != 0)
+                            this.hubClient.SendAction(new ChatMessageAction()
+                            {
+                                Content = chatString,
+                                RoomID = LoginUserData.GetRoomID(),
+                                NickName = LoginUserData.GetNickName(),
+                            });
+                    }
                 }
 
                 // 離開 
-                this.hubClient.SendAction(new LeaveRoomMessageAction()
+                this.hubClient.SendAction(new LeaveRoomMsgAction()
                 {
                     RoomID = LoginUserData.GetRoomID(),
                     NickName = LoginUserData.GetNickName(),

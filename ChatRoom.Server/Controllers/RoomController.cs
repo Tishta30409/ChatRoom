@@ -22,6 +22,7 @@ namespace ChatRoom.Server.Controllers
         public RoomController(IRoomRepository repo, IHubClient hubClient)
         {
             this.repo = repo;
+            this.hubClient = hubClient;
         }
 
         //取得房間列表-client
@@ -54,7 +55,7 @@ namespace ChatRoom.Server.Controllers
                 var addResult = this.repo.Add(input);
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.room));
+                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.resultCode));
                 return result;
             }
             catch (Exception ex)

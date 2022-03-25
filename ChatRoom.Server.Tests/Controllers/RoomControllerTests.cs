@@ -1,6 +1,7 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Controllers;
+using ChatRoom.Server.Hubs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -19,9 +20,11 @@ namespace ChatRoom.Server.Tests.Controllers
         {
             var repo = new Mock<IRoomRepository>();
             repo.Setup(p => p.Add("room001"))
-                .Returns((null, new Room() { f_roomName = "room001" }));
+                .Returns((null, ResultCode.SUCCESS));
 
-            var controller = new RoomController(repo.Object);
+            var hubClient = new Mock<IHubClient>();
+
+            var controller = new RoomController(repo.Object, hubClient.Object);
             var postRsult = controller.Add("room001");
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
@@ -37,13 +40,14 @@ namespace ChatRoom.Server.Tests.Controllers
             repo.Setup(p => p.Delete(1))
                 .Returns((null, new Room() { f_roomName = "room001" }));
 
-            var controller = new RoomController(repo.Object);
+            var hubClient = new Mock<IHubClient>();
+
+            var controller = new RoomController(repo.Object, hubClient.Object);
             var postRsult = controller.Delete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
-            Assert.IsNotNull(result);
         }
 
         [TestMethod]
@@ -57,7 +61,9 @@ namespace ChatRoom.Server.Tests.Controllers
                     f_roomName = $"room{index}"
                 })));
 
-            var controller = new RoomController(repo.Object);
+            var hubClient = new Mock<IHubClient>();
+
+            var controller = new RoomController(repo.Object, hubClient.Object);
             var postRsult = controller.GetList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Room>>(postRsult.Content.ReadAsStringAsync().Result);
 

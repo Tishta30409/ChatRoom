@@ -7,7 +7,7 @@ namespace ChatRoom.Domain.Action
     public class LeaveRoomAction : ActionBase
     {
         public override string Action()
-           => "LeaveRoom";
+           => "leaveRoom";
 
         /// <summary>
         /// 房間ID

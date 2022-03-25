@@ -17,13 +17,13 @@ namespace ChatRoom.Persistent.Repository
             this.connectionString = connectionString;
         }
 
-        public (Exception exception, Room room) Add(string roomName)
+        public (Exception exception, ResultCode resultCode) Add(string roomName)
         {
             try
             {
                 using (var cn = new SqlConnection(this.connectionString))
                 {
-                    var result = cn.QueryFirstOrDefault<Room>(
+                    var result = cn.QueryFirstOrDefault<ResultCode>(
                         "pro_roomAdd",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
@@ -37,7 +37,7 @@ namespace ChatRoom.Persistent.Repository
             }
             catch (Exception ex)
             {
-                return (ex, null);
+                return (ex, ResultCode.DEFAULT);
             }
         }
 

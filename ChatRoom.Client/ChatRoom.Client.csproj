@@ -76,9 +76,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionHandler\JoinRoomMessageActionHandler.cs" />
+    <Compile Include="ActionHandler\UpdateAccountActionHandler.cs" />
+    <Compile Include="ActionHandler\JoinRoomMsgActionHandler.cs" />
+    <Compile Include="ActionHandler\AccountDisconnectActionHandler.cs" />
     <Compile Include="ActionHandler\LeaveRoomActionHandler.cs" />
-    <Compile Include="ActionHandler\LeaveRoomMessgaeActionHandler.cs" />
+    <Compile Include="ActionHandler\LeaveRoomMsgActionHandler.cs" />
     <Compile Include="ActionHandler\CheckConnectStateActionHandler.cs" />
     <Compile Include="ActionHandler\ChatMessageActionHandler.cs" />
     <Compile Include="Applibs\AutofacConfig.cs" />
