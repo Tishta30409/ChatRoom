@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[pro_roomUpdate]
 	@id int,
-	@roomName VARCHAR(20)
+	@roomName NVARCHAR(20)
 AS
 	UPDATE t_room WITH(ROWLOCK)
 	SET 
