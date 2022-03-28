@@ -61,6 +61,7 @@
     <Compile Include="Repository\AccountRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\RoomRepositoryTests.cs" />
+    <Compile Include="Repository\UserRoomRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

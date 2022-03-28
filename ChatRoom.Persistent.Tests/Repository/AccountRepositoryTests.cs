@@ -3,6 +3,7 @@ using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -112,17 +113,15 @@ namespace ChatRoom.Persistent.Tests
 
             var updateResult = this.repo.Update(new Account() { 
                 f_account = "test000", 
-                f_password = "654321", 
                 f_nickName = "我是你好" ,
                 f_isLocked = 1,
                 f_isMuted = 0,
-                f_errorTimes = 3
-            
+                f_errorTimes = 3,
+                f_loginIdentifier = new Guid().ToString(),
             });
             Assert.IsNull(updateResult.exception);
             Assert.IsNotNull(updateResult.account);
             Assert.AreEqual(updateResult.account.f_account, "test000");
-            Assert.AreNotEqual(updateResult.account.f_password, "654321");
             Assert.AreEqual(updateResult.account.f_nickName, "我是你好");
             Assert.AreEqual(updateResult.account.f_isLocked, 1);
             Assert.AreEqual(updateResult.account.f_isMuted, 0);
