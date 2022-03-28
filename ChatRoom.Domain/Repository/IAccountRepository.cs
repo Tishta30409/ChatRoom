@@ -19,8 +19,8 @@ namespace ChatRoom.Domain.Repository
         ACCOUNT_NOTEXIST = 3,
         [EnumDisplay("密碼錯誤")]
         WORNG_PASSWORD = 4,
-        [EnumDisplay("未定義錯誤")]
-        UNDEFINE_ERROR = 5,
+        [EnumDisplay("帳號未啟用")]
+        ACCOUNT_UNACTIVE = 5
     }
 
     public interface IAccountRepository

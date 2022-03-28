@@ -60,14 +60,13 @@
     <Compile Include="KeepAliveConn\ActionModule.cs" />
     <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />
     <Compile Include="Model\ConsoleWrapper\IConsoleWrapper.cs" />
-    <Compile Include="Model\DataType\HistoryResult.cs" />
-    <Compile Include="Model\DataType\RoomResult.cs" />
     <Compile Include="Model\DataType\Tsql\Account.cs" />
     <Compile Include="Model\DataType\Api\AccountDto.cs" />
     <Compile Include="Model\DataType\Tsql\History.cs" />
     <Compile Include="Model\DataType\Api\LoginDto.cs" />
     <Compile Include="Model\DataType\AccountResult.cs" />
     <Compile Include="Model\DataType\Tsql\Room.cs" />
+    <Compile Include="Model\DataType\Tsql\UserRoom.cs" />
     <Compile Include="Model\DataType\UserConstants.cs" />
     <Compile Include="Model\EnumDisplayAttribute.cs" />
     <Compile Include="Model\KeyboardReader\IKeyboardReader.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="Repository\IRoomRepository.cs" />
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\IHistoryRepository.cs" />
+    <Compile Include="Repository\IUserRoomRepository.cs" />
     <Compile Include="Service\RoomService.cs" />
     <Compile Include="Service\HistoryService.cs" />
     <Compile Include="Service\AccountService.cs" />
