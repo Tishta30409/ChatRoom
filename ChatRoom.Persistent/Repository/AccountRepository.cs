@@ -51,7 +51,7 @@ namespace ChatRoom.Persistent.Repository
             {
                 return (ex, new AccountResult()
                 {
-                    ResultCode = ResultCode.UNDEFINE_ERROR,
+                    ResultCode = ResultCode.DEFAULT,
                     Account = null
                 });
             }
@@ -165,7 +165,6 @@ namespace ChatRoom.Persistent.Repository
                         new
                         {
                             Account = account.f_account,
-                            Password = account.f_password,
                             NickName = account.f_nickName,
                             IsLocked = account.f_isLocked,
                             IsMuted = account.f_isMuted,
