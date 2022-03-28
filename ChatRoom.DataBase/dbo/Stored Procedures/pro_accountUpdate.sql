@@ -5,18 +5,19 @@
 	@isLocked	TINYINT,
 	@isMuted TINYINT, 
 	@errorTimes TINYINT,
-	@GUID UNIQUEIDENTIFIER ,
-	@roomID INT
+	@LoginIdentifier NVARCHAR(32)
 AS
+
+	DECLARE @passwordMD5 VARCHAR(32) = SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5',@password)), 3, 32)
+
 	UPDATE t_account WITH(ROWLOCK)
 	SET 
-	f_password = @password, 
+	f_password = @passwordMD5, 
 	f_nickName = @nickName,
 	f_isLocked = @isLocked,
 	f_isMuted = @isMuted,
 	f_errorTimes = @errorTimes,
-	f_GUID = @GUID,
-	f_roomID = @roomID
+	f_loginIdentifier = @LoginIdentifier
 	OUTPUT inserted.*
 	WHERE f_account = @account
 RETURN 0

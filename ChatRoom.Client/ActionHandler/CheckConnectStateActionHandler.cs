@@ -1,11 +1,9 @@
 ﻿using ChatRoom.Client.Model;
-using ChatRoom.Client.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 
 namespace ChatRoom.Client.ActionHandler
 {
@@ -25,9 +23,9 @@ namespace ChatRoom.Client.ActionHandler
                 var action = JsonConvert.DeserializeObject<CheckConnectStateAction>(actionModule.Message);
 
                 //帳號相同 但是GUID不同 為前被踢
-                if(LoginUserData.GetAccount() == action?.Account && LoginUserData.GetGUID() != action?.GUID)
+                if(LoginUserData.Account.f_account == action?.Account && LoginUserData.Account.f_loginIdentifier != action?.LoginIdentifier )
                 {
-                    LoginUserData.account =  new Account() { };
+                    LoginUserData.Account =  new Account() { };
                     this.console.WriteLine("帳號重複登入 即將關閉視窗...");
                     this.console.Read();
                     Environment.Exit(0);

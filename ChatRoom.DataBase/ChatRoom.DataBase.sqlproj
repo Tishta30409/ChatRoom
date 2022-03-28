@@ -79,6 +79,9 @@
     <Build Include="dbo\Stored Procedures\pro_accountQuery.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountQueryList.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountLogin.sql" />
+    <Build Include="dbo\Tables\t_userroom.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userroom_join.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userroom_leave.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChatRoom.DataBase.publish.xml" />

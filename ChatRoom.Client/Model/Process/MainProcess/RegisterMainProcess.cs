@@ -68,14 +68,14 @@ namespace ChatRoom.Client.Model.Process
 
 
 
-                if(result.result.resultCode == ResultCode.SUCCESS)
+                if(result.result == ResultCode.SUCCESS)
                 {
                     this.console.Write("註冊成功\n");
                 }
                 else
                 {
                     this.console.Write("註冊失敗\n");
-                    this.console.WriteLine($"{result.result.resultCode}");
+                    this.console.WriteLine($"{result.result}");
                 }
 
                 this.console.Read();

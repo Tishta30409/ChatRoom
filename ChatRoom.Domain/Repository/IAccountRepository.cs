@@ -19,6 +19,8 @@ namespace ChatRoom.Domain.Repository
         ACCOUNT_NOTEXIST = 3,
         [EnumDisplay("密碼錯誤")]
         WORNG_PASSWORD = 4,
+        [EnumDisplay("未定義錯誤")]
+        UNDEFINE_ERROR = 5,
     }
 
     public interface IAccountRepository
@@ -28,14 +30,14 @@ namespace ChatRoom.Domain.Repository
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, AccountResult result) Login(Login login);
+        (Exception exception, AccountResult result) Login(Account login);
 
         /// <summary>
         /// 新增帳號
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, AccountResult result) Add(Account account);
+        (Exception exception, ResultCode result) Add(Account account);
 
         /// <summary>
         /// 更新帳號

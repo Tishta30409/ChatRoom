@@ -50,10 +50,9 @@ namespace ChatRoom.Backstage.Model
                         f_password = result.account.f_password,
                         f_nickName = result.account.f_nickName,
                         f_errorTimes = result.account.f_errorTimes,
-                        f_guid = result.account.f_guid,
                         f_isLocked = result.account.f_isLocked,
-                        f_isMuted = !result.account.f_isMuted,
-                        f_roomID = result.account.f_roomID,
+                        f_isMuted = 1,
+                        f_loginIdentifier = result.account.f_loginIdentifier,
                     });
 
                     this.console.WriteLine($"執行結果::\n{JsonConvert.SerializeObject(updateResult.account)}");

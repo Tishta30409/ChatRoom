@@ -29,11 +29,9 @@ namespace ChatRoom.Client.Tests.ActionHandler
                         f_account = "test123",
                         f_password = "123456",
                         f_errorTimes = 0,
-                        f_isLocked = false,
-                        f_isMuted = false,
-                        f_nickName = "test123",
-                       f_roomID =0
-                          
+                        f_isLocked = 0,
+                        f_isMuted = 0,
+                        f_nickName = "test123"
                     }
                 }.ToString()
             });

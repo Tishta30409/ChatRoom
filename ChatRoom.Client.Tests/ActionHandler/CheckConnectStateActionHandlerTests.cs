@@ -22,7 +22,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
                 Message = new CheckConnectStateAction()
                 {
                     Account = "test123",
-                    GUID = new Guid()
+                    LoginIdentifier = new Guid().ToString(),
                 }.ToString()
             }) ;
 

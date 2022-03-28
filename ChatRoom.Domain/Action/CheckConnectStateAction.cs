@@ -16,7 +16,7 @@ namespace ChatRoom.Domain.Action
         /// <summary>
         /// 房間ID
         /// </summary>
-        public Guid GUID { get; set; }
+        public string LoginIdentifier { get; set; }
 
     }
 }

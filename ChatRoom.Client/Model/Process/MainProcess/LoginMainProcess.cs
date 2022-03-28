@@ -67,12 +67,12 @@ namespace ChatRoom.Client.Model.Process
                 }
                 else
                 {
-                    this.console.Write((result.result.resultCode).ToDisplay());
+                    this.console.Write((result.result.ResultCode).ToDisplay());
                        
-                    if(result.result.resultCode == ResultCode.SUCCESS)
+                    if(result.result.ResultCode == ResultCode.SUCCESS)
                     {
                         // 存帳號資料
-                        LoginUserData.account = result.result.account;
+                        LoginUserData.Account = result.result.Account;
                         this.console.WriteLine("登入成功 嘗試建立連線");
 
                         //連線
@@ -91,7 +91,7 @@ namespace ChatRoom.Client.Model.Process
                     else
                     {
                         this.console.WriteLine("登入失敗 返回主畫面");
-                        this.console.WriteLine($"{result.result.resultCode }");
+                        this.console.WriteLine($"{result.result.ResultCode }");
                         this.console.Read();
                         return ProcessViewType.Main;
                     }

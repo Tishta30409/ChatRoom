@@ -1,5 +1,6 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,27 @@ namespace ChatRoom.Domain.Service
             };
         }
 
+        public (Exception exception, ResultCode result) Register(AccountDto account)
+        {
+            try
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(account), Encoding.UTF8, "application/json");
+                var response = this.client.PostAsync(this.route + "/Register", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<ResultCode>(result)));
+            }
+            catch (Exception ex)
+            {
+                return (ex, ResultCode.DEFAULT);
+            }
+        }
+
         public (Exception exception, AccountResult result) Login(LoginDto login)
         {
             try
@@ -47,26 +69,7 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, AccountResult result) Register(AccountDto account)
-        {
-            try
-            {
-                var content = new StringContent(JsonConvert.SerializeObject(account), Encoding.UTF8, "application/json");
-                var response = this.client.PostAsync(this.route + "/Register", content).Result;
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception(response.Content.ReadAsStringAsync().Result);
-                }
-
-                var result = response.Content.ReadAsStringAsync().Result;
-                return ((null, JsonConvert.DeserializeObject<AccountResult>(result)));
-            }
-            catch (Exception ex)
-            {
-                return (ex, null);
-            }
-        }
+        
 
         public (Exception exception, Account account) Update(Account account)
         {

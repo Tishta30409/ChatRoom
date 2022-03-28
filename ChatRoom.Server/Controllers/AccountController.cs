@@ -60,7 +60,7 @@ namespace ChatRoom.Server.Controllers
         {
             try
             {
-                var queryResult = this.repo.Login(new Login()
+                var queryResult = this.repo.Login(new Account()
                 {
                     f_account = input.Account,
                     f_password = input.Password,
@@ -68,12 +68,12 @@ namespace ChatRoom.Server.Controllers
 
 
                 //如果登入成功才廣播訊息
-                if (queryResult.result.resultCode == ResultCode.SUCCESS && queryResult.result.account != null)
+                if (queryResult.result.ResultCode == ResultCode.SUCCESS && queryResult.result.Account != null)
                 {
                     this.hub.BroadCastAction(new CheckConnectStateAction()
                     {
-                        Account = queryResult.result.account.f_account,
-                        GUID = queryResult.result.account.f_guid
+                        Account = queryResult.result.Account.f_account,
+                        LoginIdentifier = queryResult.result.Account.f_loginIdentifier
                     });
                 }
 

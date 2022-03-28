@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,19 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[pro_roomAdd]
 	@roomName NVARCHAR(20)
 AS
-	CREATE  TABLE #roomTemp
-	 (
-		f_id int,
-		f_roomName NVARCHAR(10)
-	 )
-
-	 --撈出會員資料
-	INSERT INTO #roomTemp 
-	SELECT f_id, f_roomName FROM t_room WHERE f_roomName =  @roomName
-
 	IF EXISTS(
-    SELECT f_id
-    FROM #roomTemp 
+    SELECT Top 1 1
+    FROM t_room 
     WHERE f_roomName=@roomName
     )
 	BEGIN

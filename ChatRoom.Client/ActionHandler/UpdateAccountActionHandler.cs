@@ -25,9 +25,9 @@ namespace ChatRoom.Client.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<UpdateAccountAction>(actionModule.Message);
 
-                if(LoginUserData.GetAccount() == action?.Account.f_account)
+                if(LoginUserData.Account.f_account == action?.Account.f_account)
                 {
-                    LoginUserData.account = action.Account;
+                    LoginUserData.Account = action.Account;
                 }
 
                 return true;

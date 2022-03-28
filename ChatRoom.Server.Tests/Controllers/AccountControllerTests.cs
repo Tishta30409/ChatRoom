@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace ChatRoom.Server.Tests
 {
@@ -21,16 +22,7 @@ namespace ChatRoom.Server.Tests
         {
             var repo = new Mock<IAccountRepository>();
             repo.Setup(p => p.Add(It.IsAny<Account>()))
-                .Returns((null, new AccountResult()
-                {
-                    resultCode = ResultCode.SUCCESS,
-                    account = new Account()
-                    {
-                        f_account = "test123",
-                        f_password = "123456",
-                        f_nickName = "我是測試"
-                    }
-                }));
+                .Returns((null, ResultCode.SUCCESS));
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
@@ -43,7 +35,7 @@ namespace ChatRoom.Server.Tests
                 NickName = "我是測試"
             });
 
-            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+            var result = JsonConvert.DeserializeObject<ResultCode>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
@@ -55,19 +47,19 @@ namespace ChatRoom.Server.Tests
             var repo = new Mock<IAccountRepository>();
 
             // 一般登入
-            repo.Setup(p => p.Login(It.IsAny<Login>()))
+            repo.Setup(p => p.Login(It.IsAny<Account>()))
                 .Returns((null, new AccountResult()
                 {
-                    resultCode = ResultCode.SUCCESS,
-                    account = new Account()
+                    ResultCode = ResultCode.SUCCESS,
+                    Account = new Account()
                     {
                         f_account = "test123",
                         f_password = "123456",
                         f_errorTimes = 0,
                         f_nickName = "test123",
                         f_id = 1,
-                        f_isLocked = false,
-                        f_isMuted = false,
+                        f_isLocked = 0,
+                        f_isMuted = 0,
                     }
                 }));
 
@@ -81,27 +73,26 @@ namespace ChatRoom.Server.Tests
                 Password = "123456",
             });
 
-            var result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
+            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, ResultCode.SUCCESS);
 
 
             //帳號鎖定
-            repo.Setup(p => p.Login(It.IsAny<Login>()))
+            repo.Setup(p => p.Login(It.IsAny<Account>()))
                .Returns((null, new AccountResult()
                {
-                   resultCode = ResultCode.ACCOUNT_LOCKED,
-                   account = new Account()
+                   ResultCode = ResultCode.ACCOUNT_LOCKED,
+                   Account = new Account()
                    {
                        f_account = "test123",
                        f_password = "123456",
                        f_errorTimes = 0,
                        f_nickName = "test123",
                        f_id = 1,
-                       f_isLocked = false,
-                       f_isMuted = false,
+                       f_isLocked = 0,
+                       f_isMuted = 0,
                    }
                }));
 
@@ -112,26 +103,25 @@ namespace ChatRoom.Server.Tests
                 Password = "123456",
             });
 
-            result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
+            result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, ResultCode.ACCOUNT_LOCKED);
 
             // 密碼錯誤
-            repo.Setup(p => p.Login(It.IsAny<Login>()))
+            repo.Setup(p => p.Login(It.IsAny<Account>()))
                .Returns((null, new AccountResult()
                {
-                   resultCode = ResultCode.WORNG_PASSWORD,
-                   account = new Account()
+                   ResultCode = ResultCode.WORNG_PASSWORD,
+                   Account = new Account()
                    {
                        f_account = "test123",
                        f_password = "123456",
                        f_errorTimes = 0,
                        f_nickName = "test123",
                        f_id = 1,
-                       f_isLocked = false,
-                       f_isMuted = false,
+                       f_isLocked = 0,
+                       f_isMuted = 0,
                    }
                }));
 
@@ -142,11 +132,10 @@ namespace ChatRoom.Server.Tests
                 Password = "123457",
             });
 
-            result = JsonConvert.DeserializeObject<Login>(postRsult.Content.ReadAsStringAsync().Result);
+            result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.resultCode, ResultCode.WORNG_PASSWORD);
 
         }
 
@@ -161,8 +150,8 @@ namespace ChatRoom.Server.Tests
                     f_account = $"acc{index}",
                     f_password = $"pass{index}",
                     f_nickName = $"nick{index}",
-                    f_isLocked = false,
-                    f_isMuted = false,
+                    f_isLocked = 0,
+                    f_isMuted = 0,
                     f_errorTimes = 0,
                 })));
 
@@ -202,16 +191,7 @@ namespace ChatRoom.Server.Tests
             var repo = new Mock<IAccountRepository>();
 
             repo.Setup(p => p.Add(It.IsAny<Account>()))
-                .Returns((null, new AccountResult()
-                {
-                    resultCode = ResultCode.SUCCESS,
-                    account = new Account()
-                    {
-                        f_account = "test123",
-                        f_password = "123456",
-                        f_nickName = "我是測試"
-                    }
-                }));
+                .Returns((null, ResultCode.SUCCESS));
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
@@ -224,10 +204,10 @@ namespace ChatRoom.Server.Tests
                 NickName = "我是測試"
             });
 
-            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+            var registerResult = JsonConvert.DeserializeObject<ResultCode>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(registerResult);
 
             repo.Setup(p => p.Update(It.IsAny<Account>()))
                 .Returns((null, new Account()
@@ -237,31 +217,30 @@ namespace ChatRoom.Server.Tests
                     f_password = "123456",
                     f_nickName = "我是測試",
                     f_errorTimes = 0,
-                    f_guid = new Guid(),
-                    f_isLocked = false,
-                    f_isMuted = false,
-                    f_roomID = 1
+                    f_isLocked = 0,
+                    f_isMuted = 0,
+                    f_loginIdentifier = MD5.Create().ToString(),
+
                 }));
 
 
             controller = new AccountController(repo.Object, hub.Object);
-            var updateRsult = controller.Update(new Account()
+            var postUpdateResult = controller.Update(new Account()
             {
                 f_id = 1,
                 f_account = "test123",
                 f_password = "123456",
                 f_nickName = "我是測試",
                 f_errorTimes = 0,
-                f_guid = new Guid(),
-                f_isLocked = false,
-                f_isMuted = false,
-                f_roomID = 1
+                f_isLocked = 0,
+                f_isMuted = 0,
+                f_loginIdentifier= MD5.Create().ToString(),
             });
 
-            result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+            var updateResult = JsonConvert.DeserializeObject<Account>(postUpdateResult.Content.ReadAsStringAsync().Result);
 
-            Assert.AreEqual(updateRsult.StatusCode, HttpStatusCode.OK);
-            Assert.IsNotNull(result);
+            Assert.AreEqual(postUpdateResult.StatusCode, HttpStatusCode.OK);
+            Assert.IsNotNull(updateResult);
         }
     }
 }

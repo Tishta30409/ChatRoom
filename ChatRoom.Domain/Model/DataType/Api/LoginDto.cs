@@ -1,22 +1,22 @@
 ﻿using ChatRoom.Domain.Repository;
+using Newtonsoft.Json;
 
 namespace ChatRoom.Domain.Model.DataObj
 {
-    public class Login
+    public class LoginDto
     {
         /// <summary>
         /// 限制長度 20 不能含中文
         /// </summary>
-        public string f_account { get; set; }
-
+        public string Account { get; set; }
 
         /// <summary>
         /// 限制長度 20 不能含中文
         /// </summary>
-        public string f_password { get; set; }
+        public string Password { get; set; }
 
-        public ResultCode resultCode { get; set; }
 
-        public Account account { get; set; }
+        public override string ToString()
+            => JsonConvert.SerializeObject(this);
     }
 }

@@ -5,42 +5,21 @@ CREATE PROCEDURE [dbo].[pro_accountAdd]
 	@password VARCHAR(40),
 	@nickName NVARCHAR(20)
 AS
-	CREATE  TABLE #accountTemp
-	 (
-		f_id int,
-		f_account VARCHAR(40),
-		f_password VARCHAR(40),
-		f_nickName NVARCHAR(20),
-		f_isLocked TINYINT,
-		f_isMuted TINYINT,
-		f_errorTimes TINYINT,
-		f_GUID UNIQUEIDENTIFIER
-	 )
-
-	 --ResultCode
-		--SUCCESS = 0,
-        --ACCOUNT_REPEAT = 1,
-        --ACCOUNT_LOCKED = 2,
-        --ACCOUNT_NOTEXIST = 3,
-        --WORNG_PASSWORD = 4,
-
-	--撈出會員資料
-	INSERT INTO #accountTemp 
-	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM t_account WHERE f_account =  @account
-
 	IF EXISTS(
-		SELECT f_id FROM #accountTemp WHERE f_account = @account
+		SELECT Top 1 1 FROM t_account WHERE f_account = @account
     )
 	BEGIN
+		 --ACCOUNT_REPEAT = 1,
 		SELECT 1;
-		SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_GUID FROM #accountTemp 
+		--SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_loginIdentifier FROM #accountTemp 
 	END
 	ELSE
 	BEGIN
 		SELECT 0;
-		INSERT INTO t_account(f_account, f_password, f_nickName)
-		OUTPUT inserted.*
-		VALUES(@account, @password, @nickName)
+
+		DECLARE @passwordSha2 VARCHAR(32) = SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5',@password)), 3, 32)
+
+		INSERT INTO t_account(f_account, f_password, f_nickName) VALUES(@account, @passwordSha2, @nickName)
 	END
 RETURN 0
 GO

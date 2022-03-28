@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatRoom.Domain.Model.DataObj
 {
+    //常數
     public static class UserConstants
     {
         public const int AccountLength = 20;

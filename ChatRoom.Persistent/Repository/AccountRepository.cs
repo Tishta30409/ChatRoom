@@ -21,10 +21,8 @@ namespace ChatRoom.Persistent.Repository
             this.connectionString = connectionString;
         }
 
-        public (Exception exception, AccountResult result) Login(Login login)
+        public (Exception exception, AccountResult result) Login(Account login)
         {
-            var resultCode = ResultCode.SUCCESS;
-
             try
             {
                 //會有錯誤碼跟回傳值
@@ -35,30 +33,31 @@ namespace ChatRoom.Persistent.Repository
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            account  = login.f_account,
-                            password = login.f_password
+                            account = login.f_account,
+                            password = login.f_password,
+                            loginIdentifier = new Guid().ToString()
                         },
                         commandType: CommandType.StoredProcedure
                         );
 
-                    resultCode = result.ReadFirstOrDefault<ResultCode>();
+                    var resultCode = result.ReadFirstOrDefault<ResultCode>();
                     var resultData = result.ReadFirstOrDefault<Account>();
                     //var resultData = result.Read();
                     
-                    return (null, new AccountResult() { resultCode = resultCode, account = resultData });
+                    return (null, new AccountResult() { ResultCode = resultCode, Account = resultData });
                 }
             }
             catch (Exception ex)
             {
                 return (ex, new AccountResult()
                 {
-                    resultCode = resultCode,
-                    account = null
+                    ResultCode = ResultCode.UNDEFINE_ERROR,
+                    Account = null
                 });
             }
         }
 
-        public (Exception exception, AccountResult result) Add(Account account)
+        public (Exception exception, ResultCode result) Add(Account account)
         {
             try
             {
@@ -76,14 +75,13 @@ namespace ChatRoom.Persistent.Repository
                         commandType: CommandType.StoredProcedure);
 
                     var resultCode = result.ReadFirstOrDefault<ResultCode>();
-                    var resultData = result.ReadFirstOrDefault<Account>();
 
-                    return (null, new AccountResult() { resultCode = resultCode, account = resultData });
+                    return (null, resultCode);
                 }
             }
             catch (Exception ex)
             {
-                return (ex, null);
+                return (ex, ResultCode.DEFAULT);
             }
         }
 
@@ -172,8 +170,7 @@ namespace ChatRoom.Persistent.Repository
                             IsLocked = account.f_isLocked,
                             IsMuted = account.f_isMuted,
                             ErrorTimes = account.f_errorTimes,
-                            GUID = account.f_guid,
-                            roomID = account.f_roomID,
+                            LoginIdentifier = account.f_loginIdentifier
                         },
                         commandType: CommandType.StoredProcedure);
 

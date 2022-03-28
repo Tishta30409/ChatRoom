@@ -2,9 +2,10 @@
 
 namespace ChatRoom.Domain.Model
 {
+    //From Sql
     public class History
     {
-        public Int64 f_id { get; set; }
+        public long f_id { get; set; }
 
         public int f_roomID { get; set; }
 

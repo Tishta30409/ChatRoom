@@ -5,42 +5,49 @@ namespace ChatRoom.Client.Model
 {
     public static class LoginUserData
     {
-        public static Account account;
+        private static Account account;
 
-        public static int GetRoomID()
+        private static Room room;
+
+        //外面就不用NEW了
+        public static Account Account
         {
-            return account?.f_roomID?? 0;
+            set { account = value; }
+            get
+            {
+                if (account == null)
+                {
+                    account = new Account();
+                }
+                return account;
+            }
         }
 
-        public static Guid GetGUID()
-        {
-            return account?.f_guid?? new Guid();
+        //自動屬性
+        public static Room Room {
+            set { room = value; }
+            get
+            {
+                if (room == null)
+                {
+                    room = new Room();
+                }
+                return room;
+            }
         }
 
-        public static string GetAccount()
+        public static void DisConnect()
         {
-            return account?.f_account??"";
-        }
-
-        public static string GetNickName()
-        {
-            return account?.f_nickName??"";
-        }
-
-        public static bool GetIsMuted()
-        {
-            return account?.f_isMuted?? false;
+            account = null;
+            room = null;
         }
 
         public static void LeaveRoom()
         {
-             account.f_roomID = 0;
+            room = null;
         }
-        public static void DisConnect()
-        {
-            account = null;
-        }
+
+
+
     }
-
-
 }

@@ -7,6 +7,7 @@ using ChatRoom.Domain.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Security.Cryptography;
 
 namespace ChatRoom.Client.Tests.Model.MainProcess
 {
@@ -17,22 +18,7 @@ namespace ChatRoom.Client.Tests.Model.MainProcess
         public void 註冊帳號測試()
         {
             var accountSvc = new Mock<IAccountService>();
-            accountSvc.Setup(p => p.Register(It.IsAny<AccountDto>())).Returns((null, new AccountResult()
-            {
-                resultCode = ResultCode.SUCCESS,
-                account = new Account()
-                {
-                    f_id = 1,
-                    f_account = "test123",
-                    f_password = "123456",
-                    f_nickName = "我是測試",
-                    f_errorTimes = 0,
-                    f_guid = new Guid(),
-                    f_isLocked = false,
-                    f_isMuted = false,
-                    f_roomID = 1
-                }
-            }));
+            accountSvc.Setup(p => p.Register(It.IsAny<AccountDto>())).Returns((null, ResultCode.SUCCESS));
 
             var console = new Mock<IConsoleWrapper>();
 

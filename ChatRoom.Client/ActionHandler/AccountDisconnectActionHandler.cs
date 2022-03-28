@@ -25,14 +25,15 @@ namespace ChatRoom.Client.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<AccountDisconnectAction>(actionModule.Message);
 
-                if(LoginUserData.GetAccount() == action?.Account)
+                if (LoginUserData.Account.f_account == action?.Account)
                 {
                     //如果在房間內 先送離開通知在斷線
-                    if(LoginUserData.GetRoomID() != 0)
+                    if (LoginUserData.Room != null)
                     {
-                        this.hubClient.SendAction(new LeaveRoomMsgAction() {
-                            RoomID = LoginUserData.GetRoomID(), 
-                            NickName = LoginUserData.GetNickName() 
+                        this.hubClient.SendAction(new LeaveRoomMsgAction()
+                        {
+                            RoomID = LoginUserData.Room.f_id,
+                            NickName = LoginUserData.Account.f_nickName
                         });
                     }
 

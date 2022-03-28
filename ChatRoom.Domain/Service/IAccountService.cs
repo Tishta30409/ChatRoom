@@ -1,5 +1,6 @@
 ﻿using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ namespace ChatRoom.Domain.Service
 
         (Exception exception, AccountResult result) Login(LoginDto login);
 
-        (Exception exception, AccountResult result) Register(AccountDto account);
+        (Exception exception, ResultCode result) Register(AccountDto account);
 
         (Exception exception, Account account) Query(string account);
 

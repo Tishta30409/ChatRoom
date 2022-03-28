@@ -24,8 +24,8 @@ namespace ChatRoom.Backstage.Tests.Model
                 f_password = "123456",
                 f_nickName = "你好",
                 f_errorTimes = 0,
-                f_isLocked = false,
-                f_isMuted = false
+                f_isLocked = 0,
+                f_isMuted = 0
             }));
 
             var process = new AccountDeleteBackStageProcess(accountSvc.Object, console.Object, keyboardReader.Object);

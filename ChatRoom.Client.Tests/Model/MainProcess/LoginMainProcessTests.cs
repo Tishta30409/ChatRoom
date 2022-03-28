@@ -21,18 +21,17 @@ namespace ChatRoom.Client.Tests
             var accountSvc = new Mock<IAccountService>();
             accountSvc.Setup(p => p.Login(It.IsAny<LoginDto>())).Returns((null, new AccountResult()
             {
-                resultCode = ResultCode.SUCCESS,
-                account = new Account()
+                ResultCode = ResultCode.SUCCESS,
+                Account = new Account()
                 {
                     f_id = 1,
                     f_account = "test123",
                     f_password = "123456",
                     f_nickName = "我是測試",
                     f_errorTimes = 0,
-                    f_guid = new Guid(),
-                    f_isLocked = false,
-                    f_isMuted = false,
-                    f_roomID = 1
+                    f_loginIdentifier = new Guid().ToString(),
+                    f_isLocked = 0,
+                    f_isMuted = 0,
                 }
             }));
 
