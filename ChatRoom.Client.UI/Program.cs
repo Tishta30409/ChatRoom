@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac;
+using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Forms;
+using ChatRoom.Client.UI.Model;
+using System;
 using System.Windows.Forms;
 
 namespace ChatRoom.Client.UI
@@ -16,7 +17,22 @@ namespace ChatRoom.Client.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+
+            using (var scope = AutofacConfig.Container.BeginLifetimeScope())
+            {
+                var lobby = scope.Resolve<LobbyForm>();
+                var main = scope.Resolve<MainForm>();
+                var chatRoom = scope.Resolve<ChatRoomForm>();
+
+
+                while(main.ShowDialog() == DialogResult.OK)
+                {
+                    lobby.ShowDialog();
+                }
+
+            }
+
+            //Application.Run(new Main());
         }
     }
 }

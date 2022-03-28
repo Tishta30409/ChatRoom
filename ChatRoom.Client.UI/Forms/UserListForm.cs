@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ChatRoom.Client.UI.Forms
 {
-    public partial class Lobby : Form
+    public partial class UserListForm : Form
     {
-        public Lobby()
+        public UserListForm()
         {
             InitializeComponent();
         }

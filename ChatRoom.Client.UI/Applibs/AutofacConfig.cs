@@ -63,13 +63,13 @@ namespace ChatRoom.Client.UI.Applibs
                 .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == $"I{t.Name}"))
                 .SingleInstance();
 
-            builder.RegisterType<Main>()
+            builder.RegisterType<MainForm>()
                 .SingleInstance();
 
-            builder.RegisterType<Lobby>()
+            builder.RegisterType<LobbyForm>()
                 .SingleInstance();
 
-            builder.RegisterType<ChatRoom>()
+            builder.RegisterType<ChatRoomForm>()
                 .SingleInstance();
 
             container = builder.Build();
