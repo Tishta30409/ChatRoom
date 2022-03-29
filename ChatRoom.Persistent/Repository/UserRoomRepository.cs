@@ -16,7 +16,7 @@ namespace ChatRoom.Persistent.Repository
             this.connectionString = connectionString;
         }
 
-        public (Exception exception, UserRoom data) AddRoom(UserRoom userRoom)
+        public (Exception exception, UserRoom userRoom) JoinRoom(UserRoom userRoom)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace ChatRoom.Persistent.Repository
         /// </summary>
         /// <param name="userRoom"></param>
         /// <returns></returns>
-        public (Exception exception, UserRoom data) LeaveRoom(string account)
+        public (Exception exception, UserRoom userRoom) LeaveRoom(string account)
         {
             try
             {
