@@ -181,5 +181,30 @@ namespace ChatRoom.Persistent.Repository
                 return (ex, null);
             }
         }
+
+        public (Exception exception, Account account) ChangePwd(Account account)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(this.connectionString))
+                {
+                    var result = cn.QueryFirstOrDefault<Account>(
+                        "pro_accountChangePassword",
+                        //參數名稱為PROCEDURE中宣告的變數名稱
+                        new
+                        {
+                            account = account.f_account,
+                            password = account.f_password
+                        },
+                        commandType: CommandType.StoredProcedure);
+
+                    return (null, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
     }
 }

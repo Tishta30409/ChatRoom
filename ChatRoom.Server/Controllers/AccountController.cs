@@ -53,6 +53,30 @@ namespace ChatRoom.Server.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/Account/ChangePwd")]
+        public HttpResponseMessage ChangePwd([FromBody] AccountDto input)
+        {
+            try
+            {
+                var pwdResult = this.repo.ChangePwd(new Account()
+                {
+                    f_account = input.Account,
+                    f_password = input.Password
+                });
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StringContent(JsonConvert.SerializeObject(pwdResult.account));
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{input.ToString()}");
+                return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
         //帳號登入 - CLIENT
         [HttpPost]
         [Route("api/Account/Login")]

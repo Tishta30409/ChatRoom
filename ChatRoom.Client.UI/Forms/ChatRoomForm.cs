@@ -132,7 +132,7 @@ namespace ChatRoom.Client.UI.Forms
 
         private void textUserEnter_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if(e.KeyCode == Keys.Enter && this.textUserEnter.Text != "")
             {
                 this.sendMessage();
             }

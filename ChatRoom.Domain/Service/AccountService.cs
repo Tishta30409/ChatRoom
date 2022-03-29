@@ -48,6 +48,27 @@ namespace ChatRoom.Domain.Service
             }
         }
 
+        public (Exception exception, Account account) ChangePwd(AccountDto account)
+        {
+            try
+            {
+                var content = new StringContent(account.ToString(), Encoding.UTF8, "application/json");
+                var response = this.client.PostAsync(this.route + "/ChangePwd", content).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<Account>(result)));
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
         public (Exception exception, AccountResult result) Login(LoginDto login)
         {
             try

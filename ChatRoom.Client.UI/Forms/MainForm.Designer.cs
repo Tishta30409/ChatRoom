@@ -34,13 +34,12 @@
             this.textPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnChangedPwd = new System.Windows.Forms.Button();
             this.msgLogin = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(155, 132);
+            this.btnLogin.Location = new System.Drawing.Point(155, 147);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 1;
@@ -80,9 +79,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(38, 35);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.Size = new System.Drawing.Size(32, 12);
             this.label2.TabIndex = 5;
-            this.label2.Text = "帳號";
+            this.label2.Text = "帳號:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
@@ -92,21 +91,12 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 6;
-            this.label3.Text = "密碼";
-            // 
-            // btnChangedPwd
-            // 
-            this.btnChangedPwd.Location = new System.Drawing.Point(155, 161);
-            this.btnChangedPwd.Name = "btnChangedPwd";
-            this.btnChangedPwd.Size = new System.Drawing.Size(75, 23);
-            this.btnChangedPwd.TabIndex = 7;
-            this.btnChangedPwd.Text = "修改密碼";
-            this.btnChangedPwd.UseVisualStyleBackColor = true;
+            this.label3.Text = "密碼:";
             // 
             // msgLogin
             // 
             this.msgLogin.AutoSize = true;
-            this.msgLogin.Location = new System.Drawing.Point(115, 107);
+            this.msgLogin.Location = new System.Drawing.Point(104, 119);
             this.msgLogin.Name = "msgLogin";
             this.msgLogin.Size = new System.Drawing.Size(83, 12);
             this.msgLogin.TabIndex = 8;
@@ -120,7 +110,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 216);
             this.Controls.Add(this.msgLogin);
-            this.Controls.Add(this.btnChangedPwd);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textPassword);
@@ -129,6 +118,7 @@
             this.Controls.Add(this.btnLogin);
             this.Name = "MainForm";
             this.Text = "聊天室系統";
+            this.Shown += new System.EventHandler(this.Main_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +131,6 @@
         private System.Windows.Forms.TextBox textPassword;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnChangedPwd;
         private System.Windows.Forms.Label msgLogin;
     }
 }

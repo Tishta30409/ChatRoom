@@ -4,6 +4,7 @@ using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
+using ChatRoom.Domain.Service;
 using System;
 using System.Windows.Forms;
 
@@ -27,6 +28,8 @@ namespace ChatRoom.Client.UI
                 var lobby = scope.Resolve<LobbyForm>();
                 var main = scope.Resolve<MainForm>();
                 var chatRoom = scope.Resolve<ChatRoomForm>();
+                var changePwd = scope.Resolve<ChangePasswordForm>(); 
+                var userList = scope.Resolve<UserListForm>();
 
                 while (LocalUserData.FormViewType != FormViewType.Leave)
                 {
@@ -34,6 +37,7 @@ namespace ChatRoom.Client.UI
                     {
                         case FormViewType.Main:
                             var result =  main.ShowDialog();
+
                             if(result == DialogResult.Cancel)
                             {
                                 LocalUserData.FormViewType = FormViewType.Leave;
@@ -43,6 +47,7 @@ namespace ChatRoom.Client.UI
                             if(lobby.ShowDialog() == DialogResult.Cancel)
                             {
                                 LocalUserData.FormViewType = FormViewType.Main;
+                                changePwd.Close();
                                 LocalUserData.DisConnect();
                             }
                             break;
@@ -50,12 +55,19 @@ namespace ChatRoom.Client.UI
                             if(chatRoom.ShowDialog() == DialogResult.Cancel)
                             {
                                 LocalUserData.FormViewType = FormViewType.Lobby;
+
+                                userList.Close();
+
                                 hubClient.SendAction(new ChatMessageAction()
                                 {
-                                    Content = "加入房間!",
+                                    Content = "離開房間",
                                     RoomID = LocalUserData.Room.f_id,
                                     NickName = LocalUserData.Account.f_nickName,
                                 });
+
+                                //正常離開房間
+                                var userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
+                                userRoomSvc.LeaveRoom(LocalUserData.Account.f_account);
                             }
                             break;
                         default:

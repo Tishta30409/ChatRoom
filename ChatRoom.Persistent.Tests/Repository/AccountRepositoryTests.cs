@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataObj;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;
@@ -111,9 +112,10 @@ namespace ChatRoom.Persistent.Tests
             Assert.IsNull(addResult.exception);
             Assert.AreEqual(addResult.result, ResultCode.SUCCESS);
 
-            var updateResult = this.repo.Update(new Account() { 
-                f_account = "test000", 
-                f_nickName = "我是你好" ,
+            var updateResult = this.repo.Update(new Account()
+            {
+                f_account = "test000",
+                f_nickName = "我是你好",
                 f_isLocked = 1,
                 f_isMuted = 0,
                 f_errorTimes = 3,
@@ -128,8 +130,8 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(updateResult.account.f_errorTimes, 3);
         }
 
-          [TestMethod]
-        public  void 刪除帳號測試()
+        [TestMethod]
+        public void 刪除帳號測試()
         {
             var addResult = this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
 
@@ -180,5 +182,29 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(queryResult.accounts.Count(), 5);
         }
 
+        [TestMethod]
+        public void 修改密碼測試()
+        {
+            this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
+
+            var changePwdResult = this.repo.ChangePwd(new Account()
+            {
+                f_account = "test000",
+                f_password = "1234567"
+            });
+
+            Assert.IsNull(changePwdResult.exception);
+            Assert.IsNotNull(changePwdResult.account);
+
+            var loginResult = this.repo.Login(new Account()
+            {
+                f_account = "test000",
+                f_password = "1234567"
+            });
+
+            Assert.IsNull(loginResult.exception);
+            Assert.IsNotNull(loginResult.result.Account);
+            Assert.AreEqual(ResultCode.SUCCESS, loginResult.result.ResultCode);
+        }
     }
 }

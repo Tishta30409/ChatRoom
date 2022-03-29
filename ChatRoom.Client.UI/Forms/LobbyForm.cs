@@ -82,7 +82,7 @@ namespace ChatRoom.Client.UI.Forms
                     return;
                 }
 
-                if(this.textNickName.Text == LocalUserData.Account.f_account)
+                if (this.textNickName.Text == LocalUserData.Account.f_account)
                 {
                     MessageBox.Show("請先修改暱稱");
                     return;
@@ -90,14 +90,15 @@ namespace ChatRoom.Client.UI.Forms
 
                 if (e.RowIndex > -1 && e.RowIndex < LocalUserData.Rooms.Count())
                 {
-                    var result =  this.userRoomSvc.JoinRoom(new UserRoom() {
-                        f_account = LocalUserData.Account.f_account, 
+                    var result = this.userRoomSvc.JoinRoom(new UserRoom()
+                    {
+                        f_account = LocalUserData.Account.f_account,
                         f_roomID = LocalUserData.Rooms[e.RowIndex].f_id,
                         f_nickName = LocalUserData.Account.f_nickName
-                        
+
                     });
 
-                    if(result.userRoom != null)
+                    if (result.userRoom != null)
                     {
                         LocalUserData.Room.f_id = result.userRoom.f_roomID;
                         LocalUserData.FormViewType = FormViewType.ChatRoom;
@@ -107,12 +108,37 @@ namespace ChatRoom.Client.UI.Forms
                 }
             }
             catch (Exception)
-            { 
+            {
                 throw;
             }
         }
 
-        private void btnChangeNickName_Click(object sender, EventArgs e)
+        private void ButtonOnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var btn = (Button)sender;
+                switch (btn.Name)
+                {
+                    case "btnChangeNickName":
+                        this.changeNickName();
+                        break;
+                    case "btnChangePwd":
+                        this.changePassword();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void changeNickName()
         {
             try
             {
@@ -122,7 +148,7 @@ namespace ChatRoom.Client.UI.Forms
                     return;
                 }
 
-                if(this.textNickName.Text == LocalUserData.Account.f_nickName)
+                if (this.textNickName.Text == LocalUserData.Account.f_nickName)
                 {
                     MessageBox.Show("暱稱沒有更動");
                     return;
@@ -140,7 +166,7 @@ namespace ChatRoom.Client.UI.Forms
                 });
 
                 //沒有回傳值 更新失敗
-                if(updateResult.account == null)
+                if (updateResult.account == null)
                 {
                     MessageBox.Show("更新失敗");
                 }
@@ -155,6 +181,12 @@ namespace ChatRoom.Client.UI.Forms
 
                 throw;
             }
+        }
+
+        private void changePassword()
+        {
+            var pwdForm = AutofacConfig.Container.BeginLifetimeScope().Resolve<ChangePasswordForm>();
+            pwdForm.ShowDialog();
         }
     }
 }

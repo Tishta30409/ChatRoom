@@ -46,7 +46,6 @@ namespace ChatRoom.Client.UI
         public void Main_Shown(object sender, EventArgs e)
         {
             this.msgLogin.Visible = false;
-            this.btnChangedPwd.Enabled = true;
             this.btnLogin.Enabled = true;
             this.btnRegister.Enabled = true;
         }
@@ -106,7 +105,6 @@ namespace ChatRoom.Client.UI
                     {
                         this.btnLogin.Enabled = false;
                         this.btnRegister.Enabled = false;
-                        this.btnChangedPwd.Enabled = false;
 
                         LocalUserData.Account = result.result.Account;
 

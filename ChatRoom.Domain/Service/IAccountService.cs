@@ -25,5 +25,7 @@ namespace ChatRoom.Domain.Service
         (Exception exception, IEnumerable<Account> accounts) QueryList();
 
         (Exception exception, Account account) Delete(int id);
+
+        (Exception exception, Account account) ChangePwd(AccountDto account);
     }
 }

@@ -66,5 +66,7 @@ namespace ChatRoom.Domain.Repository
         /// <param account="accoumt"></param>
         /// <returns></returns>
         (Exception exception, Account account) Delete(int id);
+
+        (Exception exception, Account account) ChangePwd(Account account);
     }
 }
