@@ -79,6 +79,8 @@
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\IHistoryRepository.cs" />
     <Compile Include="Repository\IUserRoomRepository.cs" />
+    <Compile Include="Service\IUserRoomService.cs" />
+    <Compile Include="Service\UserRoomService.cs" />
     <Compile Include="Service\RoomService.cs" />
     <Compile Include="Service\HistoryService.cs" />
     <Compile Include="Service\AccountService.cs" />

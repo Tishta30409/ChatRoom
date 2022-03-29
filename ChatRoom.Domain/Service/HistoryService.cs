@@ -50,7 +50,7 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, IEnumerable<History> historys) QueryList(int roomID)
+        public (Exception exception, IEnumerable<History> historys) QueryList(int? roomID)
         {
             try
             {

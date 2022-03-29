@@ -26,6 +26,6 @@ namespace ChatRoom.Domain.Service
         /// 查詢歷史紀錄清單 最多10筆
         /// </summary>
         /// <returns></returns>
-        (Exception exception, IEnumerable<History> historys) QueryList(int roomID);
+        (Exception exception, IEnumerable<History> historys) QueryList(int? roomID);
     }
 }

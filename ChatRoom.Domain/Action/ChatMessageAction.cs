@@ -11,7 +11,7 @@ namespace ChatRoom.Domain.Action
         /// <summary>
         /// 房間ID
         /// </summary>
-        public int RoomID { get; set; }
+        public int? RoomID { get; set; }
 
         /// <summary>
         /// 暱稱

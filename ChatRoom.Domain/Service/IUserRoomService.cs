@@ -1,16 +1,16 @@
 ﻿using ChatRoom.Domain.Model.DataType.Tsql;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChatRoom.Domain.Repository
+namespace ChatRoom.Domain.Service
 {
-    public interface IUserRoomRepository
+    public interface IUserRoomService
     {
+
         (Exception exception, UserRoom userRoom) JoinRoom(UserRoom userRoom);
 
+
         (Exception exception, UserRoom userRoom) LeaveRoom(string account);
+
+ 
     }
 }
