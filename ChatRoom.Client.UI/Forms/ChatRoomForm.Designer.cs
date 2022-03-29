@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.textMessage = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textUserEnter = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.labRoomName = new System.Windows.Forms.Label();
             this.labNickName = new System.Windows.Forms.Label();
-            this.textRoomName = new System.Windows.Forms.TextBox();
-            this.textNickName = new System.Windows.Forms.TextBox();
             this.btnUserList = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -47,21 +45,24 @@
             this.textMessage.Size = new System.Drawing.Size(586, 264);
             this.textMessage.TabIndex = 0;
             // 
-            // textBox1
+            // textUserEnter
             // 
-            this.textBox1.Location = new System.Drawing.Point(14, 368);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(486, 22);
-            this.textBox1.TabIndex = 1;
+            this.textUserEnter.Location = new System.Drawing.Point(14, 367);
+            this.textUserEnter.MaxLength = 20;
+            this.textUserEnter.Name = "textUserEnter";
+            this.textUserEnter.Size = new System.Drawing.Size(486, 22);
+            this.textUserEnter.TabIndex = 1;
+            this.textUserEnter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textUserEnter_KeyUp);
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(525, 354);
+            this.btnSend.Location = new System.Drawing.Point(525, 367);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 2;
             this.btnSend.Text = "送出";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.ButtonOnClick);
             // 
             // labRoomName
             // 
@@ -75,25 +76,11 @@
             // labNickName
             // 
             this.labNickName.AutoSize = true;
-            this.labNickName.Location = new System.Drawing.Point(25, 338);
+            this.labNickName.Location = new System.Drawing.Point(12, 339);
             this.labNickName.Name = "labNickName";
-            this.labNickName.Size = new System.Drawing.Size(29, 12);
+            this.labNickName.Size = new System.Drawing.Size(80, 12);
             this.labNickName.TabIndex = 4;
-            this.labNickName.Text = "暱稱";
-            // 
-            // textRoomName
-            // 
-            this.textRoomName.Location = new System.Drawing.Point(71, 12);
-            this.textRoomName.Name = "textRoomName";
-            this.textRoomName.Size = new System.Drawing.Size(149, 22);
-            this.textRoomName.TabIndex = 5;
-            // 
-            // textNickName
-            // 
-            this.textNickName.Location = new System.Drawing.Point(71, 335);
-            this.textNickName.Name = "textNickName";
-            this.textNickName.Size = new System.Drawing.Size(139, 22);
-            this.textNickName.TabIndex = 6;
+            this.labNickName.Text = "暱稱:aaakdskad";
             // 
             // btnUserList
             // 
@@ -103,22 +90,22 @@
             this.btnUserList.TabIndex = 7;
             this.btnUserList.Text = "房間使用者清單";
             this.btnUserList.UseVisualStyleBackColor = true;
+            this.btnUserList.Click += new System.EventHandler(this.ButtonOnClick);
             // 
-            // ChatRoom
+            // ChatRoomForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(616, 419);
+            this.ClientSize = new System.Drawing.Size(617, 413);
             this.Controls.Add(this.btnUserList);
-            this.Controls.Add(this.textNickName);
-            this.Controls.Add(this.textRoomName);
             this.Controls.Add(this.labNickName);
             this.Controls.Add(this.labRoomName);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textUserEnter);
             this.Controls.Add(this.textMessage);
-            this.Name = "ChatRoom";
+            this.Name = "ChatRoomForm";
             this.Text = "ChatRoom";
+            this.Shown += new System.EventHandler(this.ChatRoom_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,12 +114,10 @@
         #endregion
 
         private System.Windows.Forms.TextBox textMessage;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textUserEnter;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Label labRoomName;
         private System.Windows.Forms.Label labNickName;
-        private System.Windows.Forms.TextBox textRoomName;
-        private System.Windows.Forms.TextBox textNickName;
         private System.Windows.Forms.Button btnUserList;
     }
 }

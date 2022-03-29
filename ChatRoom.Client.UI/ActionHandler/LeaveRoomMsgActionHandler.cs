@@ -16,26 +16,20 @@ namespace ChatRoom.Client.UI.ActionHandler
             this.console = console;
         }
 
-        public bool Execute(ActionModule actionModule)
+        public void Execute(ActionModule actionModule)
         {
             try
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LoginUserData.Room?.f_id == action?.RoomID)
+                if(LocalUserData.Room?.f_id == action?.RoomID)
                 {
                     this.console.WriteLine($"{action.NickName} 離開聊天室..");
                 }
-
-                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                this.console.Clear();
-                this.console.WriteLine(ex.Message);
-                this.console.Read();
-
-                return false;
+                throw;
             }
         }
     }

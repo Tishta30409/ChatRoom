@@ -28,34 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dvgRoomUsers = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dvgRoomUsers)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dvgRoomUsers
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(316, 292);
-            this.dataGridView1.TabIndex = 0;
+            this.dvgRoomUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvgRoomUsers.Location = new System.Drawing.Point(12, 12);
+            this.dvgRoomUsers.Name = "dvgRoomUsers";
+            this.dvgRoomUsers.RowTemplate.Height = 24;
+            this.dvgRoomUsers.Size = new System.Drawing.Size(316, 292);
+            this.dvgRoomUsers.TabIndex = 0;
             // 
-            // UserList
+            // UserListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(341, 330);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "UserList";
+            this.Controls.Add(this.dvgRoomUsers);
+            this.Name = "UserListForm";
             this.Text = "房間使用者清單";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Shown += new System.EventHandler(this.UserListForm_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.dvgRoomUsers)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dvgRoomUsers;
     }
 }

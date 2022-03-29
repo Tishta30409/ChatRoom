@@ -75,6 +75,7 @@
     <Compile Include="ActionHandler\HistoryActionHandlerTests.cs" />
     <Compile Include="Controllers\AccountControllerTests.cs" />
     <Compile Include="Controllers\HistoryControllerTests.cs" />
+    <Compile Include="Controllers\UserRoomControllerTests.cs" />
     <Compile Include="Controllers\RoomControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

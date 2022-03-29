@@ -19,26 +19,21 @@ namespace ChatRoom.Client.UI.ActionHandler
             this.hubClient = hubClient;
         }
 
-        public bool Execute(ActionModule actionModule)
+        public void Execute(ActionModule actionModule)
         {
             try
             {
                 var action = JsonConvert.DeserializeObject<UpdateAccountAction>(actionModule.Message);
 
-                if(LoginUserData.Account.f_account == action?.Account.f_account)
+                if(LocalUserData.Account.f_account == action?.Account.f_account)
                 {
-                    LoginUserData.Account = action.Account;
+                    LocalUserData.Account = action.Account;
                 }
 
-                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                this.console.Clear();
-                this.console.WriteLine(ex.Message);
-                this.console.Read();
-
-                return false;
+                throw;
             }
         }
     }

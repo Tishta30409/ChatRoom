@@ -2,6 +2,8 @@
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
+using ChatRoom.Client.UI.Signalr;
+using ChatRoom.Domain.Action;
 using System;
 using System.Windows.Forms;
 
@@ -20,19 +22,47 @@ namespace ChatRoom.Client.UI
 
             using (var scope = AutofacConfig.Container.BeginLifetimeScope())
             {
+                var hubClient = scope.Resolve<IHubClient>();
+
                 var lobby = scope.Resolve<LobbyForm>();
                 var main = scope.Resolve<MainForm>();
                 var chatRoom = scope.Resolve<ChatRoomForm>();
 
-
-                while(main.ShowDialog() == DialogResult.OK)
+                while (LocalUserData.FormViewType != FormViewType.Leave)
                 {
-                    lobby.ShowDialog();
+                    switch (LocalUserData.FormViewType)
+                    {
+                        case FormViewType.Main:
+                            var result =  main.ShowDialog();
+                            if(result == DialogResult.Cancel)
+                            {
+                                LocalUserData.FormViewType = FormViewType.Leave;
+                            }
+                            break;
+                        case FormViewType.Lobby:
+                            if(lobby.ShowDialog() == DialogResult.Cancel)
+                            {
+                                LocalUserData.FormViewType = FormViewType.Main;
+                                LocalUserData.DisConnect();
+                            }
+                            break;
+                        case FormViewType.ChatRoom:
+                            if(chatRoom.ShowDialog() == DialogResult.Cancel)
+                            {
+                                LocalUserData.FormViewType = FormViewType.Lobby;
+                                hubClient.SendAction(new ChatMessageAction()
+                                {
+                                    Content = "加入房間!",
+                                    RoomID = LocalUserData.Room.f_id,
+                                    NickName = LocalUserData.Account.f_nickName,
+                                });
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-
             }
-
-            //Application.Run(new Main());
         }
     }
 }

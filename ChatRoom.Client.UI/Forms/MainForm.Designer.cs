@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnChangedPwd = new System.Windows.Forms.Button();
+            this.msgLogin = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -60,6 +61,7 @@
             // textAccount
             // 
             this.textAccount.Location = new System.Drawing.Point(88, 32);
+            this.textAccount.MaxLength = 20;
             this.textAccount.Name = "textAccount";
             this.textAccount.Size = new System.Drawing.Size(142, 22);
             this.textAccount.TabIndex = 3;
@@ -67,7 +69,9 @@
             // textPassword
             // 
             this.textPassword.Location = new System.Drawing.Point(88, 82);
+            this.textPassword.MaxLength = 20;
             this.textPassword.Name = "textPassword";
+            this.textPassword.PasswordChar = '*';
             this.textPassword.Size = new System.Drawing.Size(142, 22);
             this.textPassword.TabIndex = 4;
             // 
@@ -99,11 +103,23 @@
             this.btnChangedPwd.Text = "修改密碼";
             this.btnChangedPwd.UseVisualStyleBackColor = true;
             // 
+            // msgLogin
+            // 
+            this.msgLogin.AutoSize = true;
+            this.msgLogin.Location = new System.Drawing.Point(115, 107);
+            this.msgLogin.Name = "msgLogin";
+            this.msgLogin.Size = new System.Drawing.Size(83, 12);
+            this.msgLogin.TabIndex = 8;
+            this.msgLogin.Text = "登入中請稍後..";
+            this.msgLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.msgLogin.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 216);
+            this.Controls.Add(this.msgLogin);
             this.Controls.Add(this.btnChangedPwd);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -126,6 +142,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnChangedPwd;
+        private System.Windows.Forms.Label msgLogin;
     }
 }
 

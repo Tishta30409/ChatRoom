@@ -1,13 +1,27 @@
 ﻿using ChatRoom.Domain.Model;
 using System;
+using System.Collections.Generic;
 
 namespace ChatRoom.Client.UI.Model
 {
-    public static class LoginUserData
+    public enum FormViewType
     {
+        Main = 0,
+        Lobby = 1,
+        ChatRoom = 2,
+        Leave = 3,
+    }
+
+    public static class LocalUserData
+    {
+        private static FormViewType formViewType = FormViewType.Main;
+
         private static Account account;
 
         private static Room room;
+
+        private static List<Room> rooms;
+
 
         //外面就不用NEW了
         public static Account Account
@@ -24,7 +38,8 @@ namespace ChatRoom.Client.UI.Model
         }
 
         //自動屬性
-        public static Room Room {
+        public static Room Room
+        {
             set { room = value; }
             get
             {
@@ -34,6 +49,18 @@ namespace ChatRoom.Client.UI.Model
                 }
                 return room;
             }
+        }
+
+        public static List<Room> Rooms
+        {
+            set { rooms = value; }
+            get { return rooms; }
+        }
+
+        public static FormViewType FormViewType
+        {
+            get { return formViewType; }
+            set { formViewType = value; }
         }
 
         public static void DisConnect()

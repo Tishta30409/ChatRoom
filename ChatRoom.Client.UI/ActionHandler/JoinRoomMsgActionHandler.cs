@@ -1,4 +1,5 @@
-﻿using ChatRoom.Client.UI.Model;
+﻿using ChatRoom.Client.UI.Forms;
+using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
@@ -9,33 +10,28 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class JoinRoomMsgActionHandler : IActionHandler
     {
-        private IConsoleWrapper console;
+        private ChatRoomForm chatRoomForm;
 
-        public JoinRoomMsgActionHandler(IConsoleWrapper console)
+        public JoinRoomMsgActionHandler(ChatRoomForm chatRoomForm)
         {
-            this.console = console;
+            this.chatRoomForm = chatRoomForm;
         }
 
-        public bool Execute(ActionModule actionModule)
+        public void Execute(ActionModule actionModule)
         {
             try
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LoginUserData.Room?.f_id == action?.RoomID && LoginUserData.Account.f_nickName != action.NickName)
+                if(LocalUserData.Room?.f_id == action?.RoomID && LocalUserData.Account.f_nickName != action.NickName)
                 {
-                    this.console.WriteLine($"{action?.NickName??"沒有使用者"} 加入聊天室!");
+                    this.chatRoomForm.OnReceiveMessage(action);
                 }
 
-                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                this.console.Clear();
-                this.console.WriteLine(ex.Message);
-                this.console.Read();
-
-                return false;
+                throw;
             }
         }
     }

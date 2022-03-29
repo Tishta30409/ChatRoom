@@ -72,6 +72,9 @@ namespace ChatRoom.Client.UI.Applibs
             builder.RegisterType<ChatRoomForm>()
                 .SingleInstance();
 
+            builder.RegisterType<UserListForm>()
+                .SingleInstance();
+
             container = builder.Build();
         }
     }

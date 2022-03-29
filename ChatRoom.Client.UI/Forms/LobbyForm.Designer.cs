@@ -68,6 +68,7 @@
             // textNickName
             // 
             this.textNickName.Location = new System.Drawing.Point(60, 16);
+            this.textNickName.MaxLength = 10;
             this.textNickName.Name = "textNickName";
             this.textNickName.Size = new System.Drawing.Size(141, 22);
             this.textNickName.TabIndex = 3;

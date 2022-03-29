@@ -1,4 +1,5 @@
-﻿using ChatRoom.Client.UI.Model;
+﻿using ChatRoom.Client.UI.Forms;
+using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
@@ -9,35 +10,27 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class ChatMessageActionHandler : IActionHandler
     {
-        private IConsoleWrapper console;
+        private ChatRoomForm chatRoomForm;
 
-        public ChatMessageActionHandler(IConsoleWrapper console)
+        public ChatMessageActionHandler(ChatRoomForm chatRoomForm)
         {
-            this.console = console;
+            this.chatRoomForm = chatRoomForm;
         }
 
-        public bool Execute(ActionModule actionModule)
+        public void Execute(ActionModule actionModule)
         {
             try
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-
-
-                if (LoginUserData.Room.f_id == action?.RoomID)
+                if (LocalUserData.Room.f_id == action?.RoomID)
                 {
-                    this.console.WriteLine($"{action.NickName}({action.CreateDateTime}):: {action.Content}");
+                    this.chatRoomForm.OnReceiveMessage(action);
                 }
-
-                return true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                this.console.Clear();
-                this.console.WriteLine(ex.Message);
-                this.console.Read();
-
-                return false;
+                throw;
             }
         }
     }

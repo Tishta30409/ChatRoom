@@ -49,7 +49,7 @@ namespace ChatRoom.Server.Tests.Controllers
             var controller = new RoomController(repo.Object, hubClient.Object);
             var postRsult = controller.Delete(1);
 
-            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+            var result = JsonConvert.DeserializeObject<Room>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
         }
