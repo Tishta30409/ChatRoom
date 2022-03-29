@@ -21,7 +21,6 @@ namespace ChatRoom.Domain.Service
         {
             this.client = new HttpClient()
             {
-
                 BaseAddress = new Uri(serviceUri),
                 Timeout = TimeSpan.FromSeconds(timeout)
             };

@@ -71,5 +71,34 @@ namespace ChatRoom.Domain.Service
             }
         }
 
+        public (Exception exception, IEnumerable< UserRoom> userRooms) QueryList(int? roomID)
+        {
+            try
+            {
+                if(roomID != null)
+                {
+                    var content = new StringContent(JsonConvert.SerializeObject(roomID), Encoding.UTF8, "application/json");
+                    var response = this.client.GetAsync(this.route + $"/QueryList?roomID={roomID}").Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception(response.Content.ReadAsStringAsync().Result);
+                    }
+
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    return ((null, JsonConvert.DeserializeObject<IEnumerable<UserRoom>>(result)));
+                }
+                else
+                {
+                    return (null, null);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
     }
 }

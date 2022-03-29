@@ -1,5 +1,6 @@
 ﻿using ChatRoom.Domain.Model.DataType.Tsql;
 using System;
+using System.Collections.Generic;
 
 namespace ChatRoom.Domain.Service
 {
@@ -11,6 +12,8 @@ namespace ChatRoom.Domain.Service
 
         (Exception exception, UserRoom userRoom) LeaveRoom(string account);
 
- 
+        (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int? roomID);
+
+
     }
 }
