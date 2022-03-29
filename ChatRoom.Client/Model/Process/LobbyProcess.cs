@@ -53,7 +53,7 @@ namespace ChatRoom.Client.Model.Process
 
                 while (queryResult.rooms.Where((element, index) => element.f_id == number).Count() == 0 || selectRoomID == string.Empty)
                 {
-                    if(LoginUserData.Account != null)
+                    if(LocalUserData.Account != null)
                     {
                         this.console.WriteLine("請輸入房間編號(輸入exit離開): ");
                         selectRoomID = this.console.ReadLine();
@@ -61,15 +61,15 @@ namespace ChatRoom.Client.Model.Process
 
                         if (selectRoomID.ToLower() == "exit")
                         {
-                            LoginUserData.DisConnect();
+                            LocalUserData.DisConnect();
                             this.hubClient.Disconnect();
                             return ProcessViewType.Main;
                         }
                     }
                 }
 
-                LoginUserData.Room.f_id = number;
-                var updateResult =  this.accountSvc.Update(LoginUserData.Account);
+                LocalUserData.Room.f_id = number;
+                var updateResult =  this.accountSvc.Update(LocalUserData.Account);
 
                 if(updateResult.account != null)
                 {
@@ -77,8 +77,8 @@ namespace ChatRoom.Client.Model.Process
                     //送出通知
                     this.hubClient.SendAction(new JoinRoomMsgAction()
                     {
-                        RoomID = LoginUserData.Room.f_id,
-                        NickName = LoginUserData.Account.f_nickName,
+                        RoomID = LocalUserData.Room.f_id,
+                        NickName = LocalUserData.Account.f_nickName,
                     });
 
                     return ProcessViewType.ChatRoom;

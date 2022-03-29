@@ -22,9 +22,9 @@ namespace ChatRoom.Client.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LoginUserData.Room.f_id == action?.RoomID)
+                if(LocalUserData.Room.f_id == action?.RoomID)
                 {
-                    LoginUserData.LeaveRoom();
+                    LocalUserData.LeaveRoom();
 
                     this.console.WriteLine($"{action.RoomID} 聊天室已斷線");
                 }

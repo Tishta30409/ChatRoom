@@ -24,7 +24,7 @@ namespace ChatRoom.Client.ActionHandler
 
 
 
-                if (LoginUserData.Room.f_id == action?.RoomID)
+                if (LocalUserData.Room.f_id == action?.RoomID)
                 {
                     this.console.WriteLine($"{action.NickName}({action.CreateDateTime}):: {action.Content}");
                 }

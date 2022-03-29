@@ -72,7 +72,7 @@ namespace ChatRoom.Client.Model.Process
                     if(result.result.ResultCode == ResultCode.SUCCESS)
                     {
                         // 存帳號資料
-                        LoginUserData.Account = result.result.Account;
+                        LocalUserData.Account = result.result.Account;
                         this.console.WriteLine("登入成功 嘗試建立連線");
 
                         //連線

@@ -13,7 +13,7 @@ namespace ChatRoom.Client.Model
         /// </summary>
         /// <param name="roomID"></param>
         /// <returns></returns>
-        public static string GetRoomName(int roomID)
+        public static string GetRoomName(int? roomID)
         {
             return Rooms.Where((element, index)=> element.f_id == roomID).FirstOrDefault().f_roomName;
         }

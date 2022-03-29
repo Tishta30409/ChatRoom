@@ -22,7 +22,7 @@ namespace ChatRoom.Client.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LoginUserData.Room?.f_id == action?.RoomID)
+                if(LocalUserData.Room?.f_id == action?.RoomID)
                 {
                     this.console.WriteLine($"{action.NickName} 離開聊天室..");
                 }

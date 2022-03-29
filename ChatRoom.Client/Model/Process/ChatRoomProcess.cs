@@ -33,11 +33,11 @@ namespace ChatRoom.Client.Model.Process
             {
                 this.console.Clear();
                 this.console.WriteLine("聊天室介面");
-                this.console.WriteLine($"房間名稱:: {RoomListData.GetRoomName(LoginUserData.Room.f_id)}");
-                this.console.WriteLine($"使用者暱稱::{LoginUserData.Account.f_nickName}");
+                this.console.WriteLine($"房間名稱:: {RoomListData.GetRoomName(LocalUserData.Room.f_id)}");
+                this.console.WriteLine($"使用者暱稱::{LocalUserData.Account.f_nickName}");
                 this.console.WriteLine("開始聊天..(輸入exit離開)");
 
-                int roomID = LoginUserData.Room.f_id;
+                int? roomID = LocalUserData.Room.f_id;
 
                 //歷史訊息
                 var queryList = this.historySvc.QueryList(roomID);
@@ -49,7 +49,7 @@ namespace ChatRoom.Client.Model.Process
                 var chatString = string.Empty;
                 while (chatString.ToLower() != "exit")
                 {
-                    if (LoginUserData.Room != null)
+                    if (LocalUserData.Room != null)
                     {
                         this.console.WriteLine("聊天室不存在 返回大廳");
                         break;
@@ -60,12 +60,12 @@ namespace ChatRoom.Client.Model.Process
                         chatString = this.keyboardReader.GetInputString("", false, UserConstants.ContentLength);
 
                         //this.console.WriteLine(chatString);
-                        if (LoginUserData.Account.f_isMuted == 0 && chatString.ToLower() != "exit" && LoginUserData.Room != null)
+                        if (LocalUserData.Account.f_isMuted == 0 && chatString.ToLower() != "exit" && LocalUserData.Room != null)
                             this.hubClient.SendAction(new ChatMessageAction()
                             {
                                 Content = chatString,
-                                RoomID = LoginUserData.Room.f_id,
-                                NickName = LoginUserData.Account.f_nickName,
+                                RoomID = LocalUserData.Room.f_id,
+                                NickName = LocalUserData.Account.f_nickName,
                             });
                     }
                 }
@@ -73,11 +73,11 @@ namespace ChatRoom.Client.Model.Process
                 // 離開 
                 this.hubClient.SendAction(new LeaveRoomMsgAction()
                 {
-                    RoomID = LoginUserData.Room.f_id,
-                    NickName = LoginUserData.Account.f_nickName,
+                    RoomID = LocalUserData.Room.f_id,
+                    NickName = LocalUserData.Account.f_nickName,
                 });
 
-                LoginUserData.Room = null;
+                LocalUserData.Room = null;
 
                 this.console.ReadLine();
 
