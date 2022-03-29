@@ -27,5 +27,8 @@ namespace ChatRoom.Domain.Action
         /// 發話時間
         /// </summary>
         public DateTime CreateDateTime { get; set; }
+
+
+        public bool IsRecord { get; set; }
     }
 }

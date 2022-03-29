@@ -4,6 +4,7 @@ using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Service;
 using NLog;
 using System;
@@ -24,6 +25,8 @@ namespace ChatRoom.Client.UI.Forms
 
         private IUserRoomService userRoomSvc;
 
+        private IHistoryService historySvc;
+
         private ILogger logger = LogManager.GetLogger("ChatRoomUI");
 
         private delegate void DelShowMessage(ChatMessageAction action);
@@ -34,16 +37,24 @@ namespace ChatRoom.Client.UI.Forms
 
             this.hubClient = AutofacConfig.Container.Resolve<IHubClient>();
             this.userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
+            this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
         }
 
         private void ChatRoom_Shown(object sender, EventArgs e)
         {
             this.labNickName.Text = $"暱稱: {LocalUserData.Account.f_nickName}";
             this.labRoomName.Text = $"房間名稱: {LocalUserData.Rooms.FirstOrDefault(room => room.f_id == LocalUserData.Room?.f_id).f_roomName}";
+            this.textMessage.Text = "";
 
             if (LocalUserData.Account.f_isMuted == 1)
             {
                 this.btnSend.Enabled = false;
+            }
+
+            var result = this.historySvc.QueryList(LocalUserData.Room.f_id);
+            foreach (History history in result.historys)
+            {
+                this.textMessage.Text += $"{history.f_nickName}({history.f_createDateTime}): {history.f_content}\r\n";
             }
 
             this.hubClient.SendAction(new ChatMessageAction()
@@ -51,7 +62,8 @@ namespace ChatRoom.Client.UI.Forms
                 Content = "加入房間!",
                 RoomID = LocalUserData.Room.f_id,
                 NickName = LocalUserData.Account.f_nickName,
-            });
+                IsRecord = false
+            }) ;
         }
 
         private void ButtonOnClick(object sender, EventArgs e)
@@ -88,6 +100,7 @@ namespace ChatRoom.Client.UI.Forms
                 Content = this.textUserEnter.Text,
                 RoomID = LocalUserData.Room.f_id,
                 NickName = LocalUserData.Account.f_nickName,
+                IsRecord = true
             });
 
             this.textUserEnter.Text = "";

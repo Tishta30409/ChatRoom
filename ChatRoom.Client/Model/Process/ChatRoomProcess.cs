@@ -66,6 +66,7 @@ namespace ChatRoom.Client.Model.Process
                                 Content = chatString,
                                 RoomID = LocalUserData.Room.f_id,
                                 NickName = LocalUserData.Account.f_nickName,
+                                IsRecord = true
                             });
                     }
                 }

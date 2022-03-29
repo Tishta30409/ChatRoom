@@ -20,3 +20,6 @@ TRUNCATE TABLE t_history
 
 IF EXISTS( SELECT * FROM sys.tables WHERE name = 't_room' )
 TRUNCATE TABLE t_room
+
+IF EXISTS( SELECT * FROM sys.tables WHERE name = 't_userroom' )
+TRUNCATE TABLE t_userroom

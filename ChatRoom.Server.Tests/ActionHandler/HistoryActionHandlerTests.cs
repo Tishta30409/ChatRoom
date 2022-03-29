@@ -38,7 +38,8 @@ namespace ChatRoom.Server.Tests.ActionHandler
                     RoomID = 1,
                     NickName = "test001",
                     Content = "content0001",
-                    CreateDateTime = DateTime.Now
+                    CreateDateTime = DateTime.Now,
+                    IsRecord = true
                 }.ToString()
             });
 

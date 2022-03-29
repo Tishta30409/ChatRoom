@@ -63,6 +63,7 @@ namespace ChatRoom.Client.UI
                                     Content = "離開房間",
                                     RoomID = LocalUserData.Room.f_id,
                                     NickName = LocalUserData.Account.f_nickName,
+                                    IsRecord = false
                                 });
 
                                 //正常離開房間

@@ -47,22 +47,26 @@ namespace ChatRoom.Server.ActionHandler
                 }
                 else
                 {
-                    //塞資料
-                    var addResult = this.repo.Add(
-                        new History()
-                        {
-                            f_roomID = content.RoomID,
-                            f_nickName = content.NickName,
-                            f_content = content.Content,
-                            f_createDateTime = DateTime.Now,
-                        });
+                    if (content.IsRecord)
+                    {
+                        //塞資料
+                        var addResult = this.repo.Add(
+                            new History()
+                            {
+                                f_roomID = content.RoomID,
+                                f_nickName = content.NickName,
+                                f_content = content.Content,
+                                f_createDateTime = DateTime.Now,
+                            });
+                    }
+                   
 
                     //沒問題就廣播給所有連線
                     var actionResult = new ChatMessageAction()
                     {
-                        RoomID = addResult.history.f_roomID,
-                        NickName = addResult.history.f_nickName,
-                        Content = addResult.history.f_content,
+                        RoomID = content.RoomID,
+                        NickName = content.NickName,
+                        Content = content.Content,
                         CreateDateTime = DateTime.Now,
                     };
 
