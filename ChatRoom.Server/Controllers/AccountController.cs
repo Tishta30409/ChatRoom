@@ -38,7 +38,7 @@ namespace ChatRoom.Server.Controllers
                 {
                     f_account = input.Account,
                     f_password = input.Password,
-                    f_nickName = ""
+                    f_nickName = input.Account,
                 });
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);

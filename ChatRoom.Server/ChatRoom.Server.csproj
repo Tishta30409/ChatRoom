@@ -144,6 +144,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\UserRoomController.cs" />
     <Compile Include="Hubs\ChatRoomHub.cs" />
     <Compile Include="Hubs\HubClient.cs" />
     <Compile Include="Hubs\IHubClient.cs" />
