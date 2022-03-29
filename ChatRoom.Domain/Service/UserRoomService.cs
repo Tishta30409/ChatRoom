@@ -16,7 +16,7 @@ namespace ChatRoom.Domain.Service
     {
         private HttpClient client;
 
-        private string route = @"/api/Room";
+        private string route = @"/api/UserRoom";
 
         public UserRoomService(string serviceUri, int timeout = 5)
         {
@@ -33,7 +33,7 @@ namespace ChatRoom.Domain.Service
             try
             {
                 var content = new StringContent(JsonConvert.SerializeObject(userRoom), Encoding.UTF8, "application/json");
-                var response = this.client.PostAsync(this.route + "/Add", content).Result;
+                var response = this.client.PostAsync(this.route + "/JoinRoom", content).Result;
 
                 if (!response.IsSuccessStatusCode)
                 {

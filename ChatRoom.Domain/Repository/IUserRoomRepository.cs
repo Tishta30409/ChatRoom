@@ -12,5 +12,8 @@ namespace ChatRoom.Domain.Repository
         (Exception exception, UserRoom userRoom) JoinRoom(UserRoom userRoom);
 
         (Exception exception, UserRoom userRoom) LeaveRoom(string account);
+
+
+        (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int roomID);
     }
 }
