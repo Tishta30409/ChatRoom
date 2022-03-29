@@ -2,6 +2,7 @@
 using ChatRoom.Domain.Repository;
 using Dapper;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -23,12 +24,13 @@ namespace ChatRoom.Persistent.Repository
                 using (var cn = new SqlConnection(this.connectionString))
                 {
                     var result = cn.QueryFirstOrDefault<UserRoom>(
-                        "pro_userroom_join",
+                        "pro_userRoomJoin",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
                             Account = userRoom.f_account,
-                            RoomID = userRoom.f_roomID
+                            RoomID = userRoom.f_roomID,
+                            NickName = userRoom.f_nickName,
                         },
                         commandType: CommandType.StoredProcedure);
 
@@ -53,11 +55,35 @@ namespace ChatRoom.Persistent.Repository
                 using (var cn = new SqlConnection(this.connectionString))
                 {
                     var result = cn.QueryFirstOrDefault<UserRoom>(
-                        "pro_userroom_leave",
+                        "pro_userRoomLeave",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
                             Account = account
+                        },
+                        commandType: CommandType.StoredProcedure);
+
+                    return (null, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
+        public (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int roomID)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(this.connectionString))
+                {
+                    var result = cn.Query<UserRoom>(
+                        "pro_userRoomQueryList",
+                        //參數名稱為PROCEDURE中宣告的變數名稱
+                        new
+                        {
+                            RoomID = roomID
                         },
                         commandType: CommandType.StoredProcedure);
 
