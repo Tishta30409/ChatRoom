@@ -80,9 +80,10 @@
     <Build Include="dbo\Stored Procedures\pro_accountQueryList.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountLogin.sql" />
     <Build Include="dbo\Tables\t_userroom.sql" />
-    <Build Include="dbo\Stored Procedures\pro_userroom_join.sql" />
-    <Build Include="dbo\Stored Procedures\pro_userroom_leave.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userRoomJoin.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userRoomLeave.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountChangePassword.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userRoomQueryList.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChatRoom.DataBase.publish.xml" />
