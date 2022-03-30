@@ -18,11 +18,14 @@ namespace ChatRoom.Server.ActionHandler
 
         private IHubClient hubClient;
 
-        public ChatMessageActionHandler(IHistoryRepository repo, IRoomRepository roomRepo, IHubClient hubClient)
+        private IUserRoomRepository userRoomRepo;
+
+        public ChatMessageActionHandler(IHistoryRepository repo, IRoomRepository roomRepo, IUserRoomRepository userRoomRepo,  IHubClient hubClient)
         {
             this.repo = repo;
             this.roomRepo = roomRepo;
             this.hubClient = hubClient;
+            this.userRoomRepo = userRoomRepo;
         }
 
         public (Exception exception, ActionBase actionBase) ExecuteAction(ActionModule action)
@@ -31,21 +34,9 @@ namespace ChatRoom.Server.ActionHandler
             {
                 var content = JsonConvert.DeserializeObject<ChatMessageAction>(action.Message);
 
-                //檢查房間是否存在
-               var roomsResult =  this.roomRepo.QueryList();
-               var room =  roomsResult.rooms?.FirstOrDefault(p => p.f_id == content.RoomID)?? null;
-
-                if (room == null)
-                {
-                    //再廣播一次 讓客端離開房間
-                    this.hubClient.BroadCastAction(new LeaveRoomAction()
-                    {
-                        RoomID = content.RoomID,
-                    });
-
-                    return (null, null);
-                }
-                else
+                //檢查玩家是否在房間中
+                var result = this.userRoomRepo.Query(content.Account);
+                if(result.userRoom != null)
                 {
                     if (content.IsRecord)
                     {
@@ -59,11 +50,11 @@ namespace ChatRoom.Server.ActionHandler
                                 f_createDateTime = DateTime.Now,
                             });
                     }
-                   
 
                     //沒問題就廣播給所有連線
                     var actionResult = new ChatMessageAction()
                     {
+                        Account = content.Account,
                         RoomID = content.RoomID,
                         NickName = content.NickName,
                         Content = content.Content,
@@ -71,6 +62,17 @@ namespace ChatRoom.Server.ActionHandler
                     };
 
                     return (null, actionResult);
+                }
+                else
+                {
+                    //再廣播一次 讓客端離開房間
+                    this.hubClient.BroadCastAction(new LeaveRoomAction()
+                    {
+                        RoomID = content.RoomID,
+                        Account = content.Account,
+                    });
+
+                    return (null, null);
                 }
             }
             catch (Exception ex)

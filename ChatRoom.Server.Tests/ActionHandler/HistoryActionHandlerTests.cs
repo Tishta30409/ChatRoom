@@ -30,11 +30,14 @@ namespace ChatRoom.Server.Tests.ActionHandler
 
             var repoRoom = new Mock<IRoomRepository>();
 
-            var handler = new ChatMessageActionHandler(repo.Object, repoRoom.Object, hubClient.Object);
+            var repoUserRoom = new Mock<IUserRoomRepository>();
+
+            var handler = new ChatMessageActionHandler(repo.Object, repoRoom.Object, repoUserRoom.Object, hubClient.Object);
             var result = handler.ExecuteAction(new ActionModule()
             {
                 Message = new ChatMessageAction()
                 {
+                    Account = "test001",
                     RoomID = 1,
                     NickName = "test001",
                     Content = "content0001",

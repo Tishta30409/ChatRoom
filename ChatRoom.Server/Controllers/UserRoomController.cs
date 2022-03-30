@@ -65,6 +65,24 @@ namespace ChatRoom.Server.Controllers
         }
 
         [HttpGet]
+        [Route("api/UserRoom/Query")]
+        public HttpResponseMessage Query(string account)
+        {
+            try
+            {
+                var addResult = this.repo.Query(account);
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.userRoom));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request");
+                return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpGet]
         [Route("api/UserRoom/QueryList")]
         public HttpResponseMessage QueryList( int roomID)
         {
