@@ -100,7 +100,7 @@ namespace ChatRoom.Client.UI.Forms
 
                     if (result.userRoom != null)
                     {
-                        LocalUserData.Room.f_id = result.userRoom.f_roomID;
+                        LocalUserData.RoomID = result.userRoom.f_roomID;
                         LocalUserData.FormViewType = FormViewType.ChatRoom;
                         this.DialogResult = DialogResult.OK;
                         this.Close();

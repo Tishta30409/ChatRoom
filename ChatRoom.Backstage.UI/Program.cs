@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ChatRoom.Backstage.Forms.UI;
+using System;
 using System.Windows.Forms;
 
 namespace ChatRoom.Backstage.UI
@@ -16,6 +14,7 @@ namespace ChatRoom.Backstage.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new MainForm());
         }
     }

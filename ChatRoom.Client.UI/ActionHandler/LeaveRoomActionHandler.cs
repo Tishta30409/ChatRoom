@@ -22,7 +22,7 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if(LocalUserData.Room.f_id == action?.RoomID)
+                if(LocalUserData.RoomID == action?.RoomID)
                 {
                     LocalUserData.LeaveRoom();
 

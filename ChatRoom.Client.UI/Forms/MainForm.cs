@@ -165,5 +165,10 @@ namespace ChatRoom.Client.UI
 
             MessageBox.Show("註冊結果:" + result.result.ToString());
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
     }
 }

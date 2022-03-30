@@ -21,6 +21,7 @@ namespace ChatRoom.Client.Tests.ActionHandler
             {
                 Message = new ChatMessageAction()
                 {
+                    Account = "test001",
                     RoomID = 1,
                     NickName = "測試發話員",
                     Content = "測試發話",

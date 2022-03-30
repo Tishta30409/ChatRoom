@@ -89,7 +89,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(38, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.Size = new System.Drawing.Size(32, 12);
             this.label3.TabIndex = 6;
             this.label3.Text = "密碼:";
             // 
@@ -118,6 +118,7 @@
             this.Controls.Add(this.btnLogin);
             this.Name = "MainForm";
             this.Text = "聊天室系統";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Shown += new System.EventHandler(this.Main_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

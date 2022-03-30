@@ -63,6 +63,7 @@ namespace ChatRoom.Client.Model.Process
                         if (LocalUserData.Account.f_isMuted == 0 && chatString.ToLower() != "exit" && LocalUserData.Room != null)
                             this.hubClient.SendAction(new ChatMessageAction()
                             {
+                                Account = LocalUserData.Account.f_account,
                                 Content = chatString,
                                 RoomID = LocalUserData.Room.f_id,
                                 NickName = LocalUserData.Account.f_nickName,

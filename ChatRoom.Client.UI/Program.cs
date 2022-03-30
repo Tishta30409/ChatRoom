@@ -60,8 +60,8 @@ namespace ChatRoom.Client.UI
 
                                 hubClient.SendAction(new ChatMessageAction()
                                 {
+                                    Account = LocalUserData.Account.f_account,
                                     Content = "離開房間",
-                                    RoomID = LocalUserData.Room.f_id,
                                     NickName = LocalUserData.Account.f_nickName,
                                     IsRecord = false
                                 });

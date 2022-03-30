@@ -43,7 +43,7 @@ namespace ChatRoom.Client.UI.Forms
         private void ChatRoom_Shown(object sender, EventArgs e)
         {
             this.labNickName.Text = $"暱稱: {LocalUserData.Account.f_nickName}";
-            this.labRoomName.Text = $"房間名稱: {LocalUserData.Rooms.FirstOrDefault(room => room.f_id == LocalUserData.Room?.f_id).f_roomName}";
+            this.labRoomName.Text = $"房間名稱: {LocalUserData.Rooms.FirstOrDefault(room => room.f_id == LocalUserData.RoomID).f_roomName}";
             this.textMessage.Text = "";
 
             if (LocalUserData.Account.f_isMuted == 1)
@@ -51,7 +51,7 @@ namespace ChatRoom.Client.UI.Forms
                 this.btnSend.Enabled = false;
             }
 
-            var result = this.historySvc.QueryList(LocalUserData.Room.f_id);
+            var result = this.historySvc.QueryList(LocalUserData.RoomID);
             foreach (History history in result.historys)
             {
                 this.textMessage.Text += $"{history.f_nickName}({history.f_createDateTime}): {history.f_content}\r\n";
@@ -59,8 +59,8 @@ namespace ChatRoom.Client.UI.Forms
 
             this.hubClient.SendAction(new ChatMessageAction()
             {
+                Account = LocalUserData.Account.f_account,
                 Content = "加入房間!",
-                RoomID = LocalUserData.Room.f_id,
                 NickName = LocalUserData.Account.f_nickName,
                 IsRecord = false
             }) ;
@@ -97,8 +97,8 @@ namespace ChatRoom.Client.UI.Forms
         {
             this.hubClient.SendAction(new ChatMessageAction()
             {
+                Account = LocalUserData.Account.f_account,
                 Content = this.textUserEnter.Text,
-                RoomID = LocalUserData.Room.f_id,
                 NickName = LocalUserData.Account.f_nickName,
                 IsRecord = true
             });
@@ -106,11 +106,6 @@ namespace ChatRoom.Client.UI.Forms
             this.textUserEnter.Text = "";
         }
         
-        //
-        public void OnMutedStateChanged()
-        {
-
-        }
 
         public void OnReceiveMessage(ChatMessageAction action )
         {

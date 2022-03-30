@@ -18,7 +18,7 @@ namespace ChatRoom.Client.UI.Model
 
         private static Account account;
 
-        private static Room room;
+        private static int? roomID;
 
         private static List<Room> rooms;
 
@@ -38,16 +38,12 @@ namespace ChatRoom.Client.UI.Model
         }
 
         //自動屬性
-        public static Room Room
+        public static int? RoomID
         {
-            set { room = value; }
+            set { roomID = value; }
             get
             {
-                if (room == null)
-                {
-                    room = new Room();
-                }
-                return room;
+                return roomID;
             }
         }
 
@@ -66,12 +62,12 @@ namespace ChatRoom.Client.UI.Model
         public static void DisConnect()
         {
             account = null;
-            room = null;
+            roomID = null;
         }
 
         public static void LeaveRoom()
         {
-            room = null;
+            roomID = null;
         }
 
 

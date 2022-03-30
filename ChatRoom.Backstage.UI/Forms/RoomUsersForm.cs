@@ -1,54 +1,47 @@
 ﻿using Autofac;
+using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Applibs;
-using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Model.DataType.Tsql;
 using ChatRoom.Domain.Service;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ChatRoom.Client.UI.Forms
+namespace ChatRoom.Backstage.UI.Forms
 {
-    public partial class UserListForm : Form
+    public partial class RoomUsersForm : Form
     {
+
         private UserRoom[] userRooms;
 
         private IUserRoomService svc;
 
-        public UserListForm()
+        private LocalData localData;
+
+        public RoomUsersForm()
         {
             InitializeComponent();
 
             this.svc = AutofacConfig.Container.Resolve<IUserRoomService>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
-        private void UserListForm_Shown(object sender, EventArgs e)
+        private void RoomUser_Shown(object sender, EventArgs e)
         {
-            var getResult = this.svc.QueryList((int)LocalUserData.RoomID);
+            var getResult = this.svc.QueryList((int)this.localData.RoomID);
 
             if (getResult.exception != null)
             {
                 throw getResult.exception;
             }
 
-            //List<string> showData = new List<string>();
-
-            //foreach (UserRoom userRoom in getResult.userRooms.ToArray())
-            //{
-            //    showData.Add(userRoom.f_nickName);
-            //}
-
             this.userRooms = getResult.userRooms.ToArray();
 
             var bind = new BindingList<UserRoom>(this.userRooms);
             var source = new BindingSource(bind, null);
-            this.dvgRoomUsers.DataSource = source;
+            this.dvgRoomUserList.DataSource = source;
         }
     }
 }

@@ -28,11 +28,11 @@ namespace ChatRoom.Client.UI.ActionHandler
                 if (LocalUserData.Account.f_account == action?.Account)
                 {
                     //如果在房間內 先送離開通知在斷線
-                    if (LocalUserData.Room != null)
+                    if (LocalUserData.RoomID != null)
                     {
                         this.hubClient.SendAction(new LeaveRoomMsgAction()
                         {
-                            RoomID = LocalUserData.Room.f_id,
+                            RoomID = LocalUserData.RoomID,
                             NickName = LocalUserData.Account.f_nickName
                         });
                     }
