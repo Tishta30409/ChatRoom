@@ -14,5 +14,7 @@ namespace ChatRoom.Domain.Action
         /// </summary>
         public int? RoomID { get; set; }
 
+        public string Account { get; set; }
+
     }
 }

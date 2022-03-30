@@ -25,5 +25,7 @@
 
         public string f_loginIdentifier { get; set; }
 
+        public byte f_isActive { get; set; }
+
     }
 }

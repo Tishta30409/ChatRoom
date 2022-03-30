@@ -8,10 +8,9 @@ namespace ChatRoom.Domain.Action
         public override string Action()
            => "chatMessage";
 
-        /// <summary>
-        /// 房間ID
-        /// </summary>
-        public int? RoomID { get; set; }
+        public string Account { get; set; }
+
+        public int RoomID { get; set; }
 
         /// <summary>
         /// 暱稱
