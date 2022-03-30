@@ -72,6 +72,31 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
+        public (Exception exception, UserRoom userRoom) Query(string account)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(this.connectionString))
+                {
+                    var result = cn.QueryFirstOrDefault<UserRoom>(
+                        "pro_userRoomQuery",
+                        //參數名稱為PROCEDURE中宣告的變數名稱
+                        new
+                        {
+                            Account = account
+                        },
+                        commandType: CommandType.StoredProcedure);
+
+                    return (null, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
+
         public (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int roomID)
         {
             try
