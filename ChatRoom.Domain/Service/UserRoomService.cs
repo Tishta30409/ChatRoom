@@ -71,28 +71,41 @@ namespace ChatRoom.Domain.Service
             }
         }
 
-        public (Exception exception, IEnumerable< UserRoom> userRooms) QueryList(int? roomID)
+        public (Exception exception, UserRoom userRoom) Query(string account)
         {
             try
             {
-                if(roomID != null)
-                {
-                    var content = new StringContent(JsonConvert.SerializeObject(roomID), Encoding.UTF8, "application/json");
-                    var response = this.client.GetAsync(this.route + $"/QueryList?roomID={roomID}").Result;
+                var response = this.client.GetAsync(this.route + $"/Query?account={account}").Result;
 
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new Exception(response.Content.ReadAsStringAsync().Result);
-                    }
-
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    return ((null, JsonConvert.DeserializeObject<IEnumerable<UserRoom>>(result)));
-                }
-                else
+                if (!response.IsSuccessStatusCode)
                 {
-                    return (null, null);
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
                 }
-                
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<UserRoom>(result)));
+
+            }
+            catch (Exception ex)
+            {
+                return (ex, null);
+            }
+        }
+
+        public (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int roomID)
+        {
+            try
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(roomID), Encoding.UTF8, "application/json");
+                var response = this.client.GetAsync(this.route + $"/QueryList?roomID={roomID}").Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.Content.ReadAsStringAsync().Result);
+                }
+
+                var result = response.Content.ReadAsStringAsync().Result;
+                return ((null, JsonConvert.DeserializeObject<IEnumerable<UserRoom>>(result)));
             }
             catch (Exception ex)
             {

@@ -12,7 +12,9 @@ namespace ChatRoom.Domain.Service
 
         (Exception exception, UserRoom userRoom) LeaveRoom(string account);
 
-        (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int? roomID);
+        (Exception exception, UserRoom userRoom) Query(string account);
+
+        (Exception exception, IEnumerable<UserRoom> userRooms) QueryList(int roomID);
 
 
     }
