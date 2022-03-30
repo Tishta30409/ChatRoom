@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[pro_userRoomLeave]
 	@Account NVARCHAR(20)
 AS
-	UPDATE t_userroom WITH(ROWLOCK) SET f_roomID = NULL 
-	OUTPUT  inserted.* 
+	DELETE t_userroom WITH(ROWLOCK)
+	OUTPUT  deleted.* 
 	WHERE f_account = @Account
 RETURN 0
 GO

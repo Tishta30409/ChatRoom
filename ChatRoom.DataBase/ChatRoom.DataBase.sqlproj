@@ -84,6 +84,7 @@
     <Build Include="dbo\Stored Procedures\pro_userRoomLeave.sql" />
     <Build Include="dbo\Stored Procedures\pro_accountChangePassword.sql" />
     <Build Include="dbo\Stored Procedures\pro_userRoomQueryList.sql" />
+    <Build Include="dbo\Stored Procedures\pro_userRoomQuery.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChatRoom.DataBase.publish.xml" />
