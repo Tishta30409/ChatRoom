@@ -3,7 +3,7 @@
 AS
 	DELETE t_userroom WITH(ROWLOCK)
 	OUTPUT  deleted.* 
-	WHERE f_account = @Account
+	WHERE f_account = @account
 RETURN 0
 GO
 GRANT EXECUTE

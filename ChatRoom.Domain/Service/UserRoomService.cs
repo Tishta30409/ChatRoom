@@ -53,10 +53,7 @@ namespace ChatRoom.Domain.Service
         {
             try
             {
-
-                var content = new StringContent(JsonConvert.SerializeObject(account), Encoding.UTF8, "application/json");
-                var response = this.client.PutAsync(this.route + "/Update", content).Result;
-
+                var response = this.client.DeleteAsync($"{this.route}/LeaveRoom?account={account}").Result;
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new Exception(response.Content.ReadAsStringAsync().Result);
