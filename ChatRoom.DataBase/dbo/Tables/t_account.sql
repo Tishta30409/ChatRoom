@@ -8,6 +8,5 @@
 	f_isMuted TINYINT NOT NULL DEFAULT 0,
 	f_errorTimes TINYINT NOT NULL DEFAULT 0,
 	f_loginIdentifier NVARCHAR(40)  NULL,
-	[f_isActive] TINYINT NOT NULL DEFAULT 1, 
     CONSTRAINT [PK_account] PRIMARY KEY CLUSTERED ([f_id] ASC)
 )

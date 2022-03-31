@@ -26,7 +26,7 @@ namespace ChatRoom.Domain.Service
             };
         }
 
-        public (Exception exception, ResultCode resultCode) Add(string roomName)
+        public (Exception exception, Room room) Add(string roomName)
         {
             try
             {
@@ -39,11 +39,11 @@ namespace ChatRoom.Domain.Service
                 }
 
                 var result = response.Content.ReadAsStringAsync().Result;
-                return ((null, JsonConvert.DeserializeObject<ResultCode>(result)));
+                return ((null, JsonConvert.DeserializeObject<Room>(result)));
             }
             catch (Exception ex)
             {
-                return (ex, ResultCode.DEFAULT);
+                return (ex, null);
             }
         }
 

@@ -63,7 +63,7 @@ AS
 			SELECT 0
 			SET @errorTimes = 0
 			--登入 清空
-			UPDATE t_userroom SET f_roomID = NULL WHERE f_account = @account
+			DELETE t_userroom WHERE f_account = @account
 		END
 
 		--更新資料
