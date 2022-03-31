@@ -20,9 +20,13 @@ namespace ChatRoom.Server.Controllers
 
         private IHubClient hub;
 
-        public AccountController(IAccountRepository repo, IHubClient hub)
+        private IHistoryRepository historyrRepo;
+
+        public AccountController(IAccountRepository repo, IHistoryRepository historyRepository, IHubClient hub)
         {
             this.repo = repo;
+
+            this.historyrRepo = historyRepository;
 
             this.hub = hub;
         }
@@ -88,6 +92,7 @@ namespace ChatRoom.Server.Controllers
                 {
                     f_account = input.Account,
                     f_password = input.Password,
+                    f_loginIdentifier = Guid.NewGuid().ToString()
                 });
 
 
@@ -124,6 +129,11 @@ namespace ChatRoom.Server.Controllers
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.account));
+
+                if(Convert.ToBoolean(account.f_isMuted))
+                {
+                    this.historyrRepo.Delete(account.f_account);
+                }
 
                 this.hub.BroadCastAction(new UpdateAccountAction()
                 {

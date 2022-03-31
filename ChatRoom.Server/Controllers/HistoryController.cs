@@ -37,10 +37,10 @@ namespace ChatRoom.Server.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex, $"{this.GetType().Name} Post Exception Request:{roomID.ToString()}");
+                this.logger.Error(ex, $"{this.GetType().Name} Get Exception Request:{roomID.ToString()}");
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
-
         }
+
     }
 }

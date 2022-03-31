@@ -135,8 +135,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionHandler\JoinRoomMsgActionHandler.cs" />
-    <Compile Include="ActionHandler\LeaveRoomActionMsgHandler.cs" />
     <Compile Include="ActionHandler\ChatMessageActionHandler.cs" />
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ChatRoomProcess.cs" />

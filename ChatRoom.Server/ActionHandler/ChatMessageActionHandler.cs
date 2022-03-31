@@ -35,45 +35,32 @@ namespace ChatRoom.Server.ActionHandler
                 var content = JsonConvert.DeserializeObject<ChatMessageAction>(action.Message);
 
                 //檢查玩家是否在房間中
-                var result = this.userRoomRepo.Query(content.Account);
-                if(result.userRoom != null)
+                if (content.IsRecord)
                 {
-                    if (content.IsRecord)
-                    {
-                        //塞資料
-                        var addResult = this.repo.Add(
-                            new History()
-                            {
-                                f_roomID = content.RoomID,
-                                f_nickName = content.NickName,
-                                f_content = content.Content,
-                                f_createDateTime = DateTime.Now,
-                            });
-                    }
-
-                    //沒問題就廣播給所有連線
-                    var actionResult = new ChatMessageAction()
-                    {
-                        Account = content.Account,
-                        RoomID = content.RoomID,
-                        NickName = content.NickName,
-                        Content = content.Content,
-                        CreateDateTime = DateTime.Now,
-                    };
-
-                    return (null, actionResult);
+                    //塞資料
+                    var addResult = this.repo.Add(
+                        new History()
+                        {
+                            f_account = content.Account,
+                            f_roomID = content.RoomID,
+                            f_nickName = content.NickName,
+                            f_content = content.Content,
+                            f_createDateTime = DateTime.Now,
+                        });
                 }
-                else
+
+                //沒問題就廣播給所有連線
+                var actionResult = new ChatMessageAction()
                 {
-                    //再廣播一次 讓客端離開房間
-                    this.hubClient.BroadCastAction(new LeaveRoomAction()
-                    {
-                        RoomID = content.RoomID,
-                        Account = content.Account,
-                    });
+                    Account = content.Account,
+                    RoomID = content.RoomID,
+                    NickName = content.NickName,
+                    Content = content.Content,
+                    CreateDateTime = DateTime.Now,
+                };
 
-                    return (null, null);
-                }
+                return (null, actionResult);
+
             }
             catch (Exception ex)
             {

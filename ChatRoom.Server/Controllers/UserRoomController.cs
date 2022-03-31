@@ -45,13 +45,18 @@ namespace ChatRoom.Server.Controllers
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
-        [HttpPut]
+        [HttpDelete]
         [Route("api/UserRoom/LeaveRoom")]
-        public HttpResponseMessage LeaveRoom([FromBody] string account)
+        public HttpResponseMessage LeaveRoom(string account)
         {
             try
             {
                 var addResult = this.repo.LeaveRoom(account);
+
+                this.hubClient.BroadCastAction(new LeaveRoomAction()
+                {
+                    Account = account,
+                });
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.userRoom));
