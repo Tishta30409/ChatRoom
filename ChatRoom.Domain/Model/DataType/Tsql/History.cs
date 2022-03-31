@@ -7,6 +7,8 @@ namespace ChatRoom.Domain.Model
     {
         public long f_id { get; set; }
 
+        public string f_account{ get; set; }
+
         public int f_roomID { get; set; }
 
         public string f_nickName { get; set; }

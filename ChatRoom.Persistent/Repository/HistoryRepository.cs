@@ -32,6 +32,7 @@ namespace ChatRoom.Persistent.Repository
                         new
                         {
                             roomID = history.f_roomID,
+                            account = history.f_account,
                             nickName = history.f_nickName,
                             content = history.f_content,
                             createDateTime = history.f_createDateTime
@@ -85,6 +86,30 @@ namespace ChatRoom.Persistent.Repository
             catch (Exception ex)
             {
                 return (ex, null);
+            }
+        }
+
+        public (Exception exception, ResultCode resultCode) Delete(string account)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(this.connectionString))
+                {
+                    var result = cn.QueryFirstOrDefault<ResultCode>(
+                        "pro_historyDelete",
+                        new
+                        {
+                            account = account
+                        },
+                        //參數名稱為PROCEDURE中宣告的變數名稱
+                        commandType: CommandType.StoredProcedure);
+
+                    return (null, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (ex, ResultCode.DEFAULT);
             }
         }
     }

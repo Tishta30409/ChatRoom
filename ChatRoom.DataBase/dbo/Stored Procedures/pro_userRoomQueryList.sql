@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[pro_userRoomQueryList]
-	@RoomID int
+	@roomID int
 AS
-	SELECT f_account, f_nickName FROM t_userroom WITH(NOLOCK) WHERE f_roomID = @RoomID
+	SELECT f_account FROM t_userroom WITH(NOLOCK) WHERE f_roomID = @RoomID
 RETURN 0
 GO
 GRANT EXECUTE

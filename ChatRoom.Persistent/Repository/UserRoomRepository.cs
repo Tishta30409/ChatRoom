@@ -29,8 +29,7 @@ namespace ChatRoom.Persistent.Repository
                         new
                         {
                             Account = userRoom.f_account,
-                            RoomID = userRoom.f_roomID,
-                            NickName = userRoom.f_nickName,
+                            RoomID = userRoom.f_roomID
                         },
                         commandType: CommandType.StoredProcedure);
 

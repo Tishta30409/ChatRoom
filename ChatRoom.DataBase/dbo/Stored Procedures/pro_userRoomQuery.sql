@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[pro_userRoomQuery]
-	@Account NVARCHAR(20)
+	@account NVARCHAR(20)
 AS
 	SELECT f_roomID FROM t_userroom WITH(NOLOCK) WHERE f_account = @Account
 RETURN 0

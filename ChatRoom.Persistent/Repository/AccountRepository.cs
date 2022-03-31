@@ -35,7 +35,7 @@ namespace ChatRoom.Persistent.Repository
                         {
                             account = login.f_account,
                             password = login.f_password,
-                            loginIdentifier = new Guid().ToString()
+                            loginIdentifier = Guid.NewGuid().ToString()
                         },
                         commandType: CommandType.StoredProcedure
                         );

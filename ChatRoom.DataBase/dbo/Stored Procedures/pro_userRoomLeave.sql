@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[pro_userRoomLeave]
-	@Account NVARCHAR(20)
+	@account NVARCHAR(20)
 AS
 	DELETE t_userroom WITH(ROWLOCK)
 	OUTPUT  deleted.* 

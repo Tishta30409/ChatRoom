@@ -39,22 +39,11 @@ namespace ChatRoom.Persistent.Tests
             var addResult = this.repo.Add(new History()
             {
                 f_roomID = 1,
+                f_account = "test001",
                 f_content = "123456",
                 f_nickName = "你好我是",
                 f_createDateTime = DateTime.Now
             });
-            
-            for (int i=0; i< 20; i++)
-            {
-                addResult = this.repo.Add(new History() 
-                { 
-                    f_roomID = 1, 
-                    f_content = "123456", 
-                    f_nickName = "你好我是" , 
-                    f_createDateTime = DateTime.Now
-                });
-            }
-                
 
             Assert.IsNull(addResult.exception);
             Assert.IsNotNull(addResult.history);
@@ -73,6 +62,7 @@ namespace ChatRoom.Persistent.Tests
                 this.repo.Add(new History()
                 {
                     f_roomID = 1,
+                    f_account = "test001",
                     f_content = "123456",
                     f_nickName = "你好我是",
                     f_createDateTime = DateTime.Now
@@ -99,6 +89,7 @@ namespace ChatRoom.Persistent.Tests
                  this.repo.Add(new History()
                 {
                     f_roomID = 1,
+                    f_account = "test001",
                     f_content = "123456",
                     f_nickName = "你好我是",
                     f_createDateTime = DateTime.Now
@@ -110,6 +101,7 @@ namespace ChatRoom.Persistent.Tests
                 this.repo.Add(new History()
                 {
                     f_roomID = 2,
+                    f_account = "test001",
                     f_content = "123456",
                     f_nickName = "你好我是",
                     f_createDateTime = DateTime.Now
@@ -121,6 +113,7 @@ namespace ChatRoom.Persistent.Tests
                 this.repo.Add(new History()
                 {
                     f_roomID = 3,
+                    f_account = "test001",
                     f_content = "123456",
                     f_nickName = "你好我是",
                     f_createDateTime = DateTime.Now
@@ -144,5 +137,38 @@ namespace ChatRoom.Persistent.Tests
             Assert.AreEqual(queryResult3.historys.Count(), 10);
 
         }
+
+        [TestMethod]
+        public void 刪除歷史資料測試()
+        {
+
+            for (int i = 0; i < 20; i++)
+            {
+                this.repo.Add(new History()
+                {
+                    f_roomID = 1,
+                    f_account = "test001",
+                    f_content = "123456",
+                    f_nickName = "你好我是",
+                    f_createDateTime = DateTime.Now
+                });
+            }
+
+            var queryResult = this.repo.QueryList(1);
+
+            Assert.IsNull(queryResult.exception);
+            //只查10筆
+            Assert.AreEqual(queryResult.historys.Count(), 10);
+
+            this.repo.Delete("test001");
+
+            var queryResult2 = this.repo.QueryList(1);
+
+            Assert.IsNull(queryResult2.exception);
+            //只查10筆
+            Assert.AreEqual(queryResult2.historys.Count(), 0);
+        }
+
+
     }
 }

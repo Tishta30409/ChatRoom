@@ -29,5 +29,7 @@ namespace ChatRoom.Domain.Repository
         /// <returns></returns>
         (Exception exception, IEnumerable<History> historys) QueryList(int roomID);
 
+        (Exception exception, ResultCode resultCode) Delete(string account);
+
     }
 }

@@ -119,7 +119,7 @@ namespace ChatRoom.Persistent.Tests
                 f_isLocked = 1,
                 f_isMuted = 0,
                 f_errorTimes = 3,
-                f_loginIdentifier = new Guid().ToString(),
+                f_loginIdentifier = Guid.NewGuid().ToString(),
             });
             Assert.IsNull(updateResult.exception);
             Assert.IsNotNull(updateResult.account);
