@@ -1,4 +1,6 @@
-﻿using ChatRoom.Client.UI.Model;
+﻿using Autofac;
+using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
@@ -13,10 +15,15 @@ namespace ChatRoom.Client.UI.ActionHandler
         private IConsoleWrapper console;
 
         private IHubClient hubClient;
+
+        private LocalData localData;
+
+
         public UpdateAccountActionHandler(IConsoleWrapper console, IHubClient hubClient)
         {
             this.console = console;
             this.hubClient = hubClient;
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         public void Execute(ActionModule actionModule)
@@ -25,9 +32,9 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<UpdateAccountAction>(actionModule.Message);
 
-                if(LocalUserData.Account.f_account == action?.Account.f_account)
+                if(this.localData.Account.f_account == action?.Account.f_account)
                 {
-                    LocalUserData.Account = action.Account;
+                    this.localData.Account = action.Account;
                 }
 
             }

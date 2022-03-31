@@ -23,6 +23,8 @@ namespace ChatRoom.Client.UI
 
         private ILogger logger = LogManager.GetLogger("ChatRoomUI");
 
+        private LocalData localData;
+
         /// <summary>
         /// 背景計時器
         /// </summary>
@@ -34,6 +36,8 @@ namespace ChatRoom.Client.UI
 
             this.hubClient = AutofacConfig.Container.Resolve<IHubClient>();
             this.accountSvc = AutofacConfig.Container.Resolve<IAccountService>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
 
             this.timer = new Timer();
             this.timer.Interval = 500;
@@ -106,7 +110,7 @@ namespace ChatRoom.Client.UI
                         this.btnLogin.Enabled = false;
                         this.btnRegister.Enabled = false;
 
-                        LocalUserData.Account = result.result.Account;
+                        this.localData.Account = result.result.Account;
 
                         this.hubClient.StartAsync();
                         this.timer.Start();
@@ -131,7 +135,7 @@ namespace ChatRoom.Client.UI
 
             if (this.hubClient.State == ConnectionState.Connected)
             {
-                LocalUserData.FormViewType = FormViewType.Lobby;
+                this.localData.FormViewType = FormViewType.Lobby;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
                 this.msgLogin.Text = "連線成功";

@@ -1,4 +1,6 @@
-﻿using ChatRoom.Client.UI.Model;
+﻿using Autofac;
+using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
@@ -13,10 +15,14 @@ namespace ChatRoom.Client.UI.ActionHandler
         private IConsoleWrapper console;
 
         private IHubClient hubClient;
+
+        private LocalData localData;
+
         public AccountDisconnectActionHandler(IConsoleWrapper console, IHubClient hubClient)
         {
             this.console = console;
             this.hubClient = hubClient;
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         public void Execute(ActionModule actionModule)
@@ -25,19 +31,22 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<AccountDisconnectAction>(actionModule.Message);
 
-                if (LocalUserData.Account.f_account == action?.Account)
+                if (this.localData.Account.f_account == action?.Account)
                 {
                     //如果在房間內 先送離開通知在斷線
-                    if (LocalUserData.RoomID != null)
+                    if (this.localData.RoomID != null)
                     {
-                        this.hubClient.SendAction(new LeaveRoomMsgAction()
+                        this.hubClient.SendAction(new ChatMessageAction()
                         {
-                            RoomID = LocalUserData.RoomID,
-                            NickName = LocalUserData.Account.f_nickName
+                            Account = this.localData.Account.f_account,
+                            RoomID = (int)this.localData.RoomID,
+                            NickName = this.localData.Account.f_nickName,
+                            Content = "離開房間..",
+                            IsRecord = false,
                         });
                     }
 
-                    LocalUserData.DisConnect();
+                    this.localData.DisConnect();
                     this.hubClient.Disconnect();
                     this.console.WriteLine($"{action.Account} 玩家斷線 請重新連線");
                     this.console.ReadLine();

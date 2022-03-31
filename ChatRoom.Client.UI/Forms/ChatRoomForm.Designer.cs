@@ -38,9 +38,11 @@
             // 
             // textMessage
             // 
+            this.textMessage.BackColor = System.Drawing.Color.White;
             this.textMessage.Location = new System.Drawing.Point(14, 58);
             this.textMessage.Multiline = true;
             this.textMessage.Name = "textMessage";
+            this.textMessage.ReadOnly = true;
             this.textMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textMessage.Size = new System.Drawing.Size(586, 264);
             this.textMessage.TabIndex = 0;
@@ -105,6 +107,7 @@
             this.Controls.Add(this.textMessage);
             this.Name = "ChatRoomForm";
             this.Text = "ChatRoom";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatRoomForm_FormClosing);
             this.Shown += new System.EventHandler(this.ChatRoom_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -30,18 +30,39 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void RoomUser_Shown(object sender, EventArgs e)
         {
-            var getResult = this.svc.QueryList((int)this.localData.RoomID);
+            this.GetList();
+        }
 
-            if (getResult.exception != null)
+        private void GetList()
+        {
+            if (this.localData.RoomID != null)
             {
-                throw getResult.exception;
+                var getResult = this.svc.QueryList((int)this.localData.RoomID);
+
+                if (getResult.exception != null)
+                {
+                    throw getResult.exception;
+                }
+
+                this.userRooms = getResult.userRooms.ToArray();
+
+                var bind = new BindingList<UserRoom>(this.userRooms);
+                var source = new BindingSource(bind, null);
+                this.dvgRoomUserList.DataSource = source;
             }
+        }
 
-            this.userRooms = getResult.userRooms.ToArray();
+        private void dvgRoomUserList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1 && e.RowIndex < this.userRooms.Count() && this.userRooms[e.RowIndex].f_account != "Admin")
+            {
+                var result = this.svc.LeaveRoom(this.userRooms[e.RowIndex].f_account);
 
-            var bind = new BindingList<UserRoom>(this.userRooms);
-            var source = new BindingSource(bind, null);
-            this.dvgRoomUserList.DataSource = source;
+                if (result.userRoom != null)
+                {
+                    this.GetList();
+                }
+            }
         }
     }
 }

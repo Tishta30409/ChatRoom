@@ -38,6 +38,7 @@
             this.btnRoomUser = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textRoomName = new System.Windows.Forms.TextBox();
+            this.btnLeaveRoom = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnRoomList
@@ -62,22 +63,25 @@
             // 
             // textMessage
             // 
+            this.textMessage.BackColor = System.Drawing.Color.White;
             this.textMessage.Location = new System.Drawing.Point(14, 73);
             this.textMessage.Multiline = true;
             this.textMessage.Name = "textMessage";
-            this.textMessage.Size = new System.Drawing.Size(403, 393);
+            this.textMessage.ReadOnly = true;
+            this.textMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textMessage.Size = new System.Drawing.Size(403, 128);
             this.textMessage.TabIndex = 11;
             // 
             // textUserInput
             // 
-            this.textUserInput.Location = new System.Drawing.Point(14, 478);
+            this.textUserInput.Location = new System.Drawing.Point(14, 207);
             this.textUserInput.Name = "textUserInput";
             this.textUserInput.Size = new System.Drawing.Size(264, 22);
             this.textUserInput.TabIndex = 12;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(315, 478);
+            this.btnSend.Location = new System.Drawing.Point(342, 207);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 13;
@@ -90,6 +94,7 @@
             this.textConnectState.Enabled = false;
             this.textConnectState.Location = new System.Drawing.Point(74, 9);
             this.textConnectState.Name = "textConnectState";
+            this.textConnectState.ReadOnly = true;
             this.textConnectState.Size = new System.Drawing.Size(100, 22);
             this.textConnectState.TabIndex = 14;
             this.textConnectState.Text = "未連線";
@@ -125,16 +130,28 @@
             // 
             // textRoomName
             // 
+            this.textRoomName.BackColor = System.Drawing.Color.White;
             this.textRoomName.Location = new System.Drawing.Point(74, 45);
             this.textRoomName.Name = "textRoomName";
+            this.textRoomName.ReadOnly = true;
             this.textRoomName.Size = new System.Drawing.Size(100, 22);
             this.textRoomName.TabIndex = 18;
+            // 
+            // btnLeaveRoom
+            // 
+            this.btnLeaveRoom.Location = new System.Drawing.Point(342, 43);
+            this.btnLeaveRoom.Name = "btnLeaveRoom";
+            this.btnLeaveRoom.Size = new System.Drawing.Size(75, 23);
+            this.btnLeaveRoom.TabIndex = 19;
+            this.btnLeaveRoom.Text = "離開房間";
+            this.btnLeaveRoom.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 513);
+            this.ClientSize = new System.Drawing.Size(429, 239);
+            this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.textRoomName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRoomUser);
@@ -163,6 +180,7 @@
         private System.Windows.Forms.Button btnRoomUser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textRoomName;
+        private System.Windows.Forms.Button btnLeaveRoom;
     }
 }
 

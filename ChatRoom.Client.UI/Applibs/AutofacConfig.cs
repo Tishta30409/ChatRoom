@@ -78,6 +78,9 @@ namespace ChatRoom.Client.UI.Applibs
             builder.RegisterType<ChangePasswordForm>()
                 .SingleInstance();
 
+            builder.RegisterType<LocalData>()
+                .SingleInstance();
+
             container = builder.Build();
         }
     }

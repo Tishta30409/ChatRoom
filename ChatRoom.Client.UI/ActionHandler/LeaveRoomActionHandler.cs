@@ -1,4 +1,7 @@
-﻿using ChatRoom.Client.UI.Model;
+﻿using Autofac;
+using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Forms;
+using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
@@ -9,24 +12,26 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class LeaveRoomActionHandler : IActionHandler
     {
-        private IConsoleWrapper console;
+        private ChatRoomForm form;
 
-        public LeaveRoomActionHandler(IConsoleWrapper console)
+        private LocalData localData;
+
+        public LeaveRoomActionHandler(ChatRoomForm form)
         {
-            this.console = console;
+            this.form = form;
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         public void Execute(ActionModule actionModule)
         {
             try
             {
-                var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
+                var action = JsonConvert.DeserializeObject<LeaveRoomAction>(actionModule.Message);
 
-                if(LocalUserData.RoomID == action?.RoomID)
+                if(action?.RoomID ==  this.localData.RoomID || action.Account == this.localData.Account.f_account)
                 {
-                    LocalUserData.LeaveRoom();
-
-                    this.console.WriteLine($"{action.RoomID} 聊天室已斷線");
+                    var chatRoom = AutofacConfig.Container.Resolve<ChatRoomForm>();
+                    chatRoom.OnLeaveRoom();
                 }
 
             }

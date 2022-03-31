@@ -9,6 +9,8 @@ using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using NLog;
 using System;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ChatRoom.Backstage.Forms.UI
@@ -30,10 +32,12 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private delegate void DelShowJoinRoom();
 
+        private StringBuilder sb;
+
         /// <summary>
         /// 背景計時器
         /// </summary>
-        private Timer timer;
+        private System.Windows.Forms.Timer timer;
 
         public MainForm()
         {
@@ -43,9 +47,7 @@ namespace ChatRoom.Backstage.Forms.UI
             this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
 
-
-
-            this.timer = new Timer();
+            this.timer = new System.Windows.Forms.Timer();
             this.timer.Interval = 500;
             this.timer.Tick += (object sender, EventArgs e) =>
             {
@@ -54,14 +56,32 @@ namespace ChatRoom.Backstage.Forms.UI
 
             this.timer.Start();
             this.hubClient.StartAsync();
+
+            this.sb = new StringBuilder();
+
+            this.CheckMainButtonState();
         }
 
-        private void SetJoinRoom(bool enable)
+        private void CheckMainButtonState()
         {
-            this.btnRoomUser.Enabled = !enable;
+            if(this.localData.RoomID == null)
+            {
+                this.btnLeaveRoom.Enabled = false;
+                this.btnSend.Enabled = false;
+                this.btnRoomUser.Enabled = false;
+                this.btnRoomList.Enabled = true;
+                this.textUserInput.Enabled = false;
+            }
+            else
+            {
+                this.btnLeaveRoom.Enabled = true;
+                this.btnSend.Enabled = true;
+                this.btnRoomUser.Enabled=true; 
+                this.btnRoomList.Enabled=false;
+                this.textUserInput.Enabled = true;
+            }
 
             this.textRoomName.Text = this.localData.RoomName;
-
         }
 
         private void OnButtonClick(object sender, EventArgs e)
@@ -84,16 +104,37 @@ namespace ChatRoom.Backstage.Forms.UI
                         roomList.ShowDialog();
                         break;
                     case "btnSend":
+                        this.sendMessage();
                         break;
                     default:
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+               MessageBox.Show(ex.Message);
             }
+        }
+
+        private void sendMessage()
+        {
+            if(this.localData.RoomID == null)
+            {
+                MessageBox.Show("請先加入房間");
+                return;
+            }
+
+            this.hubClient.SendAction(new ChatMessageAction()
+            {
+                Account = this.localData.Account,
+                Content = this.textUserInput.Text,
+                NickName = this.localData.RoomName,
+                RoomID = (int)this.localData.RoomID,
+                IsRecord = true
+            });
+
+            this.textUserInput.Text = "";
         }
 
         private void ChangeStatus()
@@ -120,7 +161,12 @@ namespace ChatRoom.Backstage.Forms.UI
             }
             else
             {
-                this.textMessage.Text += $"{action.NickName}({action.CreateDateTime}) :: {action.Content}\r\n";
+                this.sb.AppendLine($"{action.NickName}({action.CreateDateTime}) :: {action.Content}");
+                this.textMessage.Text = this.sb.ToString();
+
+                this.textMessage.SelectionStart = textMessage.Text.Length;
+                this.textMessage.ScrollToCaret();
+                this.textMessage.Refresh();
             }
         }
 
@@ -133,17 +179,27 @@ namespace ChatRoom.Backstage.Forms.UI
             }
             else
             {
-                this.textMessage.Text = "";
+                this.sb.Clear();
                 var result = this.historySvc.QueryList(this.localData.RoomID);
                 if (result.historys != null)
                 {
                     foreach (History history in result.historys)
                     {
-                        this.textMessage.Text += $"{history.f_nickName}({history.f_createDateTime}): {history.f_content}";
+                       sb.AppendLine($"{history.f_nickName}({history.f_createDateTime}): {history.f_content}");
                     }
+
+                    this.textMessage.Text = this.sb.ToString();
+                    this.textMessage.SelectionStart = textMessage.Text.Length;
+                    this.textMessage.ScrollToCaret();
+                    this.textMessage.Refresh();
                 }
 
-                this.textRoomName.Text = this.localData.RoomName;
+                //Task
+                //Thread t = new Thread(CheckMainButtonState);
+                //t.IsBackground = true;
+                //t.Start();
+
+                this.CheckMainButtonState();
             }
 
         }

@@ -35,7 +35,6 @@
             this.btnUnMute = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnActive = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgUserList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,6 +45,7 @@
             this.dvgUserList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgUserList.Location = new System.Drawing.Point(12, 110);
             this.dvgUserList.Name = "dvgUserList";
+            this.dvgUserList.ReadOnly = true;
             this.dvgUserList.RowTemplate.Height = 24;
             this.dvgUserList.Size = new System.Drawing.Size(473, 257);
             this.dvgUserList.TabIndex = 0;
@@ -108,22 +108,11 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "帳號禁言 要砍先前訊息";
             // 
-            // btnActive
-            // 
-            this.btnActive.Location = new System.Drawing.Point(256, 81);
-            this.btnActive.Name = "btnActive";
-            this.btnActive.Size = new System.Drawing.Size(75, 23);
-            this.btnActive.TabIndex = 8;
-            this.btnActive.Text = "Active";
-            this.btnActive.UseVisualStyleBackColor = true;
-            this.btnActive.Click += new System.EventHandler(this.OnButtonClick);
-            // 
             // UserInfoListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 377);
-            this.Controls.Add(this.btnActive);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnUnMute);
@@ -149,6 +138,5 @@
         private System.Windows.Forms.Button btnUnMute;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnActive;
     }
 }

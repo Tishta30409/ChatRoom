@@ -19,18 +19,22 @@ namespace ChatRoom.Client.UI.Forms
     {
 
         private IAccountService accountSvc;
+
+        private LocalData localData;
         public ChangePasswordForm()
         {
             InitializeComponent();
 
             this.accountSvc = AutofacConfig.Container.Resolve<IAccountService>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             var result =  this.accountSvc.ChangePwd(new AccountDto()
             {
-                Account = LocalUserData.Account.f_account,
+                Account = this.localData.Account.f_account,
                 Password = this.textNewPwd.Text
             });
 

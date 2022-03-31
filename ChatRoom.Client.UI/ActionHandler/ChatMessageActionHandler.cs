@@ -1,4 +1,6 @@
-﻿using ChatRoom.Client.UI.Forms;
+﻿using Autofac;
+using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
@@ -12,9 +14,12 @@ namespace ChatRoom.Client.UI.ActionHandler
     {
         private ChatRoomForm chatRoomForm;
 
+        private LocalData localData;
+
         public ChatMessageActionHandler(ChatRoomForm chatRoomForm)
         {
             this.chatRoomForm = chatRoomForm;
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         public void Execute(ActionModule actionModule)
@@ -23,7 +28,7 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if (LocalUserData.RoomID == action?.RoomID)
+                if (this.localData.RoomID == action?.RoomID)
                 {
                     this.chatRoomForm.OnReceiveMessage(action);
                 }

@@ -24,6 +24,8 @@ namespace ChatRoom.Client.UI.Forms
 
         private ChatRoomForm chatRoomFrom;
 
+        private LocalData localData;
+
         public LobbyForm()
         {
             InitializeComponent();
@@ -33,6 +35,8 @@ namespace ChatRoom.Client.UI.Forms
             this.userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
 
             this.chatRoomFrom = AutofacConfig.Container.Resolve<ChatRoomForm>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         private void Initialize()
@@ -40,7 +44,7 @@ namespace ChatRoom.Client.UI.Forms
             try
             {
                 //暱稱更新
-                this.textNickName.Text = LocalUserData.Account.f_nickName;
+                this.textNickName.Text = this.localData.Account.f_nickName;
 
                 //房間列表
                 var result = this.roomSvc.GetList();
@@ -50,9 +54,9 @@ namespace ChatRoom.Client.UI.Forms
                     throw result.exception;
                 }
 
-                LocalUserData.Rooms = result.rooms.ToList();
+                this.localData.Rooms = result.rooms.ToList();
 
-                var bind = new BindingList<Room>(LocalUserData.Rooms);
+                var bind = new BindingList<Room>(this.localData.Rooms);
                 var source = new BindingSource(bind, null);
                 this.dataGridViewRooms.DataSource = source;
             }
@@ -82,26 +86,26 @@ namespace ChatRoom.Client.UI.Forms
                     return;
                 }
 
-                if (this.textNickName.Text == LocalUserData.Account.f_account)
-                {
-                    MessageBox.Show("請先修改暱稱");
-                    return;
-                }
+                //if (this.textNickName.Text == LocalUserData.Account.f_account)
+                //{
+                //    MessageBox.Show("請先修改暱稱");
+                //    return;
+                //}
 
-                if (e.RowIndex > -1 && e.RowIndex < LocalUserData.Rooms.Count())
+                if (e.RowIndex > -1 && e.RowIndex < this.localData.Rooms.Count())
                 {
                     var result = this.userRoomSvc.JoinRoom(new UserRoom()
                     {
-                        f_account = LocalUserData.Account.f_account,
-                        f_roomID = LocalUserData.Rooms[e.RowIndex].f_id,
-                        f_nickName = LocalUserData.Account.f_nickName
+                        f_account = this.localData.Account.f_account,
+                        f_roomID = this.localData.Rooms[e.RowIndex].f_id,
+                        f_nickName = this.localData.Account.f_nickName
 
                     });
 
                     if (result.userRoom != null)
                     {
-                        LocalUserData.RoomID = result.userRoom.f_roomID;
-                        LocalUserData.FormViewType = FormViewType.ChatRoom;
+                        this.localData.RoomID = result.userRoom.f_roomID;
+                        this.localData.FormViewType = FormViewType.ChatRoom;
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
@@ -148,7 +152,7 @@ namespace ChatRoom.Client.UI.Forms
                     return;
                 }
 
-                if (this.textNickName.Text == LocalUserData.Account.f_nickName)
+                if (this.textNickName.Text == this.localData.Account.f_nickName)
                 {
                     MessageBox.Show("暱稱沒有更動");
                     return;
@@ -156,13 +160,13 @@ namespace ChatRoom.Client.UI.Forms
 
                 var updateResult = this.accountSvc.Update(new Account()
                 {
-                    f_account = LocalUserData.Account.f_account,
-                    f_password = LocalUserData.Account.f_password,
+                    f_account = this.localData.Account.f_account,
+                    f_password = this.localData.Account.f_password,
                     f_nickName = this.textNickName.Text,
-                    f_errorTimes = LocalUserData.Account.f_errorTimes,
-                    f_isLocked = LocalUserData.Account.f_isLocked,
-                    f_isMuted = LocalUserData.Account.f_isMuted,
-                    f_loginIdentifier = LocalUserData.Account.f_loginIdentifier,
+                    f_errorTimes = this.localData.Account.f_errorTimes,
+                    f_isLocked = this.localData.Account.f_isLocked,
+                    f_isMuted = this.localData.Account.f_isMuted,
+                    f_loginIdentifier = this.localData.Account.f_loginIdentifier,
                 });
 
                 //沒有回傳值 更新失敗
@@ -172,7 +176,7 @@ namespace ChatRoom.Client.UI.Forms
                 }
                 else
                 {
-                    LocalUserData.Account = updateResult.account;
+                    this.localData.Account = updateResult.account;
                     MessageBox.Show("更新成功");
                 }
             }

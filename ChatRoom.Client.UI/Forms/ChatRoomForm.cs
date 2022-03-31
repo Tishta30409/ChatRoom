@@ -31,6 +31,12 @@ namespace ChatRoom.Client.UI.Forms
 
         private delegate void DelShowMessage(ChatMessageAction action);
 
+        private delegate void DelLeaveRoom();
+
+        private StringBuilder sb;
+
+        private LocalData localData;
+
         public ChatRoomForm()
         {
             InitializeComponent();
@@ -38,30 +44,45 @@ namespace ChatRoom.Client.UI.Forms
             this.hubClient = AutofacConfig.Container.Resolve<IHubClient>();
             this.userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
             this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
+
+            this.sb = new StringBuilder();
         }
 
         private void ChatRoom_Shown(object sender, EventArgs e)
         {
-            this.labNickName.Text = $"暱稱: {LocalUserData.Account.f_nickName}";
-            this.labRoomName.Text = $"房間名稱: {LocalUserData.Rooms.FirstOrDefault(room => room.f_id == LocalUserData.RoomID).f_roomName}";
+            this.labNickName.Text = $"暱稱: {this.localData.Account.f_nickName}";
+            this.labRoomName.Text = $"房間名稱: {this.localData.Rooms.FirstOrDefault(room => room.f_id == this.localData.RoomID).f_roomName}";
             this.textMessage.Text = "";
 
-            if (LocalUserData.Account.f_isMuted == 1)
+            if (this.localData.Account.f_isMuted == 1)
             {
                 this.btnSend.Enabled = false;
             }
 
-            var result = this.historySvc.QueryList(LocalUserData.RoomID);
-            foreach (History history in result.historys)
-            {
-                this.textMessage.Text += $"{history.f_nickName}({history.f_createDateTime}): {history.f_content}\r\n";
-            }
+            var result = this.historySvc.QueryList(this.localData.RoomID);
 
+            if(result.historys != null)
+            {
+                foreach (History history in result.historys)
+                {
+                    this.sb.AppendLine($"{history.f_nickName}({history.f_createDateTime}): {history.f_content}");
+                }
+
+                this.textMessage.Text = this.sb.ToString();
+
+                this.textMessage.SelectionStart = textMessage.Text.Length;
+                this.textMessage.ScrollToCaret();
+                this.textMessage.Refresh();
+            }
+            
             this.hubClient.SendAction(new ChatMessageAction()
             {
-                Account = LocalUserData.Account.f_account,
+                Account = this.localData.Account.f_account,
                 Content = "加入房間!",
-                NickName = LocalUserData.Account.f_nickName,
+                NickName = this.localData.Account.f_nickName,
+                RoomID = (int)this.localData.RoomID,
                 IsRecord = false
             }) ;
         }
@@ -74,10 +95,10 @@ namespace ChatRoom.Client.UI.Forms
                 switch (btn.Name)
                 {
                     case "btnSend":
-                        this.sendMessage();
+                        this.SendMessage();
                         break;
                     case "btnUserList":
-                        this.openRoomList();
+                        this.OpenRoomList();
                         break;
                     default:
                         MessageBox.Show("無效的選項");
@@ -93,13 +114,14 @@ namespace ChatRoom.Client.UI.Forms
         }
 
 
-        private void sendMessage()
+        private void SendMessage()
         {
             this.hubClient.SendAction(new ChatMessageAction()
             {
-                Account = LocalUserData.Account.f_account,
+                Account = this.localData.Account.f_account,
                 Content = this.textUserEnter.Text,
-                NickName = LocalUserData.Account.f_nickName,
+                NickName = this.localData.Account.f_nickName,
+                RoomID = (int)this.localData.RoomID,
                 IsRecord = true
             });
 
@@ -117,33 +139,49 @@ namespace ChatRoom.Client.UI.Forms
             }
             else
             {
-                this.textMessage.Text += $"{action.NickName}({action.CreateDateTime}) :: {action.Content}\r\n";
+                this.sb.AppendLine($"{action.NickName}({action.CreateDateTime}) :: {action.Content}");
+                this.textMessage.Text = this.sb.ToString();
+
+                this.textMessage.SelectionStart = textMessage.Text.Length;
+                this.textMessage.ScrollToCaret();
+                this.textMessage.Refresh();
             }
 
         }
 
-        public void OnDisconncet()
+        public void OnLeaveRoom()
         {
-
+            //執行緒問題
+            if (this.InvokeRequired)
+            {
+                DelLeaveRoom del = new DelLeaveRoom(OnLeaveRoom);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.sb.Clear();
+                this.Close();
+            }
         }
 
-        private void openRoomList()
+        private void OpenRoomList()
         {
             var userlist =  AutofacConfig.Container.BeginLifetimeScope().Resolve<UserListForm>();
             userlist.ShowDialog();
-        }
-
-        private void btnUserList_KeyUp(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void textUserEnter_KeyUp(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter && this.textUserEnter.Text != "")
             {
-                this.sendMessage();
+                this.SendMessage();
             }
+        }
+
+        private void ChatRoomForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true; //關閉視窗時取消
+            this.Hide(); //隱藏式窗,下次再show出
         }
     }
 }

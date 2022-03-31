@@ -21,54 +21,61 @@ namespace ChatRoom.Client.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var hubClient = AutofacConfig.Container.Resolve<IHubClient>();
+
+
+            var localData = AutofacConfig.Container.Resolve<LocalData>();
+
+
             using (var scope = AutofacConfig.Container.BeginLifetimeScope())
             {
-                var hubClient = scope.Resolve<IHubClient>();
-
                 var lobby = scope.Resolve<LobbyForm>();
                 var main = scope.Resolve<MainForm>();
-                var chatRoom = scope.Resolve<ChatRoomForm>();
-                var changePwd = scope.Resolve<ChangePasswordForm>(); 
-                var userList = scope.Resolve<UserListForm>();
+                var chatRoom = AutofacConfig.Container.Resolve<ChatRoomForm>();
+                var changePwd = scope.Resolve<ChangePasswordForm>();
 
-                while (LocalUserData.FormViewType != FormViewType.Leave)
+                while (localData.FormViewType != FormViewType.Leave)
                 {
-                    switch (LocalUserData.FormViewType)
+                    switch (localData.FormViewType)
                     {
                         case FormViewType.Main:
                             var result =  main.ShowDialog();
 
                             if(result == DialogResult.Cancel)
                             {
-                                LocalUserData.FormViewType = FormViewType.Leave;
+                                localData.FormViewType = FormViewType.Leave;
                             }
                             break;
                         case FormViewType.Lobby:
                             if(lobby.ShowDialog() == DialogResult.Cancel)
                             {
-                                LocalUserData.FormViewType = FormViewType.Main;
+                                localData.FormViewType = FormViewType.Main;
                                 changePwd.Close();
-                                LocalUserData.DisConnect();
+                                localData.DisConnect();
                             }
                             break;
                         case FormViewType.ChatRoom:
                             if(chatRoom.ShowDialog() == DialogResult.Cancel)
                             {
-                                LocalUserData.FormViewType = FormViewType.Lobby;
-
-                                userList.Close();
+                                localData.FormViewType = FormViewType.Lobby;
 
                                 hubClient.SendAction(new ChatMessageAction()
                                 {
-                                    Account = LocalUserData.Account.f_account,
+                                    Account = localData.Account.f_account,
                                     Content = "離開房間",
-                                    NickName = LocalUserData.Account.f_nickName,
+                                    NickName = localData.Account.f_nickName,
+                                    RoomID = (int)localData.RoomID,
                                     IsRecord = false
                                 });
 
                                 //正常離開房間
                                 var userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
-                                userRoomSvc.LeaveRoom(LocalUserData.Account.f_account);
+                                userRoomSvc.LeaveRoom(localData.Account.f_account);
+
+                                //確定離開房間才清值
+                                localData.LeaveRoom();
+
+                                chatRoom.Hide();
                             }
                             break;
                         default:

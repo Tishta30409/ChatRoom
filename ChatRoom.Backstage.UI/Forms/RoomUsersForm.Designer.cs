@@ -39,9 +39,11 @@
             this.dvgRoomUserList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgRoomUserList.Location = new System.Drawing.Point(12, 12);
             this.dvgRoomUserList.Name = "dvgRoomUserList";
+            this.dvgRoomUserList.ReadOnly = true;
             this.dvgRoomUserList.RowTemplate.Height = 24;
             this.dvgRoomUserList.Size = new System.Drawing.Size(302, 381);
             this.dvgRoomUserList.TabIndex = 0;
+            this.dvgRoomUserList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgRoomUserList_CellDoubleClick);
             // 
             // RoomUsersForm
             // 

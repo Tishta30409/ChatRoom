@@ -1,4 +1,6 @@
-﻿using ChatRoom.Backstage.Forms.UI;
+﻿using Autofac;
+using ChatRoom.Backstage.Forms.UI;
+using ChatRoom.Client.UI.Applibs;
 using System;
 using System.Windows.Forms;
 
@@ -15,7 +17,8 @@ namespace ChatRoom.Backstage.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new MainForm());
+            var main = AutofacConfig.Container.BeginLifetimeScope().Resolve<MainForm>();
+            main.ShowDialog();
         }
     }
 }

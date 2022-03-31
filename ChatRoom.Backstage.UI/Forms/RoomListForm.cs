@@ -33,13 +33,18 @@ namespace ChatRoom.Backstage.UI.Forms
 
             this.svc = AutofacConfig.Container.Resolve<IRoomService>();
             this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
-            
+
 
         }
 
         private void RoomListForm_Shown(object sender, EventArgs e)
         {
             this.GetRoomList();
+            if(this.rooms.Length != 0)
+            {
+                this.room = this.rooms[this.dvgRoomList.CurrentCell.RowIndex];
+            }
+            
         }
 
         private void GetRoomList()
@@ -60,11 +65,6 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void OnButtonClick(object sender, EventArgs e)
         {
-            if (room == null)
-            {
-                MessageBox.Show("請先選擇房間");
-            }
-
             try
             {
                 var btn = (Button)sender;
@@ -94,6 +94,12 @@ namespace ChatRoom.Backstage.UI.Forms
         }
         private void JoinRoom()
         {
+            if (room == null)
+            {
+                MessageBox.Show("請先選擇房間");
+                return;
+            }
+
             var joinResult = this.userRoomService.JoinRoom(
                 new UserRoom()
                 {
@@ -102,50 +108,76 @@ namespace ChatRoom.Backstage.UI.Forms
                     f_roomID = this.rooms[this.dvgRoomList.CurrentCell.RowIndex].f_id
                 });
 
-            this.localData.RoomID = joinResult.userRoom.f_roomID;
-            this.localData.RoomName = this.rooms[this.dvgRoomList.CurrentCell.RowIndex].f_roomName;
+            if (joinResult.userRoom == null)
+            {
+                MessageBox.Show("加入房間失敗");
+            }
+            else
+            {
+                this.localData.RoomID = joinResult.userRoom.f_roomID;
+                this.localData.RoomName = this.rooms[this.dvgRoomList.CurrentCell.RowIndex].f_roomName;
 
-            var mainForm = AutofacConfig.Container.Resolve<MainForm>();
-            mainForm.ShowJoinRoom();
+                var mainForm = AutofacConfig.Container.Resolve<MainForm>();
+                mainForm.ShowJoinRoom();
+
+                this.Close();
+            }
         }
 
         private void RemoveRoom()
         {
+            if (room == null)
+            {
+                MessageBox.Show("請先選擇房間");
+                return;
+            }
+
             var result = this.svc.Delete(this.room.f_id);
             if (result.room != null)
             {
-                this.rooms[this.dvgRoomList.CurrentCell.RowIndex] = result.room;
-                MessageBox.Show("移除成功");
+                MessageBox.Show("執行成功");
                 this.GetRoomList();
             }
             else
             {
-                MessageBox.Show("移除失敗");
+                MessageBox.Show("執行失敗");
             }
         }
 
         private void AddRoom()
         {
-            if(this.textRoomName.Text == "")
+            if (this.textRoomName.Text == "")
             {
                 MessageBox.Show("請先輸入房間名稱");
+                return;
             }
 
             var result = this.svc.Add(this.textRoomName.Text);
-            if (result.resultCode == ResultCode.SUCCESS)
+            if (result.room.f_roomName == this.textRoomName.Text)
             {
-                MessageBox.Show("新增成功");
+                MessageBox.Show("執行成功");
                 this.GetRoomList();
             }
             else
             {
-                MessageBox.Show("新增失敗");
+                MessageBox.Show("執行失敗");
             }
         }
 
         private void ChangeName()
         {
-            var result =  this.svc.Update(this.room);
+            if (room == null)
+            {
+                MessageBox.Show("請先選擇房間");
+                return;
+            }
+
+            var result = this.svc.Update(new Room()
+            {
+                f_id = room.f_id,
+                f_roomName = this.textRoomName.Text,
+            });
+
             if (result.room != null)
             {
                 this.rooms[this.dvgRoomList.CurrentCell.RowIndex] = result.room;
@@ -166,5 +198,6 @@ namespace ChatRoom.Backstage.UI.Forms
                 room = rooms[e.RowIndex];
             }
         }
+
     }
 }

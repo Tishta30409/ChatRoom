@@ -45,24 +45,27 @@
             this.btnAddRoom.TabIndex = 0;
             this.btnAddRoom.Text = "新增房間";
             this.btnAddRoom.UseVisualStyleBackColor = true;
+            this.btnAddRoom.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // btnRemoveRoom
             // 
-            this.btnRemoveRoom.Location = new System.Drawing.Point(199, 70);
+            this.btnRemoveRoom.Location = new System.Drawing.Point(309, 99);
             this.btnRemoveRoom.Name = "btnRemoveRoom";
             this.btnRemoveRoom.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveRoom.TabIndex = 1;
             this.btnRemoveRoom.Text = "移除房間";
             this.btnRemoveRoom.UseVisualStyleBackColor = true;
+            this.btnRemoveRoom.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // btnChangeName
             // 
-            this.btnChangeName.Location = new System.Drawing.Point(199, 41);
+            this.btnChangeName.Location = new System.Drawing.Point(309, 70);
             this.btnChangeName.Name = "btnChangeName";
             this.btnChangeName.Size = new System.Drawing.Size(75, 23);
             this.btnChangeName.TabIndex = 2;
             this.btnChangeName.Text = "房間改名";
             this.btnChangeName.UseVisualStyleBackColor = true;
+            this.btnChangeName.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // dvgRoomList
             // 
@@ -71,19 +74,21 @@
             this.dvgRoomList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgRoomList.Location = new System.Drawing.Point(12, 41);
             this.dvgRoomList.Name = "dvgRoomList";
+            this.dvgRoomList.ReadOnly = true;
             this.dvgRoomList.RowTemplate.Height = 24;
-            this.dvgRoomList.Size = new System.Drawing.Size(181, 299);
+            this.dvgRoomList.Size = new System.Drawing.Size(291, 299);
             this.dvgRoomList.TabIndex = 3;
             this.dvgRoomList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgRoomList_CellContentClick);
             // 
             // btnJoinRoom
             // 
-            this.btnJoinRoom.Location = new System.Drawing.Point(199, 12);
+            this.btnJoinRoom.Location = new System.Drawing.Point(309, 41);
             this.btnJoinRoom.Name = "btnJoinRoom";
             this.btnJoinRoom.Size = new System.Drawing.Size(75, 23);
             this.btnJoinRoom.TabIndex = 5;
             this.btnJoinRoom.Text = "加入房間";
             this.btnJoinRoom.UseVisualStyleBackColor = true;
+            this.btnJoinRoom.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // textRoomName
             // 
@@ -96,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 348);
+            this.ClientSize = new System.Drawing.Size(396, 346);
             this.Controls.Add(this.textRoomName);
             this.Controls.Add(this.btnJoinRoom);
             this.Controls.Add(this.dvgRoomList);

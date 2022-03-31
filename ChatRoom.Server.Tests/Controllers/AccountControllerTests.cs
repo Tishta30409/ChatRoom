@@ -6,7 +6,6 @@ using ChatRoom.Server.Hubs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -24,10 +23,12 @@ namespace ChatRoom.Server.Tests
             repo.Setup(p => p.Add(It.IsAny<Account>()))
                 .Returns((null, ResultCode.SUCCESS));
 
+            var repoHistory = new Mock<IHistoryRepository>();
+
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
 
-            var controller = new AccountController(repo.Object, hub.Object);
+            var controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postRsult = controller.Register(new AccountDto()
             {
                 Account = "test123",
@@ -65,8 +66,9 @@ namespace ChatRoom.Server.Tests
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
+            var repoHistory = new Mock<IHistoryRepository>();
 
-            var controller = new AccountController(repo.Object, hub.Object);
+            var controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -96,7 +98,8 @@ namespace ChatRoom.Server.Tests
                    }
                }));
 
-            controller = new AccountController(repo.Object, hub.Object);
+
+            controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -125,7 +128,9 @@ namespace ChatRoom.Server.Tests
                    }
                }));
 
-            controller = new AccountController(repo.Object, hub.Object);
+
+
+            controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             postRsult = controller.Login(new LoginDto()
             {
                 Account = "test123",
@@ -157,8 +162,9 @@ namespace ChatRoom.Server.Tests
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
+            var repoHistory = new Mock<IHistoryRepository>();
 
-            var controller = new AccountController(repo.Object, hub.Object);
+            var controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postRsult = controller.GetList();
             var result = JsonConvert.DeserializeObject<IEnumerable<Account>>(postRsult.Content.ReadAsStringAsync().Result);
 
@@ -175,8 +181,9 @@ namespace ChatRoom.Server.Tests
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
+            var repoHistory = new Mock<IHistoryRepository>();
 
-            var controller = new AccountController(repo.Object, hub.Object);
+            var controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postRsult = controller.Delete(1);
 
             var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
@@ -195,8 +202,9 @@ namespace ChatRoom.Server.Tests
 
             //模擬廣播 TODO
             var hub = new Mock<IHubClient>();
+            var repoHistory = new Mock<IHistoryRepository>();
 
-            var controller = new AccountController(repo.Object, hub.Object);
+            var controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postRsult = controller.Register(new AccountDto()
             {
                 Account = "test123",
@@ -223,8 +231,7 @@ namespace ChatRoom.Server.Tests
 
                 }));
 
-
-            controller = new AccountController(repo.Object, hub.Object);
+            controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
             var postUpdateResult = controller.Update(new Account()
             {
                 f_id = 1,
@@ -234,7 +241,7 @@ namespace ChatRoom.Server.Tests
                 f_errorTimes = 0,
                 f_isLocked = 0,
                 f_isMuted = 0,
-                f_loginIdentifier= MD5.Create().ToString(),
+                f_loginIdentifier = MD5.Create().ToString(),
             });
 
             var updateResult = JsonConvert.DeserializeObject<Account>(postUpdateResult.Content.ReadAsStringAsync().Result);

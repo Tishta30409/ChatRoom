@@ -12,33 +12,33 @@ namespace ChatRoom.Client.UI.Model
         Leave = 3,
     }
 
-    public static class LocalUserData
+    public class LocalData
     {
-        private static FormViewType formViewType = FormViewType.Main;
+        private FormViewType formViewType = FormViewType.Main;
 
-        private static Account account;
+        private Account account;
 
-        private static int? roomID;
+        private int? roomID;
 
-        private static List<Room> rooms;
+        private List<Room> rooms;
 
 
         //外面就不用NEW了
-        public static Account Account
+        public  Account Account
         {
             set { account = value; }
             get
             {
-                if (account == null)
+                if (this.account == null)
                 {
-                    account = new Account();
+                    this.account = new Account();
                 }
-                return account;
+                return this.account;
             }
         }
 
         //自動屬性
-        public static int? RoomID
+        public int? RoomID
         {
             set { roomID = value; }
             get
@@ -47,25 +47,25 @@ namespace ChatRoom.Client.UI.Model
             }
         }
 
-        public static List<Room> Rooms
+        public List<Room> Rooms
         {
             set { rooms = value; }
             get { return rooms; }
         }
 
-        public static FormViewType FormViewType
+        public FormViewType FormViewType
         {
             get { return formViewType; }
             set { formViewType = value; }
         }
 
-        public static void DisConnect()
+        public void DisConnect()
         {
             account = null;
             roomID = null;
         }
 
-        public static void LeaveRoom()
+        public void LeaveRoom()
         {
             roomID = null;
         }

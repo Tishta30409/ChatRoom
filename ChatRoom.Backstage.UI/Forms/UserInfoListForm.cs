@@ -58,9 +58,6 @@ namespace ChatRoom.Backstage.UI.Forms
 
                 switch (btn.Name)
                 {
-                    case "btnActive":
-                        this.ActiveAccount();
-                        break;
                     case "btnUnlock":
                         this.UnlockAccount();
                         break;
@@ -77,25 +74,6 @@ namespace ChatRoom.Backstage.UI.Forms
             catch (Exception)
             {
                 throw;
-            }
-        }
-
-        private void ActiveAccount()
-        {
-            var updateAccount = this.account;
-            updateAccount.f_isActive = Convert.ToBoolean(account.f_isActive) ? Convert.ToByte(0) : Convert.ToByte(1);
-            var activeResult = this.svc.Update(updateAccount);
-            if (activeResult.account != null)
-            {
-                var str = Convert.ToBoolean(account.f_isActive) ? "帳號啟用" : "帳號禁用";
-                MessageBox.Show($"更新成功 { str }");
-                this.account = activeResult.account;
-                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.account;
-                this.UpdateInfo();
-            }
-            else
-            {
-                MessageBox.Show("帳號不存在");
             }
         }
 
@@ -136,8 +114,6 @@ namespace ChatRoom.Backstage.UI.Forms
             }
         }
 
-
-
         private void dvgUserList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex > -1 && e.RowIndex < this.accounts.Length && e.RowIndex < this.accounts.Length)
@@ -149,7 +125,7 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void UpdateInfo()
         {
-            labState.Text = $"使用者:{account.f_account}, 啟用: {account.f_isActive}, 鎖定: {account.f_isLocked} , 禁言: {account.f_isMuted}";
+            labState.Text = $"使用者:{account.f_account}, 鎖定: {account.f_isLocked} , 禁言: {account.f_isMuted}";
 
             this.btnUnlock.Enabled = Convert.ToBoolean(account.f_isLocked);
             this.btnMute.Enabled = !Convert.ToBoolean(account.f_isMuted);

@@ -21,16 +21,20 @@ namespace ChatRoom.Client.UI.Forms
 
         private IUserRoomService svc;
 
+        private LocalData localData;
+
         public UserListForm()
         {
             InitializeComponent();
 
             this.svc = AutofacConfig.Container.Resolve<IUserRoomService>();
+
+            this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
         private void UserListForm_Shown(object sender, EventArgs e)
         {
-            var getResult = this.svc.QueryList((int)LocalUserData.RoomID);
+            var getResult = this.svc.QueryList((int)this.localData.RoomID);
 
             if (getResult.exception != null)
             {
