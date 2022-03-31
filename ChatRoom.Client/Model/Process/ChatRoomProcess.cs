@@ -73,10 +73,14 @@ namespace ChatRoom.Client.Model.Process
                 }
 
                 // 離開 
-                this.hubClient.SendAction(new LeaveRoomMsgAction()
+
+                this.hubClient.SendAction(new ChatMessageAction()
                 {
+                    Account = LocalUserData.Account.f_account,
                     RoomID = LocalUserData.Room.f_id,
                     NickName = LocalUserData.Account.f_nickName,
+                    Content = "離開房間..",
+                    IsRecord = false,
                 });
 
                 LocalUserData.Room = null;

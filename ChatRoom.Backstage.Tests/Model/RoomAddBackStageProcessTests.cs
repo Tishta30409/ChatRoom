@@ -18,7 +18,11 @@ namespace ChatRoom.Backstage.Tests.Model
         public void 新增房間測試()
         {
             var roomSvc = new Mock<IRoomService>();
-            roomSvc.Setup(p => p.Add("testName01")).Returns((null, ResultCode.SUCCESS));
+            roomSvc.Setup(p => p.Add("testName01")).Returns((null, new Room()
+            {
+                f_id = 1,
+                f_roomName = "test001"
+            }));
 
             var console = new Mock<IConsoleWrapper>();
 

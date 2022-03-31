@@ -75,10 +75,13 @@ namespace ChatRoom.Client.Model.Process
                 {
 
                     //送出通知
-                    this.hubClient.SendAction(new JoinRoomMsgAction()
+                    this.hubClient.SendAction(new ChatMessageAction()
                     {
+                        Account = LocalUserData.Account.f_account,
                         RoomID = LocalUserData.Room.f_id,
                         NickName = LocalUserData.Account.f_nickName,
+                        Content = "加入房間",
+                        IsRecord = false,
                     });
 
                     return ProcessViewType.ChatRoom;

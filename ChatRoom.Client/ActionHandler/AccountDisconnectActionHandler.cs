@@ -30,10 +30,13 @@ namespace ChatRoom.Client.ActionHandler
                     //如果在房間內 先送離開通知在斷線
                     if (LocalUserData.Room != null)
                     {
-                        this.hubClient.SendAction(new LeaveRoomMsgAction()
+                        this.hubClient.SendAction(new ChatMessageAction()
                         {
+                            Account = LocalUserData.Account.f_account,
                             RoomID = LocalUserData.Room.f_id,
-                            NickName = LocalUserData.Account.f_nickName
+                            NickName = LocalUserData.Account.f_nickName,
+                            Content = "離開房間..",
+                            IsRecord = false,
                         });
                     }
 

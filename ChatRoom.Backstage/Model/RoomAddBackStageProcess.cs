@@ -38,7 +38,7 @@ namespace ChatRoom.Backstage.Model
 
                 var result = this.svc.Add(roomName);
 
-                if (result.resultCode == ResultCode.SUCCESS)
+                if (result.room != null)
                 {
                     console.WriteLine(" 房間新增成功");
                 }

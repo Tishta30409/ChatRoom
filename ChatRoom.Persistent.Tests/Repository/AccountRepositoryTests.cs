@@ -169,11 +169,11 @@ namespace ChatRoom.Persistent.Tests
         [TestMethod]
         public void 查詢帳號清單測試()
         {
-            this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是" });
-            this.repo.Add(new Account() { f_account = "test001", f_password = "123456", f_nickName = "你好我是" });
-            this.repo.Add(new Account() { f_account = "test002", f_password = "123456", f_nickName = "你好我是" });
-            this.repo.Add(new Account() { f_account = "test003", f_password = "123456", f_nickName = "你好我是" });
-            this.repo.Add(new Account() { f_account = "test004", f_password = "123456", f_nickName = "你好我是" });
+            this.repo.Add(new Account() { f_account = "test000", f_password = "123456", f_nickName = "你好我是1" });
+            this.repo.Add(new Account() { f_account = "test001", f_password = "123456", f_nickName = "你好我是2" });
+            this.repo.Add(new Account() { f_account = "test002", f_password = "123456", f_nickName = "你好我是3" });
+            this.repo.Add(new Account() { f_account = "test003", f_password = "123456", f_nickName = "你好我是4" });
+            this.repo.Add(new Account() { f_account = "test004", f_password = "123456", f_nickName = "你好我是5" });
 
 
             var queryResult = this.repo.QueryList();
