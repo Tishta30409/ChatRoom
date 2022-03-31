@@ -26,6 +26,8 @@ namespace ChatRoom.Client.UI.Forms
 
         private LocalData localData;
 
+        private delegate void DelOnDisconnect();
+
         public LobbyForm()
         {
             InitializeComponent();
@@ -125,10 +127,10 @@ namespace ChatRoom.Client.UI.Forms
                 switch (btn.Name)
                 {
                     case "btnChangeNickName":
-                        this.changeNickName();
+                        this.ChangeNickName();
                         break;
                     case "btnChangePwd":
-                        this.changePassword();
+                        this.ChangePassword();
                         break;
                     default:
                         break;
@@ -142,7 +144,7 @@ namespace ChatRoom.Client.UI.Forms
 
         }
 
-        private void changeNickName()
+        private void ChangeNickName()
         {
             try
             {
@@ -187,10 +189,28 @@ namespace ChatRoom.Client.UI.Forms
             }
         }
 
-        private void changePassword()
+        private void ChangePassword()
         {
             var pwdForm = AutofacConfig.Container.BeginLifetimeScope().Resolve<ChangePasswordForm>();
             pwdForm.ShowDialog();
+        }
+
+        public void OnDisconnect()
+        {
+            //執行緒問題
+            if (this.InvokeRequired)
+            {
+                DelOnDisconnect del = new DelOnDisconnect(OnDisconnect);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.Close();
+                this.DialogResult = DialogResult.OK;
+                var pwdForm = AutofacConfig.Container.BeginLifetimeScope().Resolve<ChangePasswordForm>();
+                pwdForm.Close();
+                pwdForm.DialogResult = DialogResult.OK;
+            }
         }
     }
 }

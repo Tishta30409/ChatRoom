@@ -145,6 +145,7 @@
             this.btnLeaveRoom.TabIndex = 19;
             this.btnLeaveRoom.Text = "離開房間";
             this.btnLeaveRoom.UseVisualStyleBackColor = true;
+            this.btnLeaveRoom.Click += new System.EventHandler(this.OnButtonClick);
             // 
             // MainForm
             // 

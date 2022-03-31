@@ -1,10 +1,12 @@
 ﻿using Autofac;
 using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Service;
 using Newtonsoft.Json;
 using System;
 
@@ -12,17 +14,23 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class AccountDisconnectActionHandler : IActionHandler
     {
-        private IConsoleWrapper console;
+        private ChatRoomForm chatRoomForm;
+
+        private LobbyForm lobbyForm;
+
+        private IUserRoomService userRoomService;
 
         private IHubClient hubClient;
 
         private LocalData localData;
 
-        public AccountDisconnectActionHandler(IConsoleWrapper console, IHubClient hubClient)
+        public AccountDisconnectActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyForm,  IHubClient hubClient , IUserRoomService userRoomService)
         {
-            this.console = console;
+            this.chatRoomForm = chatRoomForm;
+            this.lobbyForm = lobbyForm;
             this.hubClient = hubClient;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
+            this.userRoomService = userRoomService;
         }
 
         public void Execute(ActionModule actionModule)
@@ -46,12 +54,12 @@ namespace ChatRoom.Client.UI.ActionHandler
                         });
                     }
 
+                    this.lobbyForm.OnDisconnect();
+                    this.chatRoomForm.OnDisconnect();
+
                     this.localData.DisConnect();
                     this.hubClient.Disconnect();
-                    this.console.WriteLine($"{action.Account} 玩家斷線 請重新連線");
-                    this.console.ReadLine();
-
-                    Environment.Exit(0);
+                  
                 }
             }
             catch (Exception)

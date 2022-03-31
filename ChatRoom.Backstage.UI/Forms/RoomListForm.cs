@@ -120,6 +120,7 @@ namespace ChatRoom.Backstage.UI.Forms
                 var mainForm = AutofacConfig.Container.Resolve<MainForm>();
                 mainForm.ShowJoinRoom();
 
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }

@@ -33,6 +33,10 @@ namespace ChatRoom.Client.UI.Forms
 
         private delegate void DelLeaveRoom();
 
+        private delegate void DelUpdateAccount();
+
+        private delegate void DelOnDisconnect();
+
         private StringBuilder sb;
 
         private LocalData localData;
@@ -149,6 +153,21 @@ namespace ChatRoom.Client.UI.Forms
 
         }
 
+        public void UpdateAccount()
+        {
+            //執行緒問題
+            if (this.InvokeRequired)
+            {
+                DelUpdateAccount del = new DelUpdateAccount(UpdateAccount);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.btnSend.Enabled = !Convert.ToBoolean(this.localData.Account.f_isMuted);
+
+            }
+        }
+
         public void OnLeaveRoom()
         {
             //執行緒問題
@@ -160,7 +179,9 @@ namespace ChatRoom.Client.UI.Forms
             else
             {
                 this.sb.Clear();
-                this.Close();
+                this.Hide();
+                this.DialogResult = DialogResult.Cancel;
+                
             }
         }
 
@@ -181,7 +202,26 @@ namespace ChatRoom.Client.UI.Forms
         private void ChatRoomForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true; //關閉視窗時取消
+            this.DialogResult = DialogResult.Cancel;
             this.Hide(); //隱藏式窗,下次再show出
+        }
+
+        public void OnDisconnect()
+        {
+            //執行緒問題
+            if (this.InvokeRequired)
+            {
+                DelOnDisconnect del = new DelOnDisconnect(OnDisconnect);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.Close();
+                this.DialogResult = DialogResult.OK;
+                var userlist = AutofacConfig.Container.BeginLifetimeScope().Resolve<UserListForm>();
+                userlist.Close();
+                userlist.DialogResult = DialogResult.OK;
+            }
         }
     }
 }

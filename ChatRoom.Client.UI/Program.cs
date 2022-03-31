@@ -22,23 +22,23 @@ namespace ChatRoom.Client.UI
             Application.SetCompatibleTextRenderingDefault(false);
 
             var hubClient = AutofacConfig.Container.Resolve<IHubClient>();
-
-
             var localData = AutofacConfig.Container.Resolve<LocalData>();
 
-
-            using (var scope = AutofacConfig.Container.BeginLifetimeScope())
+            using (var scope = AutofacConfig.Container)
             {
                 var lobby = scope.Resolve<LobbyForm>();
                 var main = scope.Resolve<MainForm>();
-                var chatRoom = AutofacConfig.Container.Resolve<ChatRoomForm>();
                 var changePwd = scope.Resolve<ChangePasswordForm>();
+                var chatRoom = AutofacConfig.Container.Resolve<ChatRoomForm>();
 
                 while (localData.FormViewType != FormViewType.Leave)
                 {
                     switch (localData.FormViewType)
                     {
                         case FormViewType.Main:
+                            localData.DisConnect();
+                            hubClient.Disconnect();
+
                             var result =  main.ShowDialog();
 
                             if(result == DialogResult.Cancel)
@@ -49,33 +49,37 @@ namespace ChatRoom.Client.UI
                         case FormViewType.Lobby:
                             if(lobby.ShowDialog() == DialogResult.Cancel)
                             {
-                                localData.FormViewType = FormViewType.Main;
-                                changePwd.Close();
-                                localData.DisConnect();
+                                if(localData.FormViewType == FormViewType.Lobby)
+                                {
+                                    localData.FormViewType = FormViewType.Main;
+                                    changePwd.Close();
+                                    localData.DisConnect();
+                                }
                             }
                             break;
                         case FormViewType.ChatRoom:
-                            if(chatRoom.ShowDialog() == DialogResult.Cancel)
+                            if (chatRoom.ShowDialog() == DialogResult.Cancel)
                             {
-                                localData.FormViewType = FormViewType.Lobby;
-
-                                hubClient.SendAction(new ChatMessageAction()
+                                if(localData.FormViewType == FormViewType.ChatRoom)
                                 {
-                                    Account = localData.Account.f_account,
-                                    Content = "離開房間",
-                                    NickName = localData.Account.f_nickName,
-                                    RoomID = (int)localData.RoomID,
-                                    IsRecord = false
-                                });
+                                    localData.FormViewType = FormViewType.Lobby;
 
-                                //正常離開房間
-                                var userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
-                                userRoomSvc.LeaveRoom(localData.Account.f_account);
+                                    hubClient.SendAction(new ChatMessageAction()
+                                    {
+                                        Account = localData.Account.f_account,
+                                        Content = "離開房間",
+                                        NickName = localData.Account.f_nickName,
+                                        RoomID = (int)localData.RoomID,
+                                        IsRecord = false
+                                    });
 
-                                //確定離開房間才清值
-                                localData.LeaveRoom();
+                                    //正常離開房間
+                                    var userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
+                                    userRoomSvc.LeaveRoom(localData.Account.f_account);
 
-                                chatRoom.Hide();
+                                    //確定離開房間才清值
+                                    localData.LeaveRoom();
+                                }
                             }
                             break;
                         default:

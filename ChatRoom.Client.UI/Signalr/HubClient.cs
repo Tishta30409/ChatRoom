@@ -101,9 +101,13 @@ namespace ChatRoom.Client.UI.Signalr
         {
             this.HubProxy = null;
 
-            this.HubConnection.Dispose();
-            this.HubConnection.Stop();
-            this.HubConnection = null;
+            if(this.HubConnection != null)
+            {
+                this.HubConnection.Dispose();
+                this.HubConnection.Stop();
+                this.HubConnection = null;
+            }
+           
         }
     }
 }

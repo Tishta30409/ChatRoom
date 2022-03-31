@@ -5,6 +5,7 @@ using ChatRoom.Client.Signalr;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataType.Tsql;
 using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using NLog;
@@ -34,6 +35,8 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private StringBuilder sb;
 
+        private IUserRoomService userRoomService;
+
         /// <summary>
         /// 背景計時器
         /// </summary>
@@ -46,6 +49,7 @@ namespace ChatRoom.Backstage.Forms.UI
             this.hubClient = AutofacConfig.Container.Resolve<IHubClient>();
             this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
+            this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
 
             this.timer = new System.Windows.Forms.Timer();
             this.timer.Interval = 500;
@@ -104,7 +108,10 @@ namespace ChatRoom.Backstage.Forms.UI
                         roomList.ShowDialog();
                         break;
                     case "btnSend":
-                        this.sendMessage();
+                        this.SendMessage();
+                        break;
+                    case "btnLeaveRoom":
+                        this.LeaveRoom();
                         break;
                     default:
                         break;
@@ -117,7 +124,18 @@ namespace ChatRoom.Backstage.Forms.UI
             }
         }
 
-        private void sendMessage()
+        private void LeaveRoom()
+        {
+            var joinResult = this.userRoomService.LeaveRoom(this.localData.Account);
+
+            this.localData.RoomID = null;
+
+            this.textMessage.Text = "";
+
+            this.CheckMainButtonState();
+        }
+
+        private void SendMessage()
         {
             if(this.localData.RoomID == null)
             {
@@ -129,7 +147,7 @@ namespace ChatRoom.Backstage.Forms.UI
             {
                 Account = this.localData.Account,
                 Content = this.textUserInput.Text,
-                NickName = this.localData.RoomName,
+                NickName = this.localData.Account,
                 RoomID = (int)this.localData.RoomID,
                 IsRecord = true
             });
@@ -203,6 +221,5 @@ namespace ChatRoom.Backstage.Forms.UI
             }
 
         }
-
     }
 }

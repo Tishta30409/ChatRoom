@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
@@ -12,16 +13,16 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class UpdateAccountActionHandler : IActionHandler
     {
-        private IConsoleWrapper console;
+        private ChatRoomForm chatRoomForm;
 
         private IHubClient hubClient;
 
         private LocalData localData;
 
 
-        public UpdateAccountActionHandler(IConsoleWrapper console, IHubClient hubClient)
+        public UpdateAccountActionHandler(ChatRoomForm chatRoomForm, IHubClient hubClient)
         {
-            this.console = console;
+            this.chatRoomForm = chatRoomForm;
             this.hubClient = hubClient;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
@@ -35,6 +36,9 @@ namespace ChatRoom.Client.UI.ActionHandler
                 if(this.localData.Account.f_account == action?.Account.f_account)
                 {
                     this.localData.Account = action.Account;
+
+                    this.chatRoomForm.UpdateAccount();
+
                 }
 
             }
