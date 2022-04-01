@@ -19,11 +19,7 @@ namespace ChatRoom.Server.Tests.Controllers
         {
             var repo = new Mock<IRoomRepository>();
             repo.Setup(p => p.Add("room001"))
-                .Returns((null, new Room()
-                {
-                    f_id = 1,
-                    f_roomName = "RoomTest11"
-                }));
+                .Returns((null, ResultCode.SUCCESS));
 
             var hubClient = new Mock<IHubClient>();
 

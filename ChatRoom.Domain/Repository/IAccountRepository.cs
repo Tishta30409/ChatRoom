@@ -7,8 +7,8 @@ namespace ChatRoom.Domain.Repository
 {
     public enum ResultCode
     {
-        [EnumDisplay("預設值 未定義")]
-        DEFAULT = -1,
+        [EnumDisplay("預期外的錯誤")]
+        DEFAULT_ERROR = -1,
         [EnumDisplay("成功")]
         SUCCESS = 0,
         [EnumDisplay("帳號重複")]
@@ -20,7 +20,9 @@ namespace ChatRoom.Domain.Repository
         [EnumDisplay("密碼錯誤")]
         WORNG_PASSWORD = 4,
         [EnumDisplay("帳號未啟用")]
-        ACCOUNT_UNACTIVE = 5
+        ACCOUNT_UNACTIVE = 5,
+        [EnumDisplay("房間名稱重複")]
+        ROOM_REPEAT = 6
     }
 
     public interface IAccountRepository

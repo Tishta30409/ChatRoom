@@ -3,6 +3,7 @@ using ChatRoom.Backstage.Forms.UI;
 using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using System;
 using System.ComponentModel;
@@ -148,7 +149,7 @@ namespace ChatRoom.Backstage.UI.Forms
             }
 
             var result = this.svc.Add(this.textRoomName.Text);
-            if (result.room.f_roomName == this.textRoomName.Text)
+            if (result.resultCode == ResultCode.SUCCESS)
             {
                 MessageBox.Show("執行成功");
                 this.GetRoomList();

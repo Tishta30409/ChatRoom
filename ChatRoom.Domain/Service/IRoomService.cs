@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace ChatRoom.Domain.Service
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, Room room) Add(string roomName);
+        (Exception exception, ResultCode resultCode) Add(string roomName);
 
         /// <summary>
         /// 更新帳號(--後台LIST 會先列出列表 選擇後才可以改名或刪除)

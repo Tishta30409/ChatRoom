@@ -16,10 +16,10 @@ namespace ChatRoom.Backstage.UI.ActionHandler
 
         private LocalData localData;
 
-        public ChatMessageActionHandler(MainForm chatRoomForm)
+        public ChatMessageActionHandler(MainForm chatRoomForm, LocalData localData)
         {
             this.mainForm = chatRoomForm;
-            this.localData = AutofacConfig.Container.Resolve<LocalData>();
+            this.localData = localData;
         }
 
         public void Execute(ActionModule actionModule)

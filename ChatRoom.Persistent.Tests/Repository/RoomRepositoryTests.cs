@@ -34,7 +34,7 @@ namespace ChatRoom.Persistent.Tests.Repository
             var addResult = this.repo.Add("測試房間");
 
             Assert.IsNull(addResult.exception);
-            Assert.IsNotNull(addResult.room);
+            Assert.IsNotNull(addResult);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace ChatRoom.Persistent.Tests.Repository
         {
             var addResult = this.repo.Add("測試房間");
             Assert.IsNull(addResult.exception);
-            Assert.IsNotNull(addResult.room);
+            Assert.IsNotNull(addResult);
 
             var delResult = this.repo.Delete(1);
             Assert.IsNull(delResult.exception);
@@ -57,7 +57,7 @@ namespace ChatRoom.Persistent.Tests.Repository
         {
             var addResult = this.repo.Add("測試房間");
             Assert.IsNull(addResult.exception);
-            Assert.IsNotNull(addResult.room);
+            Assert.AreEqual(ResultCode.SUCCESS, addResult.resultCode);
 
             var delResult = this.repo.Update(new Room() { f_id = 1, f_roomName = "測試房間2"});
             Assert.IsNull(delResult.exception);

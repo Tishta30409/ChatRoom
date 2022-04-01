@@ -50,7 +50,7 @@ namespace ChatRoom.Persistent.Repository
             {
                 return (ex, new AccountResult()
                 {
-                    ResultCode = ResultCode.DEFAULT,
+                    ResultCode = ResultCode.DEFAULT_ERROR,
                     Account = null
                 });
             }
@@ -80,7 +80,7 @@ namespace ChatRoom.Persistent.Repository
             }
             catch (Exception ex)
             {
-                return (ex, ResultCode.DEFAULT);
+                return (ex, ResultCode.DEFAULT_ERROR);
             }
         }
 

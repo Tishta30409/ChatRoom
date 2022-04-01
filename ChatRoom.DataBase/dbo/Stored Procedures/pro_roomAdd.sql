@@ -14,11 +14,12 @@ AS
 		SELECT TOP 1 1 FROM #roomTemp
     )
 	BEGIN
-		SELECT f_id, f_roomName FROM t_room WHERE f_roomName = @roomName 
+		SELECT 6
 	END
 	ELSE
 	BEGIN
-		INSERT INTO t_room(f_roomName) OUTPUT inserted.* VALUES(@roomName)
+		INSERT INTO t_room(f_roomName)  VALUES(@roomName)
+		SELECT 0
 	END
 RETURN 0
 GO

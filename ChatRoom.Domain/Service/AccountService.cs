@@ -41,7 +41,7 @@ namespace ChatRoom.Domain.Service
             }
             catch (Exception ex)
             {
-                return (ex, ResultCode.DEFAULT);
+                return (ex, ResultCode.DEFAULT_ERROR);
             }
         }
 

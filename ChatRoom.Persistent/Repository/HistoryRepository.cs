@@ -106,7 +106,7 @@ namespace ChatRoom.Persistent.Repository
             }
             catch (Exception ex)
             {
-                return (ex, ResultCode.DEFAULT);
+                return (ex, ResultCode.DEFAULT_ERROR);
             }
         }
     }
