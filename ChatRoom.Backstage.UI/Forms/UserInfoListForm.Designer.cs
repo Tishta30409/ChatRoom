@@ -115,7 +115,7 @@
             // faccountDataGridViewTextBoxColumn
             // 
             this.faccountDataGridViewTextBoxColumn.DataPropertyName = "f_account";
-            this.faccountDataGridViewTextBoxColumn.HeaderText = "f_account";
+            this.faccountDataGridViewTextBoxColumn.HeaderText = "帳號";
             this.faccountDataGridViewTextBoxColumn.Name = "faccountDataGridViewTextBoxColumn";
             this.faccountDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -130,21 +130,21 @@
             // fnickNameDataGridViewTextBoxColumn
             // 
             this.fnickNameDataGridViewTextBoxColumn.DataPropertyName = "f_nickName";
-            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "f_nickName";
+            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "暱稱";
             this.fnickNameDataGridViewTextBoxColumn.Name = "fnickNameDataGridViewTextBoxColumn";
             this.fnickNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // fisLockedDataGridViewTextBoxColumn
             // 
             this.fisLockedDataGridViewTextBoxColumn.DataPropertyName = "f_isLocked";
-            this.fisLockedDataGridViewTextBoxColumn.HeaderText = "f_isLocked";
+            this.fisLockedDataGridViewTextBoxColumn.HeaderText = "鎖定狀態";
             this.fisLockedDataGridViewTextBoxColumn.Name = "fisLockedDataGridViewTextBoxColumn";
             this.fisLockedDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // fisMutedDataGridViewTextBoxColumn
             // 
             this.fisMutedDataGridViewTextBoxColumn.DataPropertyName = "f_isMuted";
-            this.fisMutedDataGridViewTextBoxColumn.HeaderText = "f_isMuted";
+            this.fisMutedDataGridViewTextBoxColumn.HeaderText = "禁言狀態";
             this.fisMutedDataGridViewTextBoxColumn.Name = "fisMutedDataGridViewTextBoxColumn";
             this.fisMutedDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -188,6 +188,7 @@
         private System.Windows.Forms.Button btnUnlock;
         private System.Windows.Forms.Button btnMute;
         private System.Windows.Forms.Button btnUnMute;
+        private System.Windows.Forms.BindingSource accountBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn fidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn faccountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fpasswordDataGridViewTextBoxColumn;
@@ -196,6 +197,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fisMutedDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ferrorTimesDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn floginIdentifierDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource accountBindingSource;
     }
 }

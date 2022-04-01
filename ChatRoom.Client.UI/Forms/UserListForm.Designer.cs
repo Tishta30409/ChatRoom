@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dvgRoomUsers = new System.Windows.Forms.DataGridView();
-            this.userRoomBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userRoomBindingSource = new System.Windows.Forms.BindingSource();
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.faccountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.froomIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,7 +82,7 @@
             // fnickNameDataGridViewTextBoxColumn
             // 
             this.fnickNameDataGridViewTextBoxColumn.DataPropertyName = "f_nickName";
-            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "f_nickName";
+            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "暱稱";
             this.fnickNameDataGridViewTextBoxColumn.Name = "fnickNameDataGridViewTextBoxColumn";
             // 
             // UserListForm
@@ -104,10 +103,10 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dvgRoomUsers;
+        private System.Windows.Forms.BindingSource userRoomBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn fidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn faccountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn froomIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fnickNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource userRoomBindingSource;
     }
 }

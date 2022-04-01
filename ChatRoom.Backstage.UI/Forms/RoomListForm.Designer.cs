@@ -122,7 +122,7 @@
             // froomNameDataGridViewTextBoxColumn
             // 
             this.froomNameDataGridViewTextBoxColumn.DataPropertyName = "f_roomName";
-            this.froomNameDataGridViewTextBoxColumn.HeaderText = "f_roomName";
+            this.froomNameDataGridViewTextBoxColumn.HeaderText = "房間名稱";
             this.froomNameDataGridViewTextBoxColumn.Name = "froomNameDataGridViewTextBoxColumn";
             this.froomNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -155,8 +155,8 @@
         private System.Windows.Forms.DataGridView dvgRoomList;
         private System.Windows.Forms.Button btnJoinRoom;
         private System.Windows.Forms.TextBox textRoomName;
+        private System.Windows.Forms.BindingSource roomBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn fidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn froomNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource roomBindingSource;
     }
 }
