@@ -1,16 +1,9 @@
 ﻿using Autofac;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Client.UI.Model;
-using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Service;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatRoom.Client.UI.Forms

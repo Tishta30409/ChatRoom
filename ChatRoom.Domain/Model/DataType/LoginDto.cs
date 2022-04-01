@@ -1,7 +1,7 @@
 ﻿using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 
-namespace ChatRoom.Domain.Model.DataObj
+namespace ChatRoom.Domain.Model.DataType
 {
     public class LoginDto
     {

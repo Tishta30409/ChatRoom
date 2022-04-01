@@ -2,6 +2,7 @@
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataType;
 using Newtonsoft.Json;
 using System;
 

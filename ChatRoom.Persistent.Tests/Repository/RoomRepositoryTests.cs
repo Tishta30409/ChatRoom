@@ -1,14 +1,13 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Data.SqlClient;
 using System.Linq;
 
 namespace ChatRoom.Persistent.Tests.Repository
-{ 
+{
     [TestClass]
     public class RoomRepositoryTests
     {

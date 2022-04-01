@@ -1,7 +1,7 @@
 ﻿using ChatRoom.Domain.Repository;
 using System.Collections.Generic;
 
-namespace ChatRoom.Domain.Model.DataObj
+namespace ChatRoom.Domain.Model.DataType
 {
     public class AccountResult
     { 

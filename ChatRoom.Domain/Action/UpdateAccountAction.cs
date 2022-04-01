@@ -1,6 +1,5 @@
 ﻿using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
-using System;
+using ChatRoom.Domain.Model.DataType;
 
 namespace ChatRoom.Domain.Action
 {

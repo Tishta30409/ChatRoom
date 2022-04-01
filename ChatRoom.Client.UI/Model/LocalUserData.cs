@@ -1,5 +1,4 @@
-﻿using ChatRoom.Domain.Model;
-using System;
+﻿using ChatRoom.Domain.Model.DataType;
 using System.Collections.Generic;
 
 namespace ChatRoom.Client.UI.Model

@@ -2,7 +2,7 @@
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
-using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;

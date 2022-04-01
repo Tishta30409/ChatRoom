@@ -1,4 +1,4 @@
-﻿namespace ChatRoom.Domain.Model
+﻿namespace ChatRoom.Domain.Model.DataType
 {
     //From Sql
     public class Account

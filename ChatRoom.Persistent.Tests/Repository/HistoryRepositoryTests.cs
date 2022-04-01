@@ -1,4 +1,4 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;

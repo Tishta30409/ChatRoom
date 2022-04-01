@@ -1,6 +1,7 @@
 ﻿using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Hubs;
 using ChatRoom.Server.Model;

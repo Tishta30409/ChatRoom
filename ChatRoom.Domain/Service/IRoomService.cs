@@ -1,5 +1,4 @@
-﻿using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Repository;
+﻿using ChatRoom.Domain.Model.DataType;
 using System;
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿using ChatRoom.Domain.Model.DataType.Tsql;
+﻿using ChatRoom.Domain.Model.DataType;
 using System;
 using System.Collections.Generic;
 

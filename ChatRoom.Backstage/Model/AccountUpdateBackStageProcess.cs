@@ -1,9 +1,9 @@
 ﻿using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Service;
-using System;
-using ChatRoom.Domain.Model.DataObj;
 using Newtonsoft.Json;
+using System;
 
 namespace ChatRoom.Backstage.Model
 {

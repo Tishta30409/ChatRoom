@@ -1,13 +1,10 @@
-﻿using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataObj;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatRoom.Domain.Service
 {

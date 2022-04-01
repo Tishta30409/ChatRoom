@@ -1,12 +1,11 @@
 ﻿using ChatRoom.Client.Signalr;
 using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace ChatRoom.Client.Model.Process

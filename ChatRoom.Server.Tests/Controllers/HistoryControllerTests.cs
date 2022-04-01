@@ -1,4 +1,4 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

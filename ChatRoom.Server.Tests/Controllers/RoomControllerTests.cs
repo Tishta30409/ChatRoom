@@ -1,11 +1,10 @@
-﻿using ChatRoom.Domain.Model;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Server.Controllers;
 using ChatRoom.Server.Hubs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;

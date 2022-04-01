@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Client.UI.Model;
-using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataType.Tsql;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Service;
 using NLog;
 using System;

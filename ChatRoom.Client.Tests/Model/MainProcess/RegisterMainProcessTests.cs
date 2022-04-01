@@ -1,13 +1,11 @@
 ﻿using ChatRoom.Client.Model.Process;
 using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Security.Cryptography;
 
 namespace ChatRoom.Client.Tests.Model.MainProcess
 {

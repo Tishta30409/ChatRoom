@@ -2,9 +2,7 @@
 using ChatRoom.Backstage.Forms.UI;
 using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Applibs;
-using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataType.Tsql;
-using ChatRoom.Domain.Repository;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Service;
 using System;
 using System.ComponentModel;

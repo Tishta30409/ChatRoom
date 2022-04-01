@@ -3,6 +3,7 @@ using ChatRoom.Client.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
 using ChatRoom.Domain.Model;
+using ChatRoom.Domain.Model.DataType;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

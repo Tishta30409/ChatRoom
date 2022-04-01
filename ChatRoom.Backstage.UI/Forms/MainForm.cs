@@ -4,14 +4,12 @@ using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.Signalr;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Domain.Action;
-using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataType.Tsql;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using NLog;
 using System;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace ChatRoom.Backstage.Forms.UI

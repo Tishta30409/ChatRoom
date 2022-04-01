@@ -1,10 +1,6 @@
-﻿using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataObj;
+﻿using ChatRoom.Domain.Model.DataType;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatRoom.Domain.Repository
 {

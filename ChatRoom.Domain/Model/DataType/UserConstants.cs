@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatRoom.Domain.Model.DataObj
+namespace ChatRoom.Domain.Model.DataType
 {
     //常數
     public static class UserConstants

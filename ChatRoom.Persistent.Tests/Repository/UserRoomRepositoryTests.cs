@@ -1,9 +1,8 @@
-﻿using ChatRoom.Domain.Model.DataType.Tsql;
+﻿using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Persistent.Repository;
 using Dapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Data.SqlClient;
 using System.Linq;
 

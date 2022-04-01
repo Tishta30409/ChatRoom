@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 
-namespace ChatRoom.Domain.Model.DataObj
+namespace ChatRoom.Domain.Model.DataType
 {
     public class AccountDto
     {

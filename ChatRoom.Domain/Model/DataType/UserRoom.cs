@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatRoom.Domain.Model.DataType.Tsql
+namespace ChatRoom.Domain.Model.DataType
 {
     public class UserRoom
     {

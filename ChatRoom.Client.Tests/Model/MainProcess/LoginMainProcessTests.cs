@@ -1,11 +1,9 @@
 ﻿using ChatRoom.Client.Model.Process;
-using ChatRoom.Client.Signalr;
 using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Model.DataObj;
+using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Model.Process;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
-using Microsoft.AspNet.SignalR.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
