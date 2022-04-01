@@ -49,7 +49,7 @@ namespace ChatRoom.Backstage.UI.Forms
 
             if (roomsResult.exception != null)
             {
-                throw roomsResult.exception;
+                return;
             }
 
             this.rooms = roomsResult.rooms.ToArray();

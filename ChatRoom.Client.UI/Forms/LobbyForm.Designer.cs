@@ -33,22 +33,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textNickName = new System.Windows.Forms.TextBox();
             this.btnChangePwd = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRooms)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewRooms
             // 
             this.dataGridViewRooms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRooms.Location = new System.Drawing.Point(27, 68);
+            this.dataGridViewRooms.Location = new System.Drawing.Point(27, 79);
             this.dataGridViewRooms.Name = "dataGridViewRooms";
             this.dataGridViewRooms.RowTemplate.Height = 24;
-            this.dataGridViewRooms.Size = new System.Drawing.Size(346, 328);
+            this.dataGridViewRooms.Size = new System.Drawing.Size(346, 270);
             this.dataGridViewRooms.TabIndex = 0;
             this.dataGridViewRooms.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvRoomList_Click);
             // 
             // btnChangeNickName
             // 
-            this.btnChangeNickName.Location = new System.Drawing.Point(217, 22);
+            this.btnChangeNickName.Location = new System.Drawing.Point(27, 50);
             this.btnChangeNickName.Name = "btnChangeNickName";
             this.btnChangeNickName.Size = new System.Drawing.Size(75, 23);
             this.btnChangeNickName.TabIndex = 1;
@@ -76,7 +77,7 @@
             // 
             // btnChangePwd
             // 
-            this.btnChangePwd.Location = new System.Drawing.Point(298, 22);
+            this.btnChangePwd.Location = new System.Drawing.Point(109, 50);
             this.btnChangePwd.Name = "btnChangePwd";
             this.btnChangePwd.Size = new System.Drawing.Size(75, 23);
             this.btnChangePwd.TabIndex = 4;
@@ -84,11 +85,22 @@
             this.btnChangePwd.UseVisualStyleBackColor = true;
             this.btnChangePwd.Click += new System.EventHandler(this.ButtonOnClick);
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(298, 50);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "刷新";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.ButtonOnClick);
+            // 
             // LobbyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(405, 419);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnChangePwd);
             this.Controls.Add(this.textNickName);
             this.Controls.Add(this.label1);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textNickName;
         private System.Windows.Forms.Button btnChangePwd;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

@@ -48,24 +48,29 @@ namespace ChatRoom.Client.UI.Forms
                 //暱稱更新
                 this.textNickName.Text = this.localData.Account.f_nickName;
 
-                //房間列表
-                var result = this.roomSvc.GetList();
-
-                if (result.exception != null)
-                {
-                    throw result.exception;
-                }
-
-                this.localData.Rooms = result.rooms.ToList();
-
-                var bind = new BindingList<Room>(this.localData.Rooms);
-                var source = new BindingSource(bind, null);
-                this.dataGridViewRooms.DataSource = source;
+                this.GetList();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        private void GetList()
+        {
+            //房間列表
+            var result = this.roomSvc.GetList();
+
+            if (result.exception != null)
+            {
+                throw result.exception;
+            }
+
+            this.localData.Rooms = result.rooms.ToList();
+
+            var bind = new BindingList<Room>(this.localData.Rooms);
+            var source = new BindingSource(bind, null);
+            this.dataGridViewRooms.DataSource = source;
         }
 
         /// <summary>
@@ -131,6 +136,9 @@ namespace ChatRoom.Client.UI.Forms
                         break;
                     case "btnChangePwd":
                         this.ChangePassword();
+                        break;
+                    case "btnRefresh":
+                        this.GetList();
                         break;
                     default:
                         break;
@@ -212,5 +220,6 @@ namespace ChatRoom.Client.UI.Forms
                 pwdForm.DialogResult = DialogResult.OK;
             }
         }
+
     }
 }
