@@ -130,8 +130,6 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void UpdateInfo()
         {
-            labState.Text = $"使用者:{account.f_account}, 鎖定: {Convert.ToBoolean(account.f_isLocked)} , 禁言: {Convert.ToBoolean(account.f_isMuted)}";
-
             this.btnUnlock.Enabled = Convert.ToBoolean(account.f_isLocked);
             this.btnMute.Enabled = !Convert.ToBoolean(account.f_isMuted);
             this.btnUnMute.Enabled = Convert.ToBoolean(account.f_isMuted);

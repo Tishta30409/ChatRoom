@@ -158,7 +158,8 @@ namespace ChatRoom.Client.UI.Forms
             else
             {
                 this.btnSend.Enabled = !Convert.ToBoolean(this.localData.Account.f_isMuted);
-
+                this.textUserEnter.Enabled = !Convert.ToBoolean(this.localData.Account.f_isMuted);
+                this.textUserEnter.Text = Convert.ToBoolean(this.localData.Account.f_isMuted) == true ? "您已被禁言" : "";
             }
         }
 

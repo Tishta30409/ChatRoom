@@ -28,41 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dvgUserList = new System.Windows.Forms.DataGridView();
-            this.labState = new System.Windows.Forms.Label();
             this.btnUnlock = new System.Windows.Forms.Button();
             this.btnMute = new System.Windows.Forms.Button();
             this.btnUnMute = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.faccountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fpasswordDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fnickNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fisLockedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fisMutedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ferrorTimesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.floginIdentifierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dvgUserList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dvgUserList
             // 
             this.dvgUserList.AllowUserToAddRows = false;
             this.dvgUserList.AllowUserToDeleteRows = false;
+            this.dvgUserList.AutoGenerateColumns = false;
             this.dvgUserList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dvgUserList.Location = new System.Drawing.Point(12, 110);
+            this.dvgUserList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fidDataGridViewTextBoxColumn,
+            this.faccountDataGridViewTextBoxColumn,
+            this.fpasswordDataGridViewTextBoxColumn,
+            this.fnickNameDataGridViewTextBoxColumn,
+            this.fisLockedDataGridViewTextBoxColumn,
+            this.fisMutedDataGridViewTextBoxColumn,
+            this.ferrorTimesDataGridViewTextBoxColumn,
+            this.floginIdentifierDataGridViewTextBoxColumn});
+            this.dvgUserList.DataSource = this.accountBindingSource;
+            this.dvgUserList.Location = new System.Drawing.Point(9, 41);
             this.dvgUserList.Name = "dvgUserList";
             this.dvgUserList.ReadOnly = true;
             this.dvgUserList.RowTemplate.Height = 24;
-            this.dvgUserList.Size = new System.Drawing.Size(473, 257);
+            this.dvgUserList.Size = new System.Drawing.Size(445, 257);
             this.dvgUserList.TabIndex = 0;
             this.dvgUserList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgUserList_CellClick);
             // 
-            // labState
-            // 
-            this.labState.AutoSize = true;
-            this.labState.Location = new System.Drawing.Point(12, 18);
-            this.labState.Name = "labState";
-            this.labState.Size = new System.Drawing.Size(35, 12);
-            this.labState.TabIndex = 2;
-            this.labState.Text = "狀態::";
-            // 
             // btnUnlock
             // 
-            this.btnUnlock.Location = new System.Drawing.Point(12, 81);
+            this.btnUnlock.Location = new System.Drawing.Point(217, 12);
             this.btnUnlock.Name = "btnUnlock";
             this.btnUnlock.Size = new System.Drawing.Size(75, 23);
             this.btnUnlock.TabIndex = 3;
@@ -72,7 +82,7 @@
             // 
             // btnMute
             // 
-            this.btnMute.Location = new System.Drawing.Point(93, 81);
+            this.btnMute.Location = new System.Drawing.Point(298, 12);
             this.btnMute.Name = "btnMute";
             this.btnMute.Size = new System.Drawing.Size(75, 23);
             this.btnMute.TabIndex = 4;
@@ -82,7 +92,7 @@
             // 
             // btnUnMute
             // 
-            this.btnUnMute.Location = new System.Drawing.Point(174, 81);
+            this.btnUnMute.Location = new System.Drawing.Point(379, 12);
             this.btnUnMute.Name = "btnUnMute";
             this.btnUnMute.Size = new System.Drawing.Size(75, 23);
             this.btnUnMute.TabIndex = 5;
@@ -90,53 +100,102 @@
             this.btnUnMute.UseVisualStyleBackColor = true;
             this.btnUnMute.Click += new System.EventHandler(this.OnButtonClick);
             // 
-            // label2
+            // accountBindingSource
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(176, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "鎖帳號 要確認有鎖定才可以解鎖";
+            this.accountBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Account);
             // 
-            // label3
+            // fidDataGridViewTextBoxColumn
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(194, 50);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "帳號禁言 要砍先前訊息";
+            this.fidDataGridViewTextBoxColumn.DataPropertyName = "f_id";
+            this.fidDataGridViewTextBoxColumn.HeaderText = "f_id";
+            this.fidDataGridViewTextBoxColumn.Name = "fidDataGridViewTextBoxColumn";
+            this.fidDataGridViewTextBoxColumn.ReadOnly = true;
+            this.fidDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // faccountDataGridViewTextBoxColumn
+            // 
+            this.faccountDataGridViewTextBoxColumn.DataPropertyName = "f_account";
+            this.faccountDataGridViewTextBoxColumn.HeaderText = "f_account";
+            this.faccountDataGridViewTextBoxColumn.Name = "faccountDataGridViewTextBoxColumn";
+            this.faccountDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fpasswordDataGridViewTextBoxColumn
+            // 
+            this.fpasswordDataGridViewTextBoxColumn.DataPropertyName = "f_password";
+            this.fpasswordDataGridViewTextBoxColumn.HeaderText = "f_password";
+            this.fpasswordDataGridViewTextBoxColumn.Name = "fpasswordDataGridViewTextBoxColumn";
+            this.fpasswordDataGridViewTextBoxColumn.ReadOnly = true;
+            this.fpasswordDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // fnickNameDataGridViewTextBoxColumn
+            // 
+            this.fnickNameDataGridViewTextBoxColumn.DataPropertyName = "f_nickName";
+            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "f_nickName";
+            this.fnickNameDataGridViewTextBoxColumn.Name = "fnickNameDataGridViewTextBoxColumn";
+            this.fnickNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fisLockedDataGridViewTextBoxColumn
+            // 
+            this.fisLockedDataGridViewTextBoxColumn.DataPropertyName = "f_isLocked";
+            this.fisLockedDataGridViewTextBoxColumn.HeaderText = "f_isLocked";
+            this.fisLockedDataGridViewTextBoxColumn.Name = "fisLockedDataGridViewTextBoxColumn";
+            this.fisLockedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fisMutedDataGridViewTextBoxColumn
+            // 
+            this.fisMutedDataGridViewTextBoxColumn.DataPropertyName = "f_isMuted";
+            this.fisMutedDataGridViewTextBoxColumn.HeaderText = "f_isMuted";
+            this.fisMutedDataGridViewTextBoxColumn.Name = "fisMutedDataGridViewTextBoxColumn";
+            this.fisMutedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ferrorTimesDataGridViewTextBoxColumn
+            // 
+            this.ferrorTimesDataGridViewTextBoxColumn.DataPropertyName = "f_errorTimes";
+            this.ferrorTimesDataGridViewTextBoxColumn.HeaderText = "f_errorTimes";
+            this.ferrorTimesDataGridViewTextBoxColumn.Name = "ferrorTimesDataGridViewTextBoxColumn";
+            this.ferrorTimesDataGridViewTextBoxColumn.ReadOnly = true;
+            this.ferrorTimesDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // floginIdentifierDataGridViewTextBoxColumn
+            // 
+            this.floginIdentifierDataGridViewTextBoxColumn.DataPropertyName = "f_loginIdentifier";
+            this.floginIdentifierDataGridViewTextBoxColumn.HeaderText = "f_loginIdentifier";
+            this.floginIdentifierDataGridViewTextBoxColumn.Name = "floginIdentifierDataGridViewTextBoxColumn";
+            this.floginIdentifierDataGridViewTextBoxColumn.ReadOnly = true;
+            this.floginIdentifierDataGridViewTextBoxColumn.Visible = false;
             // 
             // UserInfoListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 377);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(462, 310);
             this.Controls.Add(this.btnUnMute);
             this.Controls.Add(this.btnMute);
             this.Controls.Add(this.btnUnlock);
-            this.Controls.Add(this.labState);
             this.Controls.Add(this.dvgUserList);
             this.Name = "UserInfoListForm";
             this.Text = " 使用者列表";
             this.Shown += new System.EventHandler(this.UserInfoList_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dvgUserList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView dvgUserList;
-        private System.Windows.Forms.Label labState;
         private System.Windows.Forms.Button btnUnlock;
         private System.Windows.Forms.Button btnMute;
         private System.Windows.Forms.Button btnUnMute;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fidDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn faccountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fpasswordDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fnickNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fisLockedDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fisMutedDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ferrorTimesDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn floginIdentifierDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource accountBindingSource;
     }
 }
