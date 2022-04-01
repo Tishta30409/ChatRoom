@@ -31,6 +31,11 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void UserInfoList_Shown(object sender, EventArgs e)
         {
+            this.GetList();
+        }
+
+        private void GetList()
+        {
             var getResult = this.svc.QueryList();
 
             if (getResult.exception != null)
@@ -50,6 +55,7 @@ namespace ChatRoom.Backstage.UI.Forms
             if(account == null)
             {
                 MessageBox.Show("請先選擇帳號");
+                return;
             }
 
             try
@@ -89,6 +95,8 @@ namespace ChatRoom.Backstage.UI.Forms
                 this.account = activeResult.account;
                 this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.account;
                 this.UpdateInfo();
+
+                this.GetList();
             }
             else
             {
@@ -107,6 +115,8 @@ namespace ChatRoom.Backstage.UI.Forms
                 this.account = activeResult.account;
                 this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.account;
                 this.UpdateInfo();
+
+                this.GetList();
             }
             else
             {
@@ -118,14 +128,14 @@ namespace ChatRoom.Backstage.UI.Forms
         {
             if (e.RowIndex > -1 && e.RowIndex < this.accounts.Length && e.RowIndex < this.accounts.Length)
             {
-                account = accounts[e.RowIndex];
+               this.account = this.accounts[e.RowIndex];
                 this.UpdateInfo();
             }
         }
 
         private void UpdateInfo()
         {
-            labState.Text = $"使用者:{account.f_account}, 鎖定: {account.f_isLocked} , 禁言: {account.f_isMuted}";
+            labState.Text = $"使用者:{account.f_account}, 鎖定: {Convert.ToBoolean(account.f_isLocked)} , 禁言: {Convert.ToBoolean(account.f_isMuted)}";
 
             this.btnUnlock.Enabled = Convert.ToBoolean(account.f_isLocked);
             this.btnMute.Enabled = !Convert.ToBoolean(account.f_isMuted);

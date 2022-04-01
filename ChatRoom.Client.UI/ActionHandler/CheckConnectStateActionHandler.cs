@@ -5,7 +5,6 @@ using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Service;
 using Newtonsoft.Json;
 using System;
@@ -31,8 +30,7 @@ namespace ChatRoom.Client.UI.ActionHandler
             this.hubClient = hubClient;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
             this.userRoomService = userRoomService;
-            
-    }
+        }
 
         public void Execute(ActionModule actionModule)
         {
@@ -41,10 +39,8 @@ namespace ChatRoom.Client.UI.ActionHandler
                 var action = JsonConvert.DeserializeObject<CheckConnectStateAction>(actionModule.Message);
 
                 //帳號相同 但是GUID不同 為前被踢
-                if(this.localData.Account.f_account == action?.Account && this.localData.Account.f_loginIdentifier != action?.LoginIdentifier )
+                if (this.localData.Account.f_account == action?.Account && this.localData.Account.f_loginIdentifier != action?.LoginIdentifier)
                 {
-                    
-
                     //如果在房間內 先送離開通知在斷線
                     if (this.localData.RoomID != null)
                     {
@@ -60,7 +56,6 @@ namespace ChatRoom.Client.UI.ActionHandler
 
                     this.userRoomService.LeaveRoom(this.localData.Account.f_account);
 
-                    
                     switch (this.localData.FormViewType)
                     {
                         case FormViewType.Lobby:

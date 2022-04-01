@@ -78,7 +78,7 @@
             this.dvgRoomList.RowTemplate.Height = 24;
             this.dvgRoomList.Size = new System.Drawing.Size(291, 299);
             this.dvgRoomList.TabIndex = 3;
-            this.dvgRoomList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgRoomList_CellContentClick);
+            this.dvgRoomList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgRoomList_CellClick);
             // 
             // btnJoinRoom
             // 

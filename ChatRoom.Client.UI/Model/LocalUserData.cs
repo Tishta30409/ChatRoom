@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace ChatRoom.Client.UI.Model
 {
+    //目前畫面
     public enum FormViewType
     {
         Main = 0,

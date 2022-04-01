@@ -24,7 +24,6 @@ namespace ChatRoom.Backstage.UI.Forms
             InitializeComponent();
 
             this.svc = AutofacConfig.Container.Resolve<IUserRoomService>();
-
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 

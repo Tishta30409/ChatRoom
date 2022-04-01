@@ -14,18 +14,9 @@ namespace ChatRoom.Server.ActionHandler
     {
         private IHistoryRepository repo;
 
-        private IRoomRepository roomRepo;
-
-        private IHubClient hubClient;
-
-        private IUserRoomRepository userRoomRepo;
-
-        public ChatMessageActionHandler(IHistoryRepository repo, IRoomRepository roomRepo, IUserRoomRepository userRoomRepo,  IHubClient hubClient)
+        public ChatMessageActionHandler(IHistoryRepository repo)
         {
             this.repo = repo;
-            this.roomRepo = roomRepo;
-            this.hubClient = hubClient;
-            this.userRoomRepo = userRoomRepo;
         }
 
         public (Exception exception, ActionBase actionBase) ExecuteAction(ActionModule action)

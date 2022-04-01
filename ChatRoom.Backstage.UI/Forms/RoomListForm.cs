@@ -30,11 +30,8 @@ namespace ChatRoom.Backstage.UI.Forms
             InitializeComponent();
 
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
-
             this.svc = AutofacConfig.Container.Resolve<IRoomService>();
             this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
-
-
         }
 
         private void RoomListForm_Shown(object sender, EventArgs e)
@@ -44,7 +41,6 @@ namespace ChatRoom.Backstage.UI.Forms
             {
                 this.room = this.rooms[this.dvgRoomList.CurrentCell.RowIndex];
             }
-            
         }
 
         private void GetRoomList()
@@ -173,6 +169,12 @@ namespace ChatRoom.Backstage.UI.Forms
                 return;
             }
 
+            if (this.textRoomName.Text == "")
+            {
+                MessageBox.Show("請先輸入房間名稱");
+                return;
+            }
+
             var result = this.svc.Update(new Room()
             {
                 f_id = room.f_id,
@@ -191,14 +193,12 @@ namespace ChatRoom.Backstage.UI.Forms
             }
         }
 
-
-        private void dvgRoomList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dvgRoomList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex > -1 && e.RowIndex < this.rooms.Length && e.RowIndex < this.rooms.Length)
             {
                 room = rooms[e.RowIndex];
             }
         }
-
     }
 }

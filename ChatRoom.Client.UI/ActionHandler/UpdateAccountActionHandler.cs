@@ -5,7 +5,6 @@ using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
 using Newtonsoft.Json;
 using System;
 
@@ -14,16 +13,12 @@ namespace ChatRoom.Client.UI.ActionHandler
     public class UpdateAccountActionHandler : IActionHandler
     {
         private ChatRoomForm chatRoomForm;
-
-        private IHubClient hubClient;
-
         private LocalData localData;
 
 
-        public UpdateAccountActionHandler(ChatRoomForm chatRoomForm, IHubClient hubClient)
+        public UpdateAccountActionHandler(ChatRoomForm chatRoomForm)
         {
             this.chatRoomForm = chatRoomForm;
-            this.hubClient = hubClient;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
@@ -36,9 +31,7 @@ namespace ChatRoom.Client.UI.ActionHandler
                 if(this.localData.Account.f_account == action?.Account.f_account)
                 {
                     this.localData.Account = action.Account;
-
                     this.chatRoomForm.UpdateAccount();
-
                 }
 
             }

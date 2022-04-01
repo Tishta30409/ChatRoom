@@ -26,13 +26,7 @@ namespace ChatRoom.Server.Tests.ActionHandler
                 f_createDateTime = DateTime.Now
             }));
 
-            var hubClient = new Mock<IHubClient>();
-
-            var repoRoom = new Mock<IRoomRepository>();
-
-            var repoUserRoom = new Mock<IUserRoomRepository>();
-
-            var handler = new ChatMessageActionHandler(repo.Object, repoRoom.Object, repoUserRoom.Object, hubClient.Object);
+            var handler = new ChatMessageActionHandler(repo.Object);
             var result = handler.ExecuteAction(new ActionModule()
             {
                 Message = new ChatMessageAction()

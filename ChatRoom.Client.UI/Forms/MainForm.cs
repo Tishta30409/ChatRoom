@@ -115,8 +115,6 @@ namespace ChatRoom.Client.UI
                         this.hubClient.StartAsync();
                         this.timer.Start();
                     }
-
-                    
                 }
                 else
                 {
@@ -168,11 +166,6 @@ namespace ChatRoom.Client.UI
             });
 
             MessageBox.Show("註冊結果:" + result.result.ToString());
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
         }
     }
 }

@@ -118,7 +118,6 @@
             this.Controls.Add(this.btnLogin);
             this.Name = "MainForm";
             this.Text = "聊天室系統";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Shown += new System.EventHandler(this.Main_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

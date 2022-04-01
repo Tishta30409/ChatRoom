@@ -18,19 +18,16 @@ namespace ChatRoom.Client.UI.ActionHandler
 
         private LobbyForm lobbyForm;
 
-        private IUserRoomService userRoomService;
-
         private IHubClient hubClient;
 
         private LocalData localData;
 
-        public AccountDisconnectActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyForm,  IHubClient hubClient , IUserRoomService userRoomService)
+        public AccountDisconnectActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyForm,  IHubClient hubClient)
         {
             this.chatRoomForm = chatRoomForm;
             this.lobbyForm = lobbyForm;
             this.hubClient = hubClient;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
-            this.userRoomService = userRoomService;
         }
 
         public void Execute(ActionModule actionModule)
