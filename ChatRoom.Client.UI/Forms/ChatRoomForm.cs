@@ -187,7 +187,7 @@ namespace ChatRoom.Client.UI.Forms
 
         private void textUserEnter_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter && this.textUserEnter.Text != "")
+            if(e.KeyCode == Keys.Enter && this.textUserEnter.Text != "" && !Convert.ToBoolean(this.localData.Account.f_isMuted))
             {
                 this.SendMessage();
             }
