@@ -12,7 +12,8 @@ AS
 	f_isLocked = @isLocked,
 	f_isMuted = @isMuted,
 	f_errorTimes = @errorTimes,
-	f_loginIdentifier = @LoginIdentifier
+	f_loginIdentifier = @LoginIdentifier,
+	f_serialNumber = f_serialNumber + 1
 	OUTPUT inserted.*
 	WHERE f_account = @account
 RETURN 0
