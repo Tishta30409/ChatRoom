@@ -19,6 +19,8 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private LocalData localData;
 
+        private delegate void DelOnRefreshList();
+
         public RoomUsersForm()
         {
             InitializeComponent();
@@ -61,6 +63,19 @@ namespace ChatRoom.Backstage.UI.Forms
                 {
                     this.GetList();
                 }
+            }
+        }
+
+        public void OnRefreshList()
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.GetList();
             }
         }
     }

@@ -91,6 +91,8 @@
     <Compile Include="ActionHandler\CheckConnectStateActionHandler.cs" />
     <Compile Include="ActionHandler\LeaveRoomActionHandler.cs" />
     <Compile Include="ActionHandler\UpdateAccountActionHandler.cs" />
+    <Compile Include="ActionHandler\UpdateRoomsActionHandler.cs" />
+    <Compile Include="ActionHandler\UpdateRoomUsersActionHandler.cs" />
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />
     <Compile Include="Forms\ChangePasswordForm.cs">

@@ -92,6 +92,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionHandler\UpdateRoomUsersActionHandler.cs" />
+    <Compile Include="ActionHandler\UpdateRoomsActionHandler.cs" />
     <Compile Include="ActionHandler\ChatMessageActionHandler.cs" />
     <Compile Include="Applibs\AutofacConfig.cs" />
     <Compile Include="Applibs\ConfigHelper.cs" />

@@ -27,6 +27,8 @@ namespace ChatRoom.Client.UI.Forms
 
         private delegate void DelOnDisconnect();
 
+        private delegate void DelOnRefreshList();
+
         public LobbyForm()
         {
             InitializeComponent();
@@ -217,6 +219,19 @@ namespace ChatRoom.Client.UI.Forms
                 var pwdForm = AutofacConfig.Container.BeginLifetimeScope().Resolve<ChangePasswordForm>();
                 pwdForm.Close();
                 pwdForm.DialogResult = DialogResult.OK;
+            }
+        }
+
+        public void OnRefreshList()
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.GetList();
             }
         }
 

@@ -18,6 +18,8 @@ namespace ChatRoom.Client.UI.Forms
 
         private LocalData localData;
 
+        private delegate void DelOnRefreshList();
+
         public UserListForm()
         {
             InitializeComponent();
@@ -28,6 +30,11 @@ namespace ChatRoom.Client.UI.Forms
         }
 
         private void UserListForm_Shown(object sender, EventArgs e)
+        {
+            this.GetList();
+        }
+
+        private void GetList()
         {
             var getResult = this.svc.QueryList((int)this.localData.RoomID);
 
@@ -48,6 +55,19 @@ namespace ChatRoom.Client.UI.Forms
             var bind = new BindingList<UserRoom>(this.userRooms);
             var source = new BindingSource(bind, null);
             this.dvgRoomUsers.DataSource = source;
+        }
+
+        public void OnRefreshList()
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.GetList();
+            }
         }
     }
 }

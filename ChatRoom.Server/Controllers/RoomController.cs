@@ -54,7 +54,7 @@ namespace ChatRoom.Server.Controllers
             {
                 var addResult = this.repo.Add(input);
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(addResult));
+                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.resultCode));
                 return result;
             }
             catch (Exception ex)

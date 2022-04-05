@@ -50,10 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AccountDisconnectAction.cs" />
+    <Compile Include="Action\UpdateRoomUsersAction.cs" />
     <Compile Include="Action\UpdateAccountAction.cs" />
     <Compile Include="Action\LeaveRoomAction.cs" />
     <Compile Include="Action\CheckConnectStateAction.cs" />
     <Compile Include="Action\ChatMessageAction.cs" />
+    <Compile Include="Action\UpdateRoomAction.cs" />
+    <Compile Include="Action\UpdateRoomsAction.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
     <Compile Include="Model\ChatMessage\IChatMessage.cs" />
