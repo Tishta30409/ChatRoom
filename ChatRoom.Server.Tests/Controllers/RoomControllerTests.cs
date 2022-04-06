@@ -26,10 +26,10 @@ namespace ChatRoom.Server.Tests.Controllers
             var controller = new RoomController(repo.Object, hubClient.Object);
             var postRsult = controller.Add("room001");
 
-            var result = JsonConvert.DeserializeObject<Account>(postRsult.Content.ReadAsStringAsync().Result);
+            var result = JsonConvert.DeserializeObject<ResultCode>(postRsult.Content.ReadAsStringAsync().Result);
 
             Assert.AreEqual(postRsult.StatusCode, HttpStatusCode.OK);
-            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultCode.SUCCESS, result);
         }
 
         [TestMethod]

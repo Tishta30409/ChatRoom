@@ -217,17 +217,21 @@ namespace ChatRoom.Server.Tests
             Assert.IsNotNull(registerResult);
 
             repo.Setup(p => p.Update(It.IsAny<Account>()))
-                .Returns((null, new Account()
+                .Returns((null,
+                new AccountResult()
                 {
-                    f_id = 1,
-                    f_account = "test123",
-                    f_password = "123456",
-                    f_nickName = "我是測試",
-                    f_errorTimes = 0,
-                    f_isLocked = 0,
-                    f_isMuted = 0,
-                    f_loginIdentifier = MD5.Create().ToString(),
-
+                    ResultCode = ResultCode.SUCCESS,
+                    Account = new Account()
+                    {
+                        f_id = 1,
+                        f_account = "test123",
+                        f_password = "123456",
+                        f_nickName = "我是測試",
+                        f_errorTimes = 0,
+                        f_isLocked = 0,
+                        f_isMuted = 0,
+                        f_loginIdentifier = MD5.Create().ToString(),
+                    }
                 }));
 
             controller = new AccountController(repo.Object, repoHistory.Object, hub.Object);
@@ -241,6 +245,7 @@ namespace ChatRoom.Server.Tests
                 f_isLocked = 0,
                 f_isMuted = 0,
                 f_loginIdentifier = MD5.Create().ToString(),
+                f_serialNumber = 0
             });
 
             var updateResult = JsonConvert.DeserializeObject<Account>(postUpdateResult.Content.ReadAsStringAsync().Result);

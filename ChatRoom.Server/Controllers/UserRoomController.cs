@@ -34,6 +34,15 @@ namespace ChatRoom.Server.Controllers
             {
                 var addResult = this.repo.JoinRoom(userRoom);
 
+                if (addResult.userRoom != null)
+                {
+                    //通知更新列表
+                    this.hubClient.BroadCastAction(new UpdateRoomUsersAction() 
+                    { 
+                        RoomID = addResult.userRoom.f_roomID
+                    });
+                }
+
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.userRoom));
                 return result;
@@ -50,15 +59,21 @@ namespace ChatRoom.Server.Controllers
         {
             try
             {
-                var addResult = this.repo.LeaveRoom(account);
+                var deleteResult = this.repo.LeaveRoom(account);
 
-                this.hubClient.BroadCastAction(new LeaveRoomAction()
+                if (deleteResult.userRoom != null)
                 {
-                    Account = account,
-                });
+                    //通知更新列表
+                    this.hubClient.BroadCastAction(new LeaveRoomAction()
+                    {
+                        Account = account,
+                        RoomID = deleteResult.userRoom.f_roomID,
+                        IsRoomClose = false
+                    });
+                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(addResult.userRoom));
+                result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.userRoom));
                 return result;
             }
             catch (Exception ex)
@@ -88,7 +103,7 @@ namespace ChatRoom.Server.Controllers
 
         [HttpGet]
         [Route("api/UserRoom/QueryList")]
-        public HttpResponseMessage QueryList( int roomID)
+        public HttpResponseMessage QueryList(int roomID)
         {
             try
             {

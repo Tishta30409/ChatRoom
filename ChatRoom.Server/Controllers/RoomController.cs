@@ -53,6 +53,12 @@ namespace ChatRoom.Server.Controllers
             try
             {
                 var addResult = this.repo.Add(input);
+
+                if(addResult.resultCode == ResultCode.SUCCESS)
+                {
+                    this.hubClient.BroadCastAction(new UpdateRoomsAction() { });
+                }
+
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.resultCode));
                 return result;
@@ -70,6 +76,11 @@ namespace ChatRoom.Server.Controllers
             try
             {
                 var addResult = this.repo.Update(room);
+
+                if(addResult.room != null)
+                {
+                    this.hubClient.BroadCastAction(new UpdateRoomsAction() { });
+                }
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.room));
@@ -102,6 +113,7 @@ namespace ChatRoom.Server.Controllers
                     this.hubClient.BroadCastAction(new LeaveRoomAction()
                     {
                         RoomID = deleteResult.room.f_id,
+                        IsRoomClose = true
                     });
                 }
 

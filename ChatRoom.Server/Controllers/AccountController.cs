@@ -44,6 +44,11 @@ namespace ChatRoom.Server.Controllers
                     f_nickName = input.Account,
                 });
 
+                if (addResult.result == ResultCode.SUCCESS)
+                {
+                    this.hub.BroadCastAction(new UpdateAccountsAction() { });
+                }
+
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(JsonConvert.SerializeObject(addResult.result));
                 return result;
@@ -127,17 +132,20 @@ namespace ChatRoom.Server.Controllers
                 var queryResult = this.repo.Update(account);
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.account));
+                result.Content = new StringContent(JsonConvert.SerializeObject(queryResult.result));
 
-                if(Convert.ToBoolean(account.f_isMuted))
+                if (Convert.ToBoolean(account.f_isMuted))
                 {
                     this.historyrRepo.Delete(account.f_account);
                 }
 
-                this.hub.BroadCastAction(new UpdateAccountAction()
+                if (queryResult.result != null)
                 {
-                    Account = queryResult.account
-                }) ;
+                    this.hub.BroadCastAction(new UpdateAccountAction()
+                    {
+                        Account = queryResult.result.Account
+                    });
+                }
 
                 return result;
             }
