@@ -21,12 +21,13 @@ AS
 		f_isLocked TINYINT,
 		f_isMuted TINYINT,
 		f_errorTimes TINYINT,
-		f_loginIdentifier NVARCHAR(40)
+		f_loginIdentifier NVARCHAR(40),
+		f_serialNumber BIGINT
 	 )
 
 	--撈出會員資料
 	INSERT INTO #accountTemp 
-	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_loginIdentifier FROM t_account WHERE f_account =  @account
+	SELECT f_id, f_account, f_password,f_nickName, f_isLocked, f_isMuted, f_errorTimes, f_loginIdentifier, f_serialNumber FROM t_account WHERE f_account =  @account
 
 	DECLARE @resultCode TINYINT
  
@@ -70,7 +71,8 @@ AS
 		UPDATE t_account SET 
 		f_isLocked = @isLocked, 
 		f_errorTimes = @errorTimes,
-		f_loginIdentifier = @loginIdentifier
+		f_loginIdentifier = @loginIdentifier,
+		f_serialNumber = f_serialNumber +1
 		OUTPUT inserted.* 
 		WHERE f_account = @account 
 
