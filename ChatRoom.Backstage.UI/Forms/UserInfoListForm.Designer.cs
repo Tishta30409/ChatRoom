@@ -33,7 +33,6 @@
             this.btnUnlock = new System.Windows.Forms.Button();
             this.btnMute = new System.Windows.Forms.Button();
             this.btnUnMute = new System.Windows.Forms.Button();
-            this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.faccountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fpasswordDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +41,7 @@
             this.fisMutedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ferrorTimesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.floginIdentifierDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dvgUserList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -50,6 +50,8 @@
             // 
             this.dvgUserList.AllowUserToAddRows = false;
             this.dvgUserList.AllowUserToDeleteRows = false;
+            this.dvgUserList.AllowUserToResizeColumns = false;
+            this.dvgUserList.AllowUserToResizeRows = false;
             this.dvgUserList.AutoGenerateColumns = false;
             this.dvgUserList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgUserList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -99,10 +101,6 @@
             this.btnUnMute.Text = "解禁言";
             this.btnUnMute.UseVisualStyleBackColor = true;
             this.btnUnMute.Click += new System.EventHandler(this.OnButtonClick);
-            // 
-            // accountBindingSource
-            // 
-            this.accountBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Account);
             // 
             // fidDataGridViewTextBoxColumn
             // 
@@ -163,6 +161,10 @@
             this.floginIdentifierDataGridViewTextBoxColumn.Name = "floginIdentifierDataGridViewTextBoxColumn";
             this.floginIdentifierDataGridViewTextBoxColumn.ReadOnly = true;
             this.floginIdentifierDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // accountBindingSource
+            // 
+            this.accountBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Account);
             // 
             // UserInfoListForm
             // 

@@ -35,15 +35,19 @@
             this.textNickName = new System.Windows.Forms.TextBox();
             this.btnChangePwd = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.froomNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRooms)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewRooms
             // 
+            this.dataGridViewRooms.AllowUserToAddRows = false;
+            this.dataGridViewRooms.AllowUserToDeleteRows = false;
+            this.dataGridViewRooms.AllowUserToResizeColumns = false;
+            this.dataGridViewRooms.AllowUserToResizeRows = false;
             this.dataGridViewRooms.AutoGenerateColumns = false;
             this.dataGridViewRooms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRooms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -52,6 +56,7 @@
             this.dataGridViewRooms.DataSource = this.roomBindingSource;
             this.dataGridViewRooms.Location = new System.Drawing.Point(12, 79);
             this.dataGridViewRooms.Name = "dataGridViewRooms";
+            this.dataGridViewRooms.ReadOnly = true;
             this.dataGridViewRooms.RowTemplate.Height = 24;
             this.dataGridViewRooms.Size = new System.Drawing.Size(220, 270);
             this.dataGridViewRooms.TabIndex = 0;
@@ -105,15 +110,12 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.ButtonOnClick);
             // 
-            // roomBindingSource
-            // 
-            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
-            // 
             // fidDataGridViewTextBoxColumn
             // 
             this.fidDataGridViewTextBoxColumn.DataPropertyName = "f_id";
             this.fidDataGridViewTextBoxColumn.HeaderText = "f_id";
             this.fidDataGridViewTextBoxColumn.Name = "fidDataGridViewTextBoxColumn";
+            this.fidDataGridViewTextBoxColumn.ReadOnly = true;
             this.fidDataGridViewTextBoxColumn.Visible = false;
             // 
             // froomNameDataGridViewTextBoxColumn
@@ -121,6 +123,11 @@
             this.froomNameDataGridViewTextBoxColumn.DataPropertyName = "f_roomName";
             this.froomNameDataGridViewTextBoxColumn.HeaderText = "房間名稱";
             this.froomNameDataGridViewTextBoxColumn.Name = "froomNameDataGridViewTextBoxColumn";
+            this.froomNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // roomBindingSource
+            // 
+            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
             // 
             // LobbyForm
             // 

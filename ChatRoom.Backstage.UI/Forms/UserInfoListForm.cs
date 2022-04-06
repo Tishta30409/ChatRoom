@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using System;
 using System.ComponentModel;
@@ -16,6 +17,8 @@ namespace ChatRoom.Backstage.UI.Forms
         private Account account;
 
         private IAccountService svc;
+
+        private delegate void DelOnRefreshList();
 
         public UserInfoListForm()
         {
@@ -84,14 +87,25 @@ namespace ChatRoom.Backstage.UI.Forms
             updateAccount.f_isLocked = Convert.ToByte(0);
             updateAccount.f_errorTimes = 0;
             var activeResult = this.svc.Update(updateAccount);
-            if (activeResult.account != null)
+            if (activeResult.result != null)
             {
-                MessageBox.Show("更新成功");
-                this.account = activeResult.account;
-                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.account;
+                //顯示訊息
+                switch (activeResult.result.ResultCode)
+                {
+                    case ResultCode.DATA_NEED_REFRESH:
+                        MessageBox.Show("更新失敗 資料已過期");
+                        break;
+                    case ResultCode.SUCCESS:
+                        MessageBox.Show("更新成功");
+                        break;
+                    default:
+                        break;
+                }
+                
+                // 更新單筆資料
+                this.account = activeResult.result.Account;
+                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.result.Account;
                 this.UpdateInfo();
-
-                this.GetList();
             }
             else
             {
@@ -104,14 +118,21 @@ namespace ChatRoom.Backstage.UI.Forms
             var updateAccount = this.account;
             updateAccount.f_isMuted = Convert.ToByte(mute);
             var activeResult = this.svc.Update(updateAccount);
-            if (activeResult.account != null)
+            if (activeResult.result.ResultCode == ResultCode.SUCCESS)
             {
                 MessageBox.Show("更新成功");
-                this.account = activeResult.account;
-                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.account;
-                this.UpdateInfo();
+                this.account = activeResult.result.Account;
+                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.result.Account;
+              
 
                 this.GetList();
+            }
+            else if (activeResult.result.ResultCode == ResultCode.DATA_NEED_REFRESH)
+            {
+                MessageBox.Show("更新失敗 資料過期");
+                this.account = activeResult.result.Account;
+                this.accounts[this.dvgUserList.CurrentCell.RowIndex] = activeResult.result.Account;
+                this.UpdateInfo();
             }
             else
             {
@@ -133,6 +154,20 @@ namespace ChatRoom.Backstage.UI.Forms
             this.btnUnlock.Enabled = Convert.ToBoolean(account.f_isLocked);
             this.btnMute.Enabled = !Convert.ToBoolean(account.f_isMuted);
             this.btnUnMute.Enabled = Convert.ToBoolean(account.f_isMuted);
+        }
+
+
+        public void OnRefreshList()
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
+                this.Invoke(del);
+            }
+            else
+            {
+                this.GetList();
+            }
         }
     }
 }

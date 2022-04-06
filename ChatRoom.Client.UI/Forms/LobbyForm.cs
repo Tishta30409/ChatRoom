@@ -2,6 +2,7 @@
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using NLog;
 using System;
@@ -178,22 +179,31 @@ namespace ChatRoom.Client.UI.Forms
                     f_isLocked = this.localData.Account.f_isLocked,
                     f_isMuted = this.localData.Account.f_isMuted,
                     f_loginIdentifier = this.localData.Account.f_loginIdentifier,
+                    f_serialNumber = this.localData.Account.f_serialNumber,
                 });
 
-                //沒有回傳值 更新失敗
-                if (updateResult.account == null)
+                if (updateResult.result != null)
                 {
-                    MessageBox.Show("更新失敗");
+                    this.localData.Account = updateResult.result.Account;
+                    switch (updateResult.result.ResultCode)
+                    {
+                        case ResultCode.DATA_NEED_REFRESH:
+                            MessageBox.Show("更新失敗 資料過期 請再執行一次");
+                            break;
+                        case ResultCode.SUCCESS:
+                            MessageBox.Show("更新成功");
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                 {
-                    this.localData.Account = updateResult.account;
-                    MessageBox.Show("更新成功");
+                    MessageBox.Show("更新失敗");
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

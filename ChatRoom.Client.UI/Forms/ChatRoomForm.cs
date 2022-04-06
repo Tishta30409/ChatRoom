@@ -53,6 +53,7 @@ namespace ChatRoom.Client.UI.Forms
             this.labNickName.Text = $"暱稱: {this.localData.Account.f_nickName}";
             this.labRoomName.Text = $"房間名稱: {this.localData.Rooms.FirstOrDefault(room => room.f_id == this.localData.RoomID).f_roomName}";
             this.textMessage.Text = "";
+            this.sb.Clear();    
 
             if (this.localData.Account.f_isMuted == 1)
             {

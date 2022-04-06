@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dvgRoomUserList = new System.Windows.Forms.DataGridView();
-            this.userRoomBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.faccountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.froomIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fnickNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userRoomBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dvgRoomUserList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userRoomBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomBindingSource)).BeginInit();
@@ -45,6 +45,8 @@
             // 
             this.dvgRoomUserList.AllowUserToAddRows = false;
             this.dvgRoomUserList.AllowUserToDeleteRows = false;
+            this.dvgRoomUserList.AllowUserToResizeColumns = false;
+            this.dvgRoomUserList.AllowUserToResizeRows = false;
             this.dvgRoomUserList.AutoGenerateColumns = false;
             this.dvgRoomUserList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgRoomUserList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -60,14 +62,6 @@
             this.dvgRoomUserList.Size = new System.Drawing.Size(182, 290);
             this.dvgRoomUserList.TabIndex = 0;
             this.dvgRoomUserList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgRoomUserList_CellDoubleClick);
-            // 
-            // userRoomBindingSource
-            // 
-            this.userRoomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.UserRoom);
-            // 
-            // roomBindingSource
-            // 
-            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
             // 
             // fidDataGridViewTextBoxColumn
             // 
@@ -99,6 +93,14 @@
             this.fnickNameDataGridViewTextBoxColumn.HeaderText = "暱稱";
             this.fnickNameDataGridViewTextBoxColumn.Name = "fnickNameDataGridViewTextBoxColumn";
             this.fnickNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // userRoomBindingSource
+            // 
+            this.userRoomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.UserRoom);
+            // 
+            // roomBindingSource
+            // 
+            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
             // 
             // RoomUsersForm
             // 

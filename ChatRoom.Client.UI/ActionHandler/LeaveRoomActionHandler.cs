@@ -11,11 +11,13 @@ namespace ChatRoom.Client.UI.ActionHandler
 {
     public class LeaveRoomActionHandler : IActionHandler
     {
-        private ChatRoomForm form;
+        private ChatRoomForm chatRoomForm;
+        private LobbyForm lobbyForm;
         private LocalData localData;
-        public LeaveRoomActionHandler(ChatRoomForm form)
+        public LeaveRoomActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyFrom)
         {
-            this.form = form;
+            this.chatRoomForm = chatRoomForm;
+            this.lobbyForm = lobbyFrom;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
@@ -25,11 +27,12 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<LeaveRoomAction>(actionModule.Message);
 
-                if (action?.RoomID == this.localData.RoomID || action.Account == this.localData.Account.f_account)
+                if (action.IsRoomClose || action?.RoomID == this.localData.RoomID && action.Account == this.localData.Account.f_account)
                 {
-                    var chatRoom = AutofacConfig.Container.Resolve<ChatRoomForm>();
-                    chatRoom.OnLeaveRoom();
+                    chatRoomForm.OnLeaveRoom();
                 }
+
+                this.lobbyForm.OnRefreshList();
             }
             catch (Exception)
             {

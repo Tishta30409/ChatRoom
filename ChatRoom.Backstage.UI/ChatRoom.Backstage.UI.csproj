@@ -92,6 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionHandler\UpdateAccountsActionHandler.cs" />
     <Compile Include="ActionHandler\UpdateRoomUsersActionHandler.cs" />
     <Compile Include="ActionHandler\UpdateRoomsActionHandler.cs" />
     <Compile Include="ActionHandler\ChatMessageActionHandler.cs" />

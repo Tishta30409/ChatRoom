@@ -28,25 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dvgRoomUsers = new System.Windows.Forms.DataGridView();
-            this.userRoomBindingSource = new System.Windows.Forms.BindingSource();
+            this.userRoomBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userRoomBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.faccountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.froomIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fnickNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f_nickName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dvgRoomUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userRoomBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userRoomBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dvgRoomUsers
             // 
+            this.dvgRoomUsers.AllowUserToAddRows = false;
+            this.dvgRoomUsers.AllowUserToDeleteRows = false;
+            this.dvgRoomUsers.AllowUserToResizeColumns = false;
+            this.dvgRoomUsers.AllowUserToResizeRows = false;
             this.dvgRoomUsers.AutoGenerateColumns = false;
             this.dvgRoomUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgRoomUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fidDataGridViewTextBoxColumn,
             this.faccountDataGridViewTextBoxColumn,
             this.froomIDDataGridViewTextBoxColumn,
-            this.fnickNameDataGridViewTextBoxColumn});
+            this.f_nickName});
             this.dvgRoomUsers.DataSource = this.userRoomBindingSource;
             this.dvgRoomUsers.Location = new System.Drawing.Point(12, 12);
             this.dvgRoomUsers.Name = "dvgRoomUsers";
@@ -57,6 +64,10 @@
             // userRoomBindingSource
             // 
             this.userRoomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.UserRoom);
+            // 
+            // userRoomBindingSource1
+            // 
+            this.userRoomBindingSource1.DataSource = typeof(ChatRoom.Domain.Model.DataType.UserRoom);
             // 
             // fidDataGridViewTextBoxColumn
             // 
@@ -79,11 +90,11 @@
             this.froomIDDataGridViewTextBoxColumn.Name = "froomIDDataGridViewTextBoxColumn";
             this.froomIDDataGridViewTextBoxColumn.Visible = false;
             // 
-            // fnickNameDataGridViewTextBoxColumn
+            // f_nickName
             // 
-            this.fnickNameDataGridViewTextBoxColumn.DataPropertyName = "f_nickName";
-            this.fnickNameDataGridViewTextBoxColumn.HeaderText = "暱稱";
-            this.fnickNameDataGridViewTextBoxColumn.Name = "fnickNameDataGridViewTextBoxColumn";
+            this.f_nickName.DataPropertyName = "f_nickName";
+            this.f_nickName.HeaderText = "暱稱";
+            this.f_nickName.Name = "f_nickName";
             // 
             // UserListForm
             // 
@@ -96,6 +107,7 @@
             this.Shown += new System.EventHandler(this.UserListForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dvgRoomUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userRoomBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userRoomBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -104,9 +116,10 @@
 
         private System.Windows.Forms.DataGridView dvgRoomUsers;
         private System.Windows.Forms.BindingSource userRoomBindingSource;
+        private System.Windows.Forms.BindingSource userRoomBindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn fidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn faccountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn froomIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fnickNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f_nickName;
     }
 }

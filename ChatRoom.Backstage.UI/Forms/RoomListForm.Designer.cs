@@ -35,9 +35,9 @@
             this.dvgRoomList = new System.Windows.Forms.DataGridView();
             this.btnJoinRoom = new System.Windows.Forms.Button();
             this.textRoomName = new System.Windows.Forms.TextBox();
-            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.froomNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dvgRoomList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -76,6 +76,8 @@
             // 
             this.dvgRoomList.AllowUserToAddRows = false;
             this.dvgRoomList.AllowUserToDeleteRows = false;
+            this.dvgRoomList.AllowUserToResizeColumns = false;
+            this.dvgRoomList.AllowUserToResizeRows = false;
             this.dvgRoomList.AutoGenerateColumns = false;
             this.dvgRoomList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgRoomList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -107,10 +109,6 @@
             this.textRoomName.Size = new System.Drawing.Size(100, 22);
             this.textRoomName.TabIndex = 6;
             // 
-            // roomBindingSource
-            // 
-            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
-            // 
             // fidDataGridViewTextBoxColumn
             // 
             this.fidDataGridViewTextBoxColumn.DataPropertyName = "f_id";
@@ -125,6 +123,10 @@
             this.froomNameDataGridViewTextBoxColumn.HeaderText = "房間名稱";
             this.froomNameDataGridViewTextBoxColumn.Name = "froomNameDataGridViewTextBoxColumn";
             this.froomNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // roomBindingSource
+            // 
+            this.roomBindingSource.DataSource = typeof(ChatRoom.Domain.Model.DataType.Room);
             // 
             // RoomListForm
             // 
