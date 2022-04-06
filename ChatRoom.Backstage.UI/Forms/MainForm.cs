@@ -202,7 +202,7 @@ namespace ChatRoom.Backstage.Forms.UI
             }
             else
             {
-                this.stringBuildQueue.ClearMessage();
+                this.setMessageText( this.stringBuildQueue.ClearMessage());
 
                 var result = this.historySvc.QueryList(this.localData.RoomID);
                 if (result.historys != null)

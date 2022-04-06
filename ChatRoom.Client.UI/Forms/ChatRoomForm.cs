@@ -58,7 +58,7 @@ namespace ChatRoom.Client.UI.Forms
             this.labRoomName.Text = $"房間名稱: {this.localData.Rooms.FirstOrDefault(room => room.f_id == this.localData.RoomID).f_roomName}";
             this.textMessage.Text = "";
 
-            this.stringBuildQueue.ClearMessage();
+            this.setMessageText( this.stringBuildQueue.ClearMessage());
 
             if (this.localData.Account.f_isMuted == 1)
             {
@@ -171,7 +171,7 @@ namespace ChatRoom.Client.UI.Forms
             }
             else
             {
-                this.stringBuildQueue.ClearMessage();
+                this.setMessageText(this.stringBuildQueue.ClearMessage());
                 this.Hide();
                 this.DialogResult = DialogResult.Cancel;
             }

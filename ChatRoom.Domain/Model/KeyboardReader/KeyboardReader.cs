@@ -24,10 +24,37 @@ namespace ChatRoom.Domain.Model
                 ConsoleKeyInfo ck = Console.ReadKey(true);
 
                 //判斷使用者是否按下的Enter鍵
-                if (ck.Key != ConsoleKey.Enter)
+                if (ck.Key == ConsoleKey.Enter)
                 {
-                    // 字元正則檢查
-                    if (ck.Key != ConsoleKey.Backspace)
+                    Console.WriteLine();
+                    break;
+                }
+                else
+                {
+                    if(ck.Key == ConsoleKey.Backspace)
+                    {
+                        if (!String.IsNullOrEmpty(output))
+                        {
+
+                            if (output.Length != 0)
+                            {
+                                //判斷是否為中文
+                                if (output[output.Length - 1] > 127)
+                                {
+                                    Console.Write("\b \b");
+                                    Console.Write("\b \b");
+                                }
+                                else
+                                {
+                                    //刪除錯誤的字元
+                                    Console.Write("\b \b");
+                                }
+
+                                output = output.Substring(0, output.Length - 1);
+                            }
+                        }
+                    }
+                    else
                     {
                         if (Regex.IsMatch(ck.KeyChar.ToString(), reg) && output.Length < length)
                         {
@@ -44,35 +71,6 @@ namespace ChatRoom.Domain.Model
                             }
                         }
                     }
-                    else
-                    {
-                        if (!String.IsNullOrEmpty(output) )
-                        {
-
-                            if(output.Length != 0)
-                            {
-                                //判斷是否為中文
-                                if (output[output.Length - 1] > 127)
-                                {
-                                    Console.Write("\b \b");
-                                    Console.Write("\b \b");
-                                }
-                                else
-                                {
-                                    //刪除錯誤的字元
-                                    Console.Write("\b \b");
-                                }
-
-                                output = output.Substring(0, output.Length - 1);
-                            }
-                            
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine();
-                    break;
                 }
             }
 
