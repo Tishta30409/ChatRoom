@@ -9,10 +9,5 @@ namespace ChatRoom.Domain.Model.DataType
         public ResultCode ResultCode { get; set; }
 
         public Account Account { get; set; }
-
-        public IEnumerable<Account> Accounts { get; set; }
-
-        //Login
-        public int? RoomID { get; set; }
     }
 }

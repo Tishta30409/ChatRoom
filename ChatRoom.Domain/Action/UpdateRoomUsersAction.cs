@@ -6,7 +6,7 @@ namespace ChatRoom.Domain.Action
     public class UpdateRoomUsersAction : ActionBase
     {
         public override string Action()
-             => "updateAccounts";
+             => "updateRoomUsers";
 
         public int RoomID { get; set; }
     }

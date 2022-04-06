@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AccountDisconnectAction.cs" />
+    <Compile Include="Action\UpdateAccountsAction.cs" />
     <Compile Include="Action\UpdateRoomUsersAction.cs" />
     <Compile Include="Action\UpdateAccountAction.cs" />
     <Compile Include="Action\LeaveRoomAction.cs" />

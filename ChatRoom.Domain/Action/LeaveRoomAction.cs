@@ -3,7 +3,7 @@ using System;
 
 namespace ChatRoom.Domain.Action
 {
-    //通知玩家離開某房間
+    //通知離開某房間
     public class LeaveRoomAction : ActionBase
     {
         public override string Action()
@@ -12,9 +12,11 @@ namespace ChatRoom.Domain.Action
         /// <summary>
         /// 房間ID
         /// </summary>
-        public int? RoomID { get; set; }
+        public int RoomID { get; set; }
 
         public string Account { get; set; }
+
+        public bool IsRoomClose { get; set; }
 
     }
 }

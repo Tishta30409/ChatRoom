@@ -13,7 +13,7 @@ namespace ChatRoom.Domain.Service
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        (Exception exception, Account account) Update(Account account);
+        (Exception exception, AccountResult result) Update(Account account);
 
         (Exception exception, AccountResult result) Login(LoginDto login);
 

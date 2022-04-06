@@ -22,7 +22,9 @@ namespace ChatRoom.Domain.Repository
         [EnumDisplay("帳號未啟用")]
         ACCOUNT_UNACTIVE = 5,
         [EnumDisplay("房間名稱重複")]
-        ROOM_REPEAT = 6
+        ROOM_REPEAT = 6,
+        [EnumDisplay("資料需要更新")]
+        DATA_NEED_REFRESH = 7
     }
 
     public interface IAccountRepository
@@ -46,7 +48,7 @@ namespace ChatRoom.Domain.Repository
         /// </summary>
         /// <param account="accoumt"></param>
         /// <returns></returns>
-        (Exception exception, Account account) Update(Account account);
+        (Exception exception, AccountResult result) Update(Account account);
 
         /// <summary>
         /// 查詢單一帳號

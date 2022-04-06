@@ -89,7 +89,7 @@ namespace ChatRoom.Domain.Service
 
         
 
-        public (Exception exception, Account account) Update(Account account)
+        public (Exception exception, AccountResult result) Update(Account account)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace ChatRoom.Domain.Service
                 }
 
                 var result = response.Content.ReadAsStringAsync().Result;
-                return ((null, JsonConvert.DeserializeObject<Account>(result)));
+                return ((null, JsonConvert.DeserializeObject<AccountResult>(result)));
             }
             catch (Exception ex)
             {
