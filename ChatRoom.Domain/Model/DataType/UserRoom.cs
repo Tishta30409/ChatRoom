@@ -12,8 +12,6 @@ namespace ChatRoom.Domain.Model.DataType
 
         public string f_account { get; set; }
 
-        public int? f_roomID { get; set; }
-
-        public string f_nickName { get; set; }
+        public int f_roomID { get; set; }
     }
 }
