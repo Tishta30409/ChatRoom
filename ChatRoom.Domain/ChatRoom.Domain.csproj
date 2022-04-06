@@ -60,7 +60,6 @@
     <Compile Include="Action\UpdateRoomsAction.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
-    <Compile Include="Model\ChatMessage\IChatMessage.cs" />
     <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />
     <Compile Include="Model\ConsoleWrapper\IConsoleWrapper.cs" />
     <Compile Include="Model\DataType\Account.cs" />
@@ -77,6 +76,8 @@
     <Compile Include="Model\Process\IBackStageProcess.cs" />
     <Compile Include="Model\Process\IMainProcess.cs" />
     <Compile Include="Model\Process\IProcess.cs" />
+    <Compile Include="Model\StringBuildQueue\IStringBuildQueue.cs" />
+    <Compile Include="Model\StringBuildQueue\StringBuildQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRoomRepository.cs" />
     <Compile Include="Repository\IAccountRepository.cs" />
