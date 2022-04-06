@@ -121,12 +121,12 @@ namespace ChatRoom.Persistent.Tests
                 f_loginIdentifier = Guid.NewGuid().ToString(),
             });
             Assert.IsNull(updateResult.exception);
-            Assert.IsNotNull(updateResult.account);
-            Assert.AreEqual(updateResult.account.f_account, "test000");
-            Assert.AreEqual(updateResult.account.f_nickName, "我是你好");
-            Assert.AreEqual(updateResult.account.f_isLocked, 1);
-            Assert.AreEqual(updateResult.account.f_isMuted, 0);
-            Assert.AreEqual(updateResult.account.f_errorTimes, 3);
+            Assert.IsNotNull(updateResult.result.Account);
+            Assert.AreEqual(updateResult.result.Account.f_account, "test000");
+            Assert.AreEqual(updateResult.result.Account.f_nickName, "我是你好");
+            Assert.AreEqual(updateResult.result.Account.f_isLocked, 1);
+            Assert.AreEqual(updateResult.result.Account.f_isMuted, 0);
+            Assert.AreEqual(updateResult.result.Account.f_errorTimes, 3);
         }
 
         [TestMethod]

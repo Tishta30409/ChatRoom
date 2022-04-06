@@ -152,27 +152,35 @@ namespace ChatRoom.Persistent.Repository
             }
         }
 
-        public (Exception exception, Account account) Update(Account account)
+        public (Exception exception, AccountResult result) Update(Account account)
         {
             try
             {
                 using (var cn = new SqlConnection(this.connectionString))
                 {
-                    var result = cn.QueryFirstOrDefault<Account>(
+                    var result = cn.QueryMultiple(
                         "pro_accountUpdate",
                         //參數名稱為PROCEDURE中宣告的變數名稱
                         new
                         {
-                            Account = account.f_account,
-                            NickName = account.f_nickName,
-                            IsLocked = account.f_isLocked,
-                            IsMuted = account.f_isMuted,
-                            ErrorTimes = account.f_errorTimes,
-                            LoginIdentifier = account.f_loginIdentifier
+                            account = account.f_account,
+                            nickName = account.f_nickName,
+                            isLocked = account.f_isLocked,
+                            isMuted = account.f_isMuted,
+                            errorTimes = account.f_errorTimes,
+                            loginIdentifier = account.f_loginIdentifier,
+                            serialNumber = account.f_serialNumber,
                         },
                         commandType: CommandType.StoredProcedure);
 
-                    return (null, result);
+                    var resultCode = result.ReadFirstOrDefault<ResultCode>();
+                    var resultData = result.ReadFirstOrDefault<Account>();
+
+                    return (null, new AccountResult()
+                    {
+                        ResultCode = resultCode,
+                        Account = resultData
+                    });
                 }
             }
             catch (Exception ex)
