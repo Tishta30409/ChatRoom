@@ -4,9 +4,11 @@ using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Model.StringBuildQueue;
 using ChatRoom.Domain.Service;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -31,9 +33,13 @@ namespace ChatRoom.Client.UI.Forms
 
         private delegate void DelOnDisconnect();
 
-        private StringBuilder sb;
+        private delegate void DelClearAccountMsg(string nickName);
 
         private LocalData localData;
+
+        private StringBuildQueue stringBuildQueue;
+
+
 
         public ChatRoomForm()
         {
@@ -42,10 +48,8 @@ namespace ChatRoom.Client.UI.Forms
             this.hubClient = AutofacConfig.Container.Resolve<IHubClient>();
             this.userRoomSvc = AutofacConfig.Container.Resolve<IUserRoomService>();
             this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
-
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
-
-            this.sb = new StringBuilder();
+            this.stringBuildQueue = AutofacConfig.Container.Resolve<StringBuildQueue>();
         }
 
         private void ChatRoom_Shown(object sender, EventArgs e)
@@ -53,7 +57,8 @@ namespace ChatRoom.Client.UI.Forms
             this.labNickName.Text = $"暱稱: {this.localData.Account.f_nickName}";
             this.labRoomName.Text = $"房間名稱: {this.localData.Rooms.FirstOrDefault(room => room.f_id == this.localData.RoomID).f_roomName}";
             this.textMessage.Text = "";
-            this.sb.Clear();    
+
+            this.stringBuildQueue.ClearMessage();
 
             if (this.localData.Account.f_isMuted == 1)
             {
@@ -61,19 +66,9 @@ namespace ChatRoom.Client.UI.Forms
             }
 
             var result = this.historySvc.QueryList(this.localData.RoomID);
-
             if(result.historys != null)
             {
-                foreach (History history in result.historys)
-                {
-                    this.sb.AppendLine($"{history.f_nickName}({history.f_createDateTime}): {history.f_content}");
-                }
-
-                this.textMessage.Text = this.sb.ToString();
-
-                this.textMessage.SelectionStart = textMessage.Text.Length;
-                this.textMessage.ScrollToCaret();
-                this.textMessage.Refresh();
+                this.setMessageText(this.stringBuildQueue.AddHistory(result.historys));
             }
             
             this.hubClient.SendAction(new ChatMessageAction()
@@ -138,12 +133,14 @@ namespace ChatRoom.Client.UI.Forms
             }
             else
             {
-                this.sb.AppendLine($"{action.NickName}({action.CreateDateTime}) :: {action.Content}");
-                this.textMessage.Text = this.sb.ToString();
-
-                this.textMessage.SelectionStart = textMessage.Text.Length;
-                this.textMessage.ScrollToCaret();
-                this.textMessage.Refresh();
+                this.setMessageText(this.stringBuildQueue.AddMessage(new History()
+                {
+                    f_account = action.Account,
+                    f_roomID = action.RoomID,
+                    f_content = action.Content,
+                    f_nickName = action.NickName,
+                    f_createDateTime = action.CreateDateTime,
+                }));
             }
 
         }
@@ -174,10 +171,9 @@ namespace ChatRoom.Client.UI.Forms
             }
             else
             {
-                this.sb.Clear();
+                this.stringBuildQueue.ClearMessage();
                 this.Hide();
                 this.DialogResult = DialogResult.Cancel;
-                
             }
         }
 
@@ -218,6 +214,28 @@ namespace ChatRoom.Client.UI.Forms
                 userlist.Close();
                 userlist.DialogResult = DialogResult.OK;
             }
+        }
+
+        //收到禁言的畫面邏輯
+        public void ClearAccountMsg(string nickName)
+        {
+            if (this.InvokeRequired)
+            {
+                DelClearAccountMsg del = new DelClearAccountMsg(ClearAccountMsg);
+                this.Invoke(del, nickName);
+            }
+            else
+            {
+                this.textMessage.Text = this.stringBuildQueue.MutedProcess(nickName);
+            }
+        }
+
+        private void setMessageText(string input)
+        {
+            this.textMessage.Text = input;
+            this.textMessage.SelectionStart = textMessage.Text.Length;
+            this.textMessage.ScrollToCaret();
+            this.textMessage.Refresh();
         }
     }
 }

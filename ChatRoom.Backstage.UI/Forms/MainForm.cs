@@ -5,10 +5,12 @@ using ChatRoom.Client.Signalr;
 using ChatRoom.Client.UI.Applibs;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.Model.DataType;
+using ChatRoom.Domain.Model.StringBuildQueue;
 using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -31,9 +33,11 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private delegate void DelShowJoinRoom();
 
-        private StringBuilder sb;
+        private delegate void DelClearAccountMsg(string nickName);
 
         private IUserRoomService userRoomService;
+
+        private StringBuildQueue stringBuildQueue;
 
         /// <summary>
         /// 背景計時器
@@ -48,6 +52,7 @@ namespace ChatRoom.Backstage.Forms.UI
             this.historySvc = AutofacConfig.Container.Resolve<IHistoryService>();
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
             this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
+            this.stringBuildQueue = AutofacConfig.Container.Resolve<StringBuildQueue>();
 
             this.timer = new System.Windows.Forms.Timer();
             this.timer.Interval = 500;
@@ -59,14 +64,12 @@ namespace ChatRoom.Backstage.Forms.UI
             this.timer.Start();
             this.hubClient.StartAsync();
 
-            this.sb = new StringBuilder();
-
             this.CheckMainButtonState();
         }
 
         private void CheckMainButtonState()
         {
-            if(this.localData.RoomID == null)
+            if (this.localData.RoomID == null)
             {
                 this.btnLeaveRoom.Enabled = false;
                 this.btnSend.Enabled = false;
@@ -78,8 +81,8 @@ namespace ChatRoom.Backstage.Forms.UI
             {
                 this.btnLeaveRoom.Enabled = true;
                 this.btnSend.Enabled = true;
-                this.btnRoomUser.Enabled=true; 
-                this.btnRoomList.Enabled=false;
+                this.btnRoomUser.Enabled = true;
+                this.btnRoomList.Enabled = false;
                 this.textUserInput.Enabled = true;
             }
 
@@ -118,7 +121,7 @@ namespace ChatRoom.Backstage.Forms.UI
             catch (Exception ex)
             {
 
-               MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -135,7 +138,7 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private void SendMessage()
         {
-            if(this.localData.RoomID == null)
+            if (this.localData.RoomID == null)
             {
                 MessageBox.Show("請先加入房間");
                 return;
@@ -177,15 +180,19 @@ namespace ChatRoom.Backstage.Forms.UI
             }
             else
             {
-                this.sb.AppendLine($"{action.NickName}({action.CreateDateTime}) :: {action.Content}");
-                this.textMessage.Text = this.sb.ToString();
-
-                this.textMessage.SelectionStart = textMessage.Text.Length;
-                this.textMessage.ScrollToCaret();
-                this.textMessage.Refresh();
+                this.setMessageText(this.stringBuildQueue.AddMessage(new History()
+                {
+                    f_account = action.Account,
+                    f_roomID = action.RoomID,
+                    f_content = action.Content,
+                    f_nickName = action.NickName,
+                    f_createDateTime = action.CreateDateTime,
+                }));
             }
         }
 
+
+        //加入房間時的畫面邏輯
         public void ShowJoinRoom()
         {
             if (this.InvokeRequired)
@@ -195,29 +202,39 @@ namespace ChatRoom.Backstage.Forms.UI
             }
             else
             {
-                this.sb.Clear();
+                this.stringBuildQueue.ClearMessage();
+
                 var result = this.historySvc.QueryList(this.localData.RoomID);
                 if (result.historys != null)
                 {
-                    foreach (History history in result.historys)
-                    {
-                       sb.AppendLine($"{history.f_nickName}({history.f_createDateTime}): {history.f_content}");
-                    }
-
-                    this.textMessage.Text = this.sb.ToString();
-                    this.textMessage.SelectionStart = textMessage.Text.Length;
-                    this.textMessage.ScrollToCaret();
-                    this.textMessage.Refresh();
+                    this.setMessageText(this.stringBuildQueue.AddHistory(result.historys));
                 }
-
-                //Task
-                //Thread t = new Thread(CheckMainButtonState);
-                //t.IsBackground = true;
-                //t.Start();
 
                 this.CheckMainButtonState();
             }
-
         }
+
+        //收到禁言的畫面邏輯
+        public void ClearAccountMsg(string nickName)
+        {
+            if (this.InvokeRequired)
+            {
+                DelClearAccountMsg del = new DelClearAccountMsg(ClearAccountMsg);
+                this.Invoke(del, nickName);
+            }
+            else
+            {
+                this.setMessageText(this.stringBuildQueue.MutedProcess(nickName));
+            }
+        }
+
+        private void setMessageText(string input)
+        {
+            this.textMessage.Text = input;
+            this.textMessage.SelectionStart = textMessage.Text.Length;
+            this.textMessage.ScrollToCaret();
+            this.textMessage.Refresh();
+        }
+
     }
 }

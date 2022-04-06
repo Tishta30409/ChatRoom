@@ -139,6 +139,7 @@ namespace ChatRoom.Server.Controllers
                     this.historyrRepo.Delete(account.f_account);
                 }
 
+                //通知客端更新畫面
                 if (queryResult.result != null)
                 {
                     this.hub.BroadCastAction(new UpdateAccountAction()

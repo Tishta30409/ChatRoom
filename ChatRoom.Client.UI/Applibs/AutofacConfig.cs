@@ -5,6 +5,7 @@ namespace ChatRoom.Client.UI.Applibs
     using ChatRoom.Client.UI.Forms;
     using ChatRoom.Client.UI.Model;
     using ChatRoom.Client.UI.Signalr;
+    using ChatRoom.Domain.Model.StringBuildQueue;
     using System.Linq;
     using System.Reflection;
 
@@ -79,6 +80,9 @@ namespace ChatRoom.Client.UI.Applibs
                 .SingleInstance();
 
             builder.RegisterType<LocalData>()
+                .SingleInstance();
+
+            builder.RegisterType<StringBuildQueue>()
                 .SingleInstance();
 
             container = builder.Build();

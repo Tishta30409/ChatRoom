@@ -1,5 +1,4 @@
 ﻿using ChatRoom.Backstage.Forms.UI;
-using ChatRoom.Backstage.UI.Forms;
 using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
@@ -9,17 +8,15 @@ using System;
 
 namespace ChatRoom.Backstage.UI.ActionHandler
 {
-    public class UpdateAccountsActionHandler : IActionHandler
+    public class UpdateAccountActionHandler : IActionHandler
     {
-        private UserInfoListForm userInfoListForm;
 
         private MainForm mainForm;
 
         private LocalData localData;
 
-        public UpdateAccountsActionHandler(UserInfoListForm userInfoListForm, MainForm mainForm, LocalData localData)
+        public UpdateAccountActionHandler(MainForm mainForm, LocalData localData)
         {
-            this.userInfoListForm = userInfoListForm;
             this.mainForm = mainForm;
 
             this.localData = localData;
@@ -29,12 +26,15 @@ namespace ChatRoom.Backstage.UI.ActionHandler
         {
             try
             {
-                var action = JsonConvert.DeserializeObject<UpdateAccountsAction>(actionModule.Message);
+                var action = JsonConvert.DeserializeObject<UpdateAccountAction>(actionModule.Message);
 
-                this.userInfoListForm.OnRefreshList();
+                if (Convert.ToBoolean(action.Account.f_isMuted))
+                {
+                    this.mainForm.ClearAccountMsg(action.Account.f_nickName);
+                }
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
