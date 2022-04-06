@@ -4,7 +4,8 @@
 	@isLocked	TINYINT,
 	@isMuted TINYINT, 
 	@errorTimes TINYINT,
-	@LoginIdentifier NVARCHAR(32)
+	@LoginIdentifier NVARCHAR(32),
+	@SerialNumber BIGINT
 AS
 	UPDATE t_account WITH(ROWLOCK)
 	SET 
@@ -15,7 +16,7 @@ AS
 	f_loginIdentifier = @LoginIdentifier,
 	f_serialNumber = f_serialNumber + 1
 	OUTPUT inserted.*
-	WHERE f_account = @account
+	WHERE f_account = @account AND f_serialNumber = @SerialNumber
 RETURN 0
 GO
 GRANT EXECUTE
