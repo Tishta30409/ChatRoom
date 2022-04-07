@@ -60,7 +60,8 @@
     <Compile Include="Action\UpdateRoomsAction.cs" />
     <Compile Include="KeepAliveConn\ActionBase.cs" />
     <Compile Include="KeepAliveConn\ActionModule.cs" />
-    <Compile Include="Model\UserRoomLocker.cs" />
+    <Compile Include="Model\Locker\RoomLocker.cs" />
+    <Compile Include="Model\Locker\UserRoomLocker.cs" />
     <Compile Include="Model\ConsoleWrapper\ConsoleWrapper.cs" />
     <Compile Include="Model\ConsoleWrapper\IConsoleWrapper.cs" />
     <Compile Include="Model\DataType\Account.cs" />

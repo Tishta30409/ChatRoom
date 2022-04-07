@@ -11,6 +11,8 @@ namespace ChatRoom.Domain.Action
         public override string Action()
             => "updateRooms";
 
+        public bool IsAdd { get; set; }
+
         public Room Room { get; set; }
     }
 }

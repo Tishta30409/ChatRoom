@@ -2,6 +2,7 @@
 using ChatRoom.Backstage.Forms.UI;
 using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
@@ -14,7 +15,7 @@ namespace ChatRoom.Backstage.UI.Forms
 {
     public partial class RoomListForm : Form
     {
-        private Room[] rooms;
+        private RoomLocker rooms;
 
         private Room room;
 
@@ -24,7 +25,9 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private LocalData localData;
 
-        private delegate void DelOnRefreshList();
+        private delegate void DelOnAddRoom(Room room);
+
+        private delegate void DelOnRemoveRoom(Room room);
 
         public RoomListForm()
         {
@@ -33,15 +36,12 @@ namespace ChatRoom.Backstage.UI.Forms
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
             this.svc = AutofacConfig.Container.Resolve<IRoomService>();
             this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
+
         }
 
         private void RoomListForm_Shown(object sender, EventArgs e)
         {
             this.GetRoomList();
-            if(this.rooms.Length != 0)
-            {
-                this.room = this.rooms[this.dvgRoomList.CurrentCell.RowIndex];
-            }
         }
 
         private void GetRoomList()
@@ -53,10 +53,9 @@ namespace ChatRoom.Backstage.UI.Forms
                 return;
             }
 
-            this.rooms = roomsResult.rooms.ToArray();
-
-            var bind = new BindingList<Room>(this.rooms);
-            var source = new BindingSource(bind, null);
+            var data = roomsResult.rooms.ToList();
+            this.rooms = new RoomLocker(data);
+            var source = new BindingSource(this.rooms.GetRooms(), null);
             this.dvgRoomList.DataSource = source;
         }
 
@@ -102,7 +101,7 @@ namespace ChatRoom.Backstage.UI.Forms
                 {
                     f_account = this.localData.Account,
                     f_nickName = "Admin",
-                    f_roomID = this.rooms[this.dvgRoomList.CurrentCell.RowIndex].f_id
+                    f_roomID = this.rooms.GetElement(this.dvgRoomList.CurrentCell.RowIndex).f_id
                 });
 
             if (joinResult.userRoom == null)
@@ -112,7 +111,7 @@ namespace ChatRoom.Backstage.UI.Forms
             else
             {
                 this.localData.RoomID = joinResult.userRoom.f_roomID;
-                this.localData.RoomName = this.rooms[this.dvgRoomList.CurrentCell.RowIndex].f_roomName;
+                this.localData.RoomName = this.rooms.GetElement(this.dvgRoomList.CurrentCell.RowIndex).f_roomName;
 
                 var mainForm = AutofacConfig.Container.Resolve<MainForm>();
                 mainForm.ShowJoinRoom();
@@ -184,7 +183,7 @@ namespace ChatRoom.Backstage.UI.Forms
 
             if (result.room != null)
             {
-                this.rooms[this.dvgRoomList.CurrentCell.RowIndex] = result.room;
+                this.rooms.SetElement(this.dvgRoomList.CurrentCell.RowIndex, result.room);
                 MessageBox.Show("更新成功");
                 this.GetRoomList();
             }
@@ -196,23 +195,41 @@ namespace ChatRoom.Backstage.UI.Forms
 
         private void dvgRoomList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1 && e.RowIndex < this.rooms.Length && e.RowIndex < this.rooms.Length)
+            if (e.RowIndex > -1 && e.RowIndex < this.rooms.Count() && e.RowIndex < this.rooms.Count())
             {
-                room = rooms[e.RowIndex];
+                room = rooms.GetElement(e.RowIndex);
             }
         }
 
-        public void OnRefreshList()
+        public void OnAddRoom(Room room)
         {
             if (this.InvokeRequired)
             {
-                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
-                this.Invoke(del);
+                DelOnAddRoom del = new DelOnAddRoom(OnAddRoom);
+                this.Invoke(del, room);
             }
             else
             {
-                this.GetRoomList();
+                this.rooms.TryAdd(room);
+                var source = new BindingSource(this.rooms.GetRooms(), null);
+                this.dvgRoomList.DataSource = source;
             }
         }
+
+        public void OnRemoveRoom(Room room)
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnRemoveRoom del = new DelOnRemoveRoom(OnRemoveRoom);
+                this.Invoke(del, room);
+            }
+            else
+            {
+                this.rooms.Remove(room);
+                var source = new BindingSource(this.rooms.GetRooms(), null);
+                this.dvgRoomList.DataSource = source;
+            }
+        }
+
     }
 }
