@@ -12,15 +12,11 @@ namespace ChatRoom.Client.UI.ActionHandler
     public class LeaveRoomActionHandler : IActionHandler
     {
         private ChatRoomForm chatRoomForm;
-        private LobbyForm lobbyForm;
         private LocalData localData;
-        private UserListForm userListForm;
 
-        public LeaveRoomActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyFrom, UserListForm userListForm)
+        public LeaveRoomActionHandler(ChatRoomForm chatRoomForm)
         {
             this.chatRoomForm = chatRoomForm;
-            this.lobbyForm = lobbyFrom;
-            this.userListForm = userListForm;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 
@@ -35,7 +31,6 @@ namespace ChatRoom.Client.UI.ActionHandler
                     chatRoomForm.OnLeaveRoom();
                 }
 
-                this.lobbyForm.OnRefreshList();
             }
             catch (Exception)
             {

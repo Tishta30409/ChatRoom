@@ -29,7 +29,7 @@ namespace ChatRoom.Backstage.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<UpdateRoomUsersAction>(actionModule.Message);
 
-                if (this.localData.RoomID == action?.UserRoom.f_roomID)
+                if (this.localData.RoomID == action.UserRoom.f_roomID)
                 {
                     if (action.IsJoin)
                     {

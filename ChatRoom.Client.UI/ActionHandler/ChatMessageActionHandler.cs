@@ -4,7 +4,6 @@ using ChatRoom.Client.UI.Forms;
 using ChatRoom.Client.UI.Model;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
 using Newtonsoft.Json;
 using System;
 
@@ -28,7 +27,7 @@ namespace ChatRoom.Client.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if (this.localData.RoomID == action?.RoomID)
+                if (this.localData.RoomID == action.RoomID)
                 {
                     this.chatRoomForm.OnReceiveMessage(action);
                 }

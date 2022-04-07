@@ -5,8 +5,6 @@ using ChatRoom.Client.UI.Model;
 using ChatRoom.Client.UI.Signalr;
 using ChatRoom.Domain.Action;
 using ChatRoom.Domain.KeepAliveConn;
-using ChatRoom.Domain.Model;
-using ChatRoom.Domain.Service;
 using Newtonsoft.Json;
 using System;
 

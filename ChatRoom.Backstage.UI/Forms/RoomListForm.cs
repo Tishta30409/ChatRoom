@@ -7,7 +7,6 @@ using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Repository;
 using ChatRoom.Domain.Service;
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,19 +14,19 @@ namespace ChatRoom.Backstage.UI.Forms
 {
     public partial class RoomListForm : Form
     {
-        private RoomLocker rooms;
-
-        private Room room;
-
         private IRoomService svc;
 
         private IUserRoomService userRoomService;
 
-        private LocalData localData;
-
         private delegate void DelOnAddRoom(Room room);
 
         private delegate void DelOnRemoveRoom(Room room);
+
+        private LocalData localData;
+
+        private RoomLocker rooms;
+
+        private Room room;
 
         public RoomListForm()
         {
@@ -36,7 +35,6 @@ namespace ChatRoom.Backstage.UI.Forms
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
             this.svc = AutofacConfig.Container.Resolve<IRoomService>();
             this.userRoomService = AutofacConfig.Container.Resolve<IUserRoomService>();
-
         }
 
         private void RoomListForm_Shown(object sender, EventArgs e)

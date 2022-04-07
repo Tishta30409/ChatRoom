@@ -28,7 +28,7 @@ namespace ChatRoom.Backstage.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<ChatMessageAction>(actionModule.Message);
 
-                if (this.localData.RoomID == action?.RoomID)
+                if (this.localData.RoomID == action.RoomID)
                 {
                     this.mainForm.OnReceiveMessage(action);
                 }

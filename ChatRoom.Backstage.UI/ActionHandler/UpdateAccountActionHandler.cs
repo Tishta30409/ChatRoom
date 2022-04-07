@@ -28,7 +28,7 @@ namespace ChatRoom.Backstage.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<UpdateAccountAction>(actionModule.Message);
 
-                if (Convert.ToBoolean(action.Account.f_isMuted))
+                if (action.Account.f_isMuted)
                 {
                     this.mainForm.ClearAccountMsg(action.Account.f_nickName);
                 }

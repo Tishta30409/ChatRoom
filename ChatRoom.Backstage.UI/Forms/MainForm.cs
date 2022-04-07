@@ -10,8 +10,6 @@ using ChatRoom.Domain.Service;
 using Microsoft.AspNet.SignalR.Client;
 using NLog;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ChatRoom.Backstage.Forms.UI
@@ -25,7 +23,7 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private IHistoryService historySvc;
 
-        private LocalData localData;
+        private IUserRoomService userRoomService;
 
         private ILogger logger = LogManager.GetLogger("ChatRoomUI");
 
@@ -35,7 +33,7 @@ namespace ChatRoom.Backstage.Forms.UI
 
         private delegate void DelClearAccountMsg(string nickName);
 
-        private IUserRoomService userRoomService;
+        private LocalData localData;
 
         private StringBuildQueue stringBuildQueue;
 
