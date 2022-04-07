@@ -8,5 +8,7 @@ namespace ChatRoom.Domain.Action
     {
         public override string Action()
            => "updateAccounts";
+
+        public Account Account { get; set; }
     }
 }

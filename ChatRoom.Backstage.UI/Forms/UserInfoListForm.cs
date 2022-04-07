@@ -84,7 +84,7 @@ namespace ChatRoom.Backstage.UI.Forms
         private void UnlockAccount()
         {
             var updateAccount = this.account;
-            updateAccount.f_isLocked = Convert.ToByte(0);
+            updateAccount.f_isLocked = false;
             updateAccount.f_errorTimes = 0;
             var activeResult = this.svc.Update(updateAccount);
             if (activeResult.result != null)
@@ -116,7 +116,7 @@ namespace ChatRoom.Backstage.UI.Forms
         private void MuteAccount(bool mute)
         {
             var updateAccount = this.account;
-            updateAccount.f_isMuted = Convert.ToByte(mute);
+            updateAccount.f_isMuted = mute;
             var activeResult = this.svc.Update(updateAccount);
             if (activeResult.result.ResultCode == ResultCode.SUCCESS)
             {

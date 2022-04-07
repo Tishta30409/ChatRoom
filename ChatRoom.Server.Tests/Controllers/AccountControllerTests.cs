@@ -58,8 +58,8 @@ namespace ChatRoom.Server.Tests
                         f_errorTimes = 0,
                         f_nickName = "test123",
                         f_id = 1,
-                        f_isLocked = 0,
-                        f_isMuted = 0,
+                        f_isLocked = false,
+                        f_isMuted = false,
                     }
                 }));
 
@@ -92,8 +92,8 @@ namespace ChatRoom.Server.Tests
                        f_errorTimes = 0,
                        f_nickName = "test123",
                        f_id = 1,
-                       f_isLocked = 0,
-                       f_isMuted = 0,
+                       f_isLocked = false,
+                       f_isMuted = false,
                    }
                }));
 
@@ -122,8 +122,8 @@ namespace ChatRoom.Server.Tests
                        f_errorTimes = 0,
                        f_nickName = "test123",
                        f_id = 1,
-                       f_isLocked = 0,
-                       f_isMuted = 0,
+                       f_isLocked = false,
+                       f_isMuted = false,
                    }
                }));
 
@@ -154,8 +154,8 @@ namespace ChatRoom.Server.Tests
                     f_account = $"acc{index}",
                     f_password = $"pass{index}",
                     f_nickName = $"nick{index}",
-                    f_isLocked = 0,
-                    f_isMuted = 0,
+                    f_isLocked = false,
+                    f_isMuted = false,
                     f_errorTimes = 0,
                 })));
 
@@ -228,8 +228,8 @@ namespace ChatRoom.Server.Tests
                         f_password = "123456",
                         f_nickName = "我是測試",
                         f_errorTimes = 0,
-                        f_isLocked = 0,
-                        f_isMuted = 0,
+                        f_isLocked = false,
+                        f_isMuted = false,
                         f_loginIdentifier = MD5.Create().ToString(),
                     }
                 }));
@@ -242,8 +242,8 @@ namespace ChatRoom.Server.Tests
                 f_password = "123456",
                 f_nickName = "我是測試",
                 f_errorTimes = 0,
-                f_isLocked = 0,
-                f_isMuted = 0,
+                f_isLocked = false,
+                f_isMuted = false,
                 f_loginIdentifier = MD5.Create().ToString(),
                 f_serialNumber = 0
             });

@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.Model.DataType;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,24 +9,27 @@ namespace ChatRoom.Domain.Model.StringBuildQueue
     {
         private StringBuilder sb;
 
-        private Queue<History> historyMsg;
+        //private ConcurrentQueue<History> historyMsg;
+
+        private ConcurrentQueue<History> historyMsg;
 
         public StringBuildQueue()
         {
             this.sb = new StringBuilder();
-            this.historyMsg = new Queue<History>();
+            this.historyMsg = new ConcurrentQueue<History>();
         }
 
         public string ClearMessage()
         {
             this.sb.Clear();
-            this.historyMsg.Clear();
+            this.historyMsg = new ConcurrentQueue<History>(); ;
 
             return "";
         }
 
         public string AddHistory(IEnumerable<History> historys)
         {
+
             this.ClearMessage();
             foreach (History history in historys)
             {
@@ -38,12 +42,13 @@ namespace ChatRoom.Domain.Model.StringBuildQueue
 
         public string AddMessage(History message)
         {
+            //lock or Concurrent QUEUE
             this.historyMsg.Enqueue(message);
 
             //限制長度
             if (this.historyMsg.Count > UserConstants.ChatRoomMaxLine)
             {
-                this.historyMsg.Dequeue();
+                this.historyMsg.TryDequeue(out History result);
             }
 
             //重新拼字串
@@ -53,14 +58,16 @@ namespace ChatRoom.Domain.Model.StringBuildQueue
                 this.sb.AppendLine($"{history.f_nickName}({history.f_createDateTime}) :: {history.f_content}");
             }
 
+
             return this.sb.ToString();
         }
 
         //禁言處理
         public string MutedProcess(string nickName)
         {
+
             this.sb.Clear();
-            var newQueue = new Queue<History>();
+            var newQueue = new ConcurrentQueue<History>();
             foreach (History history in this.historyMsg)
             {
                 if (history.f_nickName != nickName)
@@ -70,6 +77,7 @@ namespace ChatRoom.Domain.Model.StringBuildQueue
                 }
             }
             this.historyMsg = newQueue;
+
 
             return sb.ToString();
         }

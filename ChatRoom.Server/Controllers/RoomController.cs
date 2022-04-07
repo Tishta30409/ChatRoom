@@ -109,7 +109,7 @@ namespace ChatRoom.Server.Controllers
                 result.Content = new StringContent(JsonConvert.SerializeObject(deleteResult.room));
 
                 if (deleteResult.room != null)
-                {
+                { 
                     this.hubClient.BroadCastAction(new LeaveRoomAction()
                     {
                         RoomID = deleteResult.room.f_id,

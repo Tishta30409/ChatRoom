@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ChatRoom.Backstage.UI.Model;
 using ChatRoom.Client.UI.Applibs;
+using ChatRoom.Domain.Model;
 using ChatRoom.Domain.Model.DataType;
 using ChatRoom.Domain.Service;
 using System;
@@ -13,13 +14,17 @@ namespace ChatRoom.Backstage.UI.Forms
     public partial class RoomUsersForm : Form
     {
 
-        private UserRoom[] userRooms;
+        private UserRoomLocker userRooms;
 
         private IUserRoomService svc;
 
         private LocalData localData;
 
-        private delegate void DelOnRefreshList();
+        private delegate void DelOnAddUser(UserRoom userRoom);
+
+        private delegate void DelOnDeleteUser(UserRoom userRoom);
+
+        private object obj;
 
         public RoomUsersForm()
         {
@@ -27,7 +32,11 @@ namespace ChatRoom.Backstage.UI.Forms
 
             this.svc = AutofacConfig.Container.Resolve<IUserRoomService>();
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
+
+            this.obj = new object();
         }
+
+
 
         private void RoomUser_Shown(object sender, EventArgs e)
         {
@@ -45,19 +54,18 @@ namespace ChatRoom.Backstage.UI.Forms
                     throw getResult.exception;
                 }
 
-                this.userRooms = getResult.userRooms.ToArray();
-
-                var bind = new BindingList<UserRoom>(this.userRooms);
-                var source = new BindingSource(bind, null);
+                var data = getResult.userRooms.ToList();
+                this.userRooms = new UserRoomLocker(data);
+                var source = new BindingSource(this.userRooms.GetRoomUsers(), null);
                 this.dvgRoomUserList.DataSource = source;
             }
         }
 
         private void dvgRoomUserList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1 && e.RowIndex < this.userRooms.Count() && this.userRooms[e.RowIndex].f_account != "Admin")
+            if (e.RowIndex > -1 && e.RowIndex < this.userRooms.Count() && this.userRooms.GetElement(e.RowIndex).f_account != "Admin")
             {
-                var result = this.svc.LeaveRoom(this.userRooms[e.RowIndex].f_account);
+                var result = this.svc.LeaveRoom(this.userRooms.GetElement(e.RowIndex).f_account);
 
                 if (result.userRoom != null)
                 {
@@ -66,16 +74,40 @@ namespace ChatRoom.Backstage.UI.Forms
             }
         }
 
-        public void OnRefreshList()
+        public void OnAddUser(UserRoom userRoom)
         {
             if (this.InvokeRequired)
             {
-                DelOnRefreshList del = new DelOnRefreshList(OnRefreshList);
-                this.Invoke(del);
+                DelOnAddUser del = new DelOnAddUser(OnAddUser);
+                this.Invoke(del, userRoom);
             }
             else
             {
-                this.GetList();
+                // TODO this.userRooms 封裝起來 LOCK
+                if (this.Visible)
+                {
+                    this.userRooms.TryAdd(userRoom);
+                    var source = new BindingSource(this.userRooms.GetRoomUsers(), null);
+                    this.dvgRoomUserList.DataSource = source;
+                }
+            }
+        }
+
+        public void OnDeleteUser(UserRoom userRoom)
+        {
+            if (this.InvokeRequired)
+            {
+                DelOnDeleteUser del = new DelOnDeleteUser(OnDeleteUser);
+                this.Invoke(del, userRoom);
+            }
+            else
+            {
+                if (this.Visible)
+                {
+                    this.userRooms.Remove(userRoom);
+                    var source = new BindingSource(this.userRooms.GetRoomUsers(), null);
+                    this.dvgRoomUserList.DataSource = source;
+                }
             }
         }
     }

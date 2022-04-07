@@ -39,7 +39,8 @@ namespace ChatRoom.Server.Controllers
                     //通知更新列表
                     this.hubClient.BroadCastAction(new UpdateRoomUsersAction() 
                     { 
-                        RoomID = addResult.userRoom.f_roomID
+                        IsJoin = true,
+                        UserRoom = userRoom,
                     });
                 }
 
@@ -64,11 +65,10 @@ namespace ChatRoom.Server.Controllers
                 if (deleteResult.userRoom != null)
                 {
                     //通知更新列表
-                    this.hubClient.BroadCastAction(new LeaveRoomAction()
+                    this.hubClient.BroadCastAction(new UpdateRoomUsersAction()
                     {
-                        Account = account,
-                        RoomID = deleteResult.userRoom.f_roomID,
-                        IsRoomClose = false
+                        IsJoin = false,
+                        UserRoom = deleteResult.userRoom,
                     });
                 }
 

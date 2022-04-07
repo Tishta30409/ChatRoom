@@ -60,7 +60,7 @@ namespace ChatRoom.Client.UI.Forms
 
             this.setMessageText( this.stringBuildQueue.ClearMessage());
 
-            if (this.localData.Account.f_isMuted == 1)
+            if (this.localData.Account.f_isMuted)
             {
                 this.btnSend.Enabled = false;
             }
@@ -171,6 +171,7 @@ namespace ChatRoom.Client.UI.Forms
             }
             else
             {
+                this.userRoomSvc.LeaveRoom(this.localData.Account.f_account);
                 this.setMessageText(this.stringBuildQueue.ClearMessage());
                 this.Hide();
                 this.DialogResult = DialogResult.Cancel;
@@ -193,6 +194,7 @@ namespace ChatRoom.Client.UI.Forms
 
         private void ChatRoomForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.userRoomSvc.LeaveRoom(this.localData.Account.f_account);
             e.Cancel = true; //關閉視窗時取消
             this.DialogResult = DialogResult.Cancel;
             this.Hide(); //隱藏式窗,下次再show出

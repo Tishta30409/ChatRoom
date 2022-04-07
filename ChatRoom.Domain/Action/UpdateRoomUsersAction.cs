@@ -1,4 +1,5 @@
 ﻿using ChatRoom.Domain.KeepAliveConn;
+using ChatRoom.Domain.Model.DataType;
 
 namespace ChatRoom.Domain.Action
 {
@@ -8,6 +9,9 @@ namespace ChatRoom.Domain.Action
         public override string Action()
              => "updateRoomUsers";
 
-        public int RoomID { get; set; }
+        public bool IsJoin { get; set; }
+
+        public UserRoom UserRoom { get; set; }
+
     }
 }

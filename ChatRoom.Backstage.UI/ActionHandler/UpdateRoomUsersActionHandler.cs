@@ -29,9 +29,16 @@ namespace ChatRoom.Backstage.UI.ActionHandler
             {
                 var action = JsonConvert.DeserializeObject<UpdateRoomUsersAction>(actionModule.Message);
 
-                if (this.localData.RoomID == action?.RoomID)
+                if (this.localData.RoomID == action?.UserRoom.f_roomID)
                 {
-                    this.roomUsersForm.OnRefreshList();
+                    if (action.IsJoin)
+                    {
+                        this.roomUsersForm.OnAddUser(action.UserRoom);
+                    }
+                    else
+                    {
+                        this.roomUsersForm.OnDeleteUser(action.UserRoom);
+                    }
                 }
             }
             catch (Exception )

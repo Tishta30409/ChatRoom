@@ -11,9 +11,9 @@
 
         public string f_nickName { get; set; }
 
-        public byte f_isLocked { get; set; }
+        public bool f_isLocked { get; set; }
 
-        public byte f_isMuted { get; set; }
+        public bool f_isMuted { get; set; }
 
         public byte f_errorTimes { get; set; }
 

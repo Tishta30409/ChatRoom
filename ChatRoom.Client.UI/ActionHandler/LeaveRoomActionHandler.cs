@@ -14,10 +14,13 @@ namespace ChatRoom.Client.UI.ActionHandler
         private ChatRoomForm chatRoomForm;
         private LobbyForm lobbyForm;
         private LocalData localData;
-        public LeaveRoomActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyFrom)
+        private UserListForm userListForm;
+
+        public LeaveRoomActionHandler(ChatRoomForm chatRoomForm, LobbyForm lobbyFrom, UserListForm userListForm)
         {
             this.chatRoomForm = chatRoomForm;
             this.lobbyForm = lobbyFrom;
+            this.userListForm = userListForm;
             this.localData = AutofacConfig.Container.Resolve<LocalData>();
         }
 

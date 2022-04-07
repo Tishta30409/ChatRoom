@@ -115,8 +115,8 @@ namespace ChatRoom.Persistent.Tests
             {
                 f_account = "test000",
                 f_nickName = "我是你好",
-                f_isLocked = 1,
-                f_isMuted = 0,
+                f_isLocked = true,
+                f_isMuted = false,
                 f_errorTimes = 3,
                 f_loginIdentifier = Guid.NewGuid().ToString(),
             });
